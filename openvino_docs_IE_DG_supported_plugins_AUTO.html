@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto-Device Plugin &#8212; OpenVINO Toolkit  documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/spark_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/spark_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/doxyrest-pygments.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/tabs.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/js/custom.js"></script>
+    <script src="_static/target-highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="index.html">
+  <img src="logo.svg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="get_started.html">
+  Get Started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="documentation.html">
+  Documentation
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="group_api_ref.html">
+  API Reference
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ntyukaev/openvino" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  
+    <div class="card-body docutils version-selector">
+      <details class="sphinx-bs dropdown card mb-3">
+        <summary class="summary-title card-header">
+          <span class="fa mr-1"></span>
+          Versions ( latest )
+        </summary>
+        <div class="summary-content card-body docutils">
+          
+          <dd><a href="/en/latest//openvino_docs_IE_DG_supported_plugins_AUTO.html">latest</a></dd>
+          
+          <dd><a href="/en/2022.1//openvino_docs_IE_DG_supported_plugins_AUTO.html">2022.1</a></dd>
+          
+        </div>
+      </details>
+    </div>
+  
+  
+    <div class="card-body docutils language-selector">
+      <details class="sphinx-bs dropdown card mb-3">
+        <summary class="summary-title card-header">
+          <span class="fa mr-1"></span>
+          Languages ( en )
+        </summary>
+        <div class="summary-content card-body docutils">
+          
+          <dd><a href="/en/latest//openvino_docs_IE_DG_supported_plugins_AUTO.html">English</a></dd>
+          
+          <dd><a href="/cn/latest//openvino_docs_IE_DG_supported_plugins_AUTO.html">Chinese</a></dd>
+          
+        </div>
+      </details>
+    </div>
+  
+</div>
+
+
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auto-device-plugin-execution">
+   Auto-Device Plugin Execution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-and-configuring-the-auto-device-plugin">
+   Defining and Configuring the Auto-Device Plugin
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#enumerating-available-devices-and-auto-device-selecting-logic">
+   Enumerating Available Devices and Auto-Device Selecting Logic
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#enumerating-available-devices">
+     Enumerating Available Devices
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#default-auto-device-selecting-logic">
+     Default Auto-Device selecting logic
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#limit-auto-target-devices-logic">
+     Limit Auto Target Devices Logic
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configuring-the-individual-devices-and-creating-the-auto-device-on-top">
+   Configuring the Individual Devices and Creating the Auto-Device on Top
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-the-auto-device-with-openvino-samples-and-benchmark-app">
+   Using the Auto-Device with OpenVINO Samples and Benchmark App
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/ntyukaev/openvino/edit/feature/ntyukaev/to-sphinx/docs/IE_DG/supported_plugins/AUTO.md">
+        <i class="fas fa-pencil-alt"></i> Edit page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+    
+        
+    
+    <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+      
+          <div>
+            
+  <div class="section" id="auto-device-plugin">
+<span id="doxid-openvino-docs-i-e-d-g-supported-plugins-a-u-t-o"></span><span id="index-0"></span><h1>Auto-Device Plugin<a class="headerlink" href="#auto-device-plugin" title="Permalink to this headline">¶</a></h1>
+<p><span class="target" id="doxid-openvino-docs-i-e-d-g-supported-plugins-a-u-t-o-1md-openvino-docs-ie-dg-supported-plugins-auto"></span></p>
+<div class="section" id="auto-device-plugin-execution">
+<h2>Auto-Device Plugin Execution<a class="headerlink" href="#auto-device-plugin-execution" title="Permalink to this headline">¶</a></h2>
+<p>Auto-device is a new special “virtual” or “proxy” device in the OpenVINO™ toolkit.</p>
+<p>Use “AUTO” as the device name to delegate selection of an actual accelerator to OpenVINO. With the 2021.4 release, Auto-device internally recognizes and selects devices from CPU, integrated GPU and discrete Intel GPUs (when available) depending on the device capabilities and the characteristic of CNN models, for example, precisions. Then Auto-device assigns inference requests to the selected device.</p>
+<p>From the application point of view, this is just another device that handles all accelerators in full system.</p>
+<p>With the 2021.4 release, Auto-device setup is done in three major steps:</p>
+<ul class="simple">
+<li><p>Step 1: Configure each device as usual (for example, via the conventional <code class="docutils literal notranslate"><span class="pre">SetConfig</span></code> method)</p></li>
+<li><p>Step 2: Load a network to the Auto-device plugin. This is the only change needed in your application</p></li>
+<li><p>Step 3: Just like with any other executable network (resulted from <code class="docutils literal notranslate"><span class="pre">LoadNetwork</span></code>), create as many requests as needed to saturate the devices. These steps are covered below in details.</p></li>
+</ul>
+</div>
+<div class="section" id="defining-and-configuring-the-auto-device-plugin">
+<h2>Defining and Configuring the Auto-Device Plugin<a class="headerlink" href="#defining-and-configuring-the-auto-device-plugin" title="Permalink to this headline">¶</a></h2>
+<p>Following the OpenVINO notions of “devices”, the Auto-device has “AUTO” name. The only configuration option for Auto-device is a limited device list:</p>
+<table class="table">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 41%" />
+<col style="width: 7%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter name</p></th>
+<th class="head"><p>Parameter values</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>“AUTO_DEVICE_LIST”</p></td>
+<td><p>comma-separated device names with no spaces</p></td>
+<td><p>N/A</p></td>
+<td><p>Device candidate list to be selected</p></td>
+</tr>
+</tbody>
+</table>
+<p>You can use the configuration name directly as a string or use <code class="docutils literal notranslate"><span class="pre">IE::KEY_AUTO_DEVICE_LIST</span></code> from <code class="docutils literal notranslate"><span class="pre">ie_plugin_config.hpp</span></code>, which defines the same string.</p>
+<p>There are two ways to use Auto-device:</p>
+<ol class="arabic simple">
+<li><p>Directly indicate device by “AUTO” or empty string:</p></li>
+</ol>
+<pre class="highlight literal-block"><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core"><span class="std std-ref">InferenceEngine::Core</span></a><span></span> <span class="n">ie</span><span class="p">;</span>
+<a class="reference internal" href="class_InferenceEngine_CNNNetwork.html#doxid-class-inference-engine-1-1-c-n-n-network"><span class="std std-ref">InferenceEngine::CNNNetwork</span></a><span></span> <span class="n">network</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1ac716dda382aefd09264b60ea40def3ef"><span class="std std-ref">ReadNetwork</span></a><span></span><span class="p">(</span><span class="s">&quot;sample.xml&quot;</span><span class="p">);</span>
+<span class="c1">// these 2 lines below are equivalent</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exec0</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;AUTO&quot;</span><span class="p">);</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exec1</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span></pre>
+<ol class="arabic simple">
+<li><p>Use Auto-device configuration to limit the device candidates list to be selected:</p></li>
+</ol>
+<pre class="highlight literal-block"><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core"><span class="std std-ref">InferenceEngine::Core</span></a><span></span> <span class="n">ie</span><span class="p">;</span>
+<a class="reference internal" href="class_InferenceEngine_CNNNetwork.html#doxid-class-inference-engine-1-1-c-n-n-network"><span class="std std-ref">InferenceEngine::CNNNetwork</span></a><span></span> <span class="n">network</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1ac716dda382aefd09264b60ea40def3ef"><span class="std std-ref">ReadNetwork</span></a><span></span><span class="p">(</span><span class="s">&quot;sample.xml&quot;</span><span class="p">);</span>
+<span class="c1">// &quot;AUTO&quot; plugin is (globally) pre-configured with the explicit option:</span>
+<span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a34aa9ac6fb237b634d5bf08b288e88d4"><span class="std std-ref">SetConfig</span></a><span></span><span class="p">({{</span><span class="s">&quot;AUTO_DEVICE_LIST&quot;</span><span class="p">,</span> <span class="s">&quot;CPU,GPU&quot;</span><span class="p">}},</span> <span class="s">&quot;AUTO&quot;</span><span class="p">);</span>
+<span class="c1">// the below 3 lines are equivalent (the first line leverages the pre-configured AUTO, while second and third explicitly pass the same settings)</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exec0</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;AUTO&quot;</span><span class="p">,</span> <span class="p">{});</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exec1</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;AUTO&quot;</span><span class="p">,</span> <span class="p">{{</span><span class="s">&quot;AUTO_DEVICE_LIST&quot;</span><span class="p">,</span> <span class="s">&quot;CPU,GPU&quot;</span><span class="p">}});</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exec2</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;AUTO:CPU,GPU&quot;</span><span class="p">);</span></pre>
+<p>Auto-device supports query device optimization capabilities in metric;</p>
+<table class="table">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter name</p></th>
+<th class="head"><p>Parameter values</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>“OPTIMIZATION_CAPABILITIES”</p></td>
+<td><p>Auto-Device capabilities</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="enumerating-available-devices-and-auto-device-selecting-logic">
+<h2>Enumerating Available Devices and Auto-Device Selecting Logic<a class="headerlink" href="#enumerating-available-devices-and-auto-device-selecting-logic" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enumerating-available-devices">
+<h3>Enumerating Available Devices<a class="headerlink" href="#enumerating-available-devices" title="Permalink to this headline">¶</a></h3>
+<p>Inference Engine now features a dedicated API to enumerate devices and their capabilities. See <a class="reference internal" href="openvino_inference_engine_samples_hello_query_device_README.html#doxid-openvino-inference-engine-samples-hello-query-device-r-e-a-d-m-e"><span class="std std-ref">Hello Query Device C++ Sample</span></a>. This is the example output from the sample (truncated to the devices’ names only):</p>
+<pre class="highlight literal-block"><span></span><span class="p">.</span><span class="o">/</span><span class="n">hello_query_device</span>
+<span class="n">Available</span> <span class="nl">devices</span><span class="p">:</span>
+    <span class="nl">Device</span><span class="p">:</span> <span class="n">CPU</span>
+<span class="p">...</span>
+    <span class="nl">Device</span><span class="p">:</span> <span class="n">GPU</span><span class="mf">.0</span>
+<span class="p">...</span>
+    <span class="nl">Device</span><span class="p">:</span> <span class="n">GPU</span><span class="mf">.1</span></pre>
+</div>
+<div class="section" id="default-auto-device-selecting-logic">
+<h3>Default Auto-Device selecting logic<a class="headerlink" href="#default-auto-device-selecting-logic" title="Permalink to this headline">¶</a></h3>
+<p>With the 2021.4 release, Auto-Device selects the most suitable device with following default logic:</p>
+<ol class="arabic simple">
+<li><p>Check if dGPU, iGPU and CPU device are available</p></li>
+<li><p>Get the precision of the input model, such as FP32</p></li>
+<li><p>According to the priority of dGPU, iGPU and CPU (in this order), if the device supports the precision of input network, select it as the most suitable device</p></li>
+</ol>
+<p>For example, CPU, dGPU and iGPU can support below precision and optimization capabilities:</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Device</p></th>
+<th class="head"><p>OPTIMIZATION_CAPABILITIES</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CPU</p></td>
+<td><p>WINOGRAD FP32 FP16 INT8 BIN</p></td>
+</tr>
+<tr class="row-odd"><td><p>dGPU</p></td>
+<td><p>FP32 BIN BATCHED_BLOB FP16 INT8</p></td>
+</tr>
+<tr class="row-even"><td><p>iGPU</p></td>
+<td><p>FP32 BIN BATCHED_BLOB FP16 INT8</p></td>
+</tr>
+</tbody>
+</table>
+<p>When application use Auto-device to run FP16 IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.</p>
+<p>When application use Auto-device to run FP16 IR on system with CPU and iGPU, Auto-device will offload this workload to iGPU.</p>
+<p>When application use Auto-device to run WINOGRAD-enabled IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.</p>
+<p>In any case, when loading the network to dGPU or iGPU fails, the networks falls back to CPU as the last choice.</p>
+</div>
+<div class="section" id="limit-auto-target-devices-logic">
+<h3>Limit Auto Target Devices Logic<a class="headerlink" href="#limit-auto-target-devices-logic" title="Permalink to this headline">¶</a></h3>
+<p>According to the Auto-device selection logic from the previous section, the most suitable device from available devices to load mode as follows:</p>
+<pre class="highlight literal-block"><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core"><span class="std std-ref">InferenceEngine::Core</span></a><span></span> <span class="n">ie</span><span class="p">;</span>
+<a class="reference internal" href="class_InferenceEngine_CNNNetwork.html#doxid-class-inference-engine-1-1-c-n-n-network"><span class="std std-ref">InferenceEngine::CNNNetwork</span></a><span></span> <span class="n">network</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1ac716dda382aefd09264b60ea40def3ef"><span class="std std-ref">ReadNetwork</span></a><span></span><span class="p">(</span><span class="s">&quot;sample.xml&quot;</span><span class="p">);</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exeNetwork</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;AUTO&quot;</span><span class="p">);</span></pre>
+<p>Another way to load mode to device from limited choice of devices is with Auto-device:</p>
+<pre class="highlight literal-block"><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core"><span class="std std-ref">InferenceEngine::Core</span></a><span></span> <span class="n">ie</span><span class="p">;</span>
+<a class="reference internal" href="class_InferenceEngine_CNNNetwork.html#doxid-class-inference-engine-1-1-c-n-n-network"><span class="std std-ref">InferenceEngine::CNNNetwork</span></a><span></span> <span class="n">network</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1ac716dda382aefd09264b60ea40def3ef"><span class="std std-ref">ReadNetwork</span></a><span></span><span class="p">(</span><span class="s">&quot;sample.xml&quot;</span><span class="p">);</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exeNetwork</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;AUTO:CPU,GPU&quot;</span><span class="p">);</span></pre>
+</div>
+</div>
+<div class="section" id="configuring-the-individual-devices-and-creating-the-auto-device-on-top">
+<h2>Configuring the Individual Devices and Creating the Auto-Device on Top<a class="headerlink" href="#configuring-the-individual-devices-and-creating-the-auto-device-on-top" title="Permalink to this headline">¶</a></h2>
+<p>As described in the first section, configure each individual device as usual and then just create the “AUTO” device on top:</p>
+<pre class="highlight literal-block"><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core"><span class="std std-ref">InferenceEngine::Core</span></a><span></span> <span class="n">ie</span><span class="p">;</span>
+<a class="reference internal" href="class_InferenceEngine_CNNNetwork.html#doxid-class-inference-engine-1-1-c-n-n-network"><span class="std std-ref">InferenceEngine::CNNNetwork</span></a><span></span> <span class="n">network</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1ac716dda382aefd09264b60ea40def3ef"><span class="std std-ref">ReadNetwork</span></a><span></span><span class="p">(</span><span class="s">&quot;sample.xml&quot;</span><span class="p">);</span>
+<span class="c1">// configure the CPU device first</span>
+<span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a34aa9ac6fb237b634d5bf08b288e88d4"><span class="std std-ref">SetConfig</span></a><span></span><span class="p">(</span><span class="n">cpu_config</span><span class="p">,</span> <span class="s">&quot;CPU&quot;</span><span class="p">);</span>
+<span class="c1">// configure the GPU device</span>
+<span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a34aa9ac6fb237b634d5bf08b288e88d4"><span class="std std-ref">SetConfig</span></a><span></span><span class="p">(</span><span class="n">gpu_config</span><span class="p">,</span> <span class="s">&quot;GPU&quot;</span><span class="p">);</span>
+<span class="c1">// load the network to the auto-device</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exeNetwork</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="s">&quot;AUTO&quot;</span><span class="p">);</span>
+<span class="c1">// new metric allows to query the optimization capabilities</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">device_cap</span> <span class="o">=</span> <span class="n">exeNetwork</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network-1a5b38590cad3a68144c679af5f5a6090d"><span class="std std-ref">GetMetric</span></a><span></span><span class="p">(</span><a class="reference internal" href="global.html#doxid-ie-plugin-config-8hpp-1a69d0efa20c5b2bec020a706279f0c7be"><span class="std std-ref">METRIC_KEY</span></a><span></span><span class="p">(</span><span class="n">OPTIMIZATION_CAPABILITIES</span><span class="p">));</span></pre>
+<p>Alternatively, you can combine all the individual device settings into single config and load it, allowing the Auto-device plugin to parse and apply it to the right devices. See the code example here:</p>
+<pre class="highlight literal-block"><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core"><span class="std std-ref">InferenceEngine::Core</span></a><span></span> <span class="n">ie</span><span class="p">;</span>
+<a class="reference internal" href="class_InferenceEngine_CNNNetwork.html#doxid-class-inference-engine-1-1-c-n-n-network"><span class="std std-ref">InferenceEngine::CNNNetwork</span></a><span></span> <span class="n">network</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1ac716dda382aefd09264b60ea40def3ef"><span class="std std-ref">ReadNetwork</span></a><span></span><span class="p">(</span><span class="s">&quot;sample.xml&quot;</span><span class="p">);</span>
+<span class="c1">// &#39;device_name&#39; can be &quot;AUTO:CPU,GPU&quot; to configure the auto-device to use CPU and GPU</span>
+<a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network"><span class="std std-ref">InferenceEngine::ExecutableNetwork</span></a><span></span> <span class="n">exeNetwork</span> <span class="o">=</span> <span class="n">ie</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_Core.html#doxid-class-inference-engine-1-1-core-1a7ac4bd8bc351fae833aaa0db84fab738"><span class="std std-ref">LoadNetwork</span></a><span></span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">full_config</span><span class="p">);</span>
+<span class="c1">// new metric allows to query the optimization capabilities</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">device_cap</span> <span class="o">=</span> <span class="n">exeNetwork</span><span class="p">.</span><a class="reference internal" href="class_InferenceEngine_ExecutableNetwork.html#doxid-class-inference-engine-1-1-executable-network-1a5b38590cad3a68144c679af5f5a6090d"><span class="std std-ref">GetMetric</span></a><span></span><span class="p">(</span><a class="reference internal" href="global.html#doxid-ie-plugin-config-8hpp-1a69d0efa20c5b2bec020a706279f0c7be"><span class="std std-ref">METRIC_KEY</span></a><span></span><span class="p">(</span><span class="n">OPTIMIZATION_CAPABILITIES</span><span class="p">));</span></pre>
+</div>
+<div class="section" id="using-the-auto-device-with-openvino-samples-and-benchmark-app">
+<h2>Using the Auto-Device with OpenVINO Samples and Benchmark App<a class="headerlink" href="#using-the-auto-device-with-openvino-samples-and-benchmark-app" title="Permalink to this headline">¶</a></h2>
+<p>Note that every OpenVINO sample that supports “-d” (which stands for “device”) command-line option transparently accepts the Auto-device. The Benchmark Application is the best example of the optimal usage of the Auto-device. You do not need to set the number of requests and CPU threads, as the application provides optimal out-of-the-box performance. Below is the example command-line to evaluate AUTO performance with that:</p>
+<pre class="highlight literal-block"><span></span><span class="p">.</span><span class="o">/</span><span class="n">benchmark_app</span> <span class="err">–</span><span class="n">d</span> <span class="n">AUTO</span> <span class="err">–</span><span class="n">m</span> <span class="o">&lt;</span><span class="n">model</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">input</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">niter</span> <span class="mi">1000</span></pre>
+<p>You can also use the auto-device with limit device choice:</p>
+<pre class="highlight literal-block"><span></span><span class="p">.</span><span class="o">/</span><span class="n">benchmark_app</span> <span class="err">–</span><span class="n">d</span> <span class="nl">AUTO</span><span class="p">:</span><span class="n">CPU</span><span class="p">,</span><span class="n">GPU</span> <span class="err">–</span><span class="n">m</span> <span class="o">&lt;</span><span class="n">model</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">input</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">niter</span> <span class="mi">1000</span></pre>
+<p>Note that the default CPU stream is 1 if using “-d AUTO”.</p>
+<p>Note that you can use the FP16 IR to work with auto-device. Also note that no demos are (yet) fully optimized for the auto-device, by means of selecting the most suitable device, using the GPU streams/throttling, and so on.</p>
+</div>
+</div>
+
+
+          </div>
+      
+      
+          <div class='prev-next-bottom'>
+            
+
+          </div>
+      
+    </main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, Intel.<br/>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.1.1.<br/>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
