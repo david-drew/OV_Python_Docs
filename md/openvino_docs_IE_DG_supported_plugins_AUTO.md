@@ -41,12 +41,44 @@ Following the OpenVINO convention for devices names, the Auto-device uses the la
 </tbody>
 </table>
 
-
 You can use the configuration name directly as a string or use IE::KEY_AUTO_DEVICE_LIST from ie_plugin_config.hpp, which defines the same string.
 
 There are two ways to use the Auto-device:
-1. Directly indicate device by “AUTO” or empty string
+1. Directly indicate device by “AUTO” or empty # IE
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model=args.model)
+
+  # Load a network on the target device
+  exec_net = ie.load_network(network=net, device_name=args.device, num_requests=num_of_input)
+  
+  # In our case, using "AUTO" (which should be loaded into the args.device variable)
+  exec_net = ie.load_network(network=net, device_name="AUTO", num_requests=num_of_input)
+</code></pre>
+
 2. Use the Auto-device configuration to limit the device candidates list to be selected
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model=args.model)
+
+  # In our case, using "AUTO" (which should be loaded into the args.device variable)
+  exec_net = ie.load_network(network=net, device_name="AUTO", num_requests=num_of_input)
+  
+  # the following 2 lines are equivalent, alternate ways to do the above
+    exec_net = ie.load_network(network=net, device_name="AUTO:CPU,GPU")
+    exec_net = ie.load_network(network=net, device_name='"AUTO", {{"AUTO_DEVICE_LIST", "CPU,GPU"}}') 
+</code></pre>
+
 
 ## Enumerating Devices and Selection Logic
 
