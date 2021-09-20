@@ -44,7 +44,7 @@ Following the OpenVINO convention for devices names, the Auto-device uses the la
 You can use the configuration name directly as a string or use IE::KEY_AUTO_DEVICE_LIST from ie_plugin_config.hpp, which defines the same string.
 
 There are two ways to use the Auto-device:
-1. Directly indicate device by “AUTO” or empty # IE
+1. Directly indicate device by “AUTO” or an empty string.
 <pre><code>
   from openvino.inference_engine import IECore, StatusCode
 
@@ -101,6 +101,18 @@ The Auto-device supports query device optimization capabilities in metric
 
 ## Enumerating Devices and Selection Logic
 
+The Inference Engine now features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device C++ Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_samples_hello_query_device_README.html)
+
+This is the example output from the sample (truncated to the devices’ names only):</p>
+<pre class="highlight literal-block"><span></span><span class="p">.</span><span class="o">/</span><span class="n">hello_query_device</span>
+<span class="n">Available</span> <span class="nl">devices</span><span class="p">:</span>
+    <span class="nl">Device</span><span class="p">:</span> <span class="n">CPU</span>
+<span class="p">...</span>
+    <span class="nl">Device</span><span class="p">:</span> <span class="n">GPU</span><span class="mf">.0</span>
+<span class="p">...</span>
+    <span class="nl">Device</span><span class="p">:</span> <span class="n">GPU</span><span class="mf">.1</span></pre>
+
+
 ### Enumerating Available Devices
 
 ### Default Auto-Device Selection Logic
@@ -109,11 +121,34 @@ With the 2021.4 release, Auto-Device selects the most suitable device with follo
 2. Get the precision of the input model, such as FP32
 3. According to the priority of dGPU, iGPU and CPU (in this order), if the device supports the precision of the input network, select it as the most suitable device
 
-For example, CPU, dGPU and iGPU can support below precision and optimization capabilities:
+For example, CPU, dGPU and iGPU can support the following precision and optimization capabilities:
 
-* When application use Auto-device to run FP16 IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
-* When application use Auto-device to run FP16 IR on system with CPU and iGPU, Auto-device will offload this workload to iGPU.
-* When application use Auto-device to run WINOGRAD-enabled IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
+<table class="table">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Device</p></th>
+<th class="head"><p>OPTIMIZATION_CAPABILITIES</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CPU</p></td>
+<td><p>WINOGRAD FP32 FP16 INT8 BIN</p></td>
+</tr>
+<tr class="row-odd"><td><p>dGPU</p></td>
+<td><p>FP32 BIN BATCHED_BLOB FP16 INT8</p></td>
+</tr>
+<tr class="row-even"><td><p>iGPU</p></td>
+<td><p>FP32 BIN BATCHED_BLOB FP16 INT8</p></td>
+</tr>
+</tbody>
+</table>
+
+* When application uses Auto-device to run FP16 IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
+* When application uses Auto-device to run FP16 IR on a system with CPU and iGPU, Auto-device will offload this workload to iGPU.
+* When application uses Auto-device to run WINOGRAD-enabled IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
 
 In any case, when loading the network to dGPU or iGPU fails, the networks falls back to CPU as the last choice.
 
