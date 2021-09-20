@@ -101,10 +101,12 @@ The Auto-device supports query device optimization capabilities in metric
 
 ## Enumerating Devices and Selection Logic
 
-The Inference Engine now features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device C++ Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_samples_hello_query_device_README.html)
+The Inference Engine now features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html)
 
-This is the example output from the sample (truncated to the devices’ names only):</p>
+This is the example output from the sample (truncated to the devices’ names only):
+
 <pre class="highlight literal-block"><span></span><span class="p">.</span><span class="o">/</span><span class="n">hello_query_device</span>
+<br>
 <span class="n">Available</span> <span class="nl">devices</span><span class="p">:</span>
     <span class="nl">Device</span><span class="p">:</span> <span class="n">CPU</span>
 <span class="p">...</span>
