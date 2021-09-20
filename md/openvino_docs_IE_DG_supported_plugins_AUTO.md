@@ -1,0 +1,70 @@
+
+
+# Auto-Device Plugin
+
+## Auto-Device Plugin Execution
+The "AUTO" device is a new, special “virtual” or “proxy” device in the OpenVINO™ toolkit.
+
+Use “AUTO” as the device name to delegate selection of an actual accelerator to OpenVINO. With the 2021.4 release, the Auto-device internally recognizes and selects devices from CPU, integrated GPU and discrete Intel GPUs (when available) depending on the device capabilities and the characteristic of CNN models, for example, precisions. Then Auto-device assigns inference requests to the selected device.
+
+From the application point of view, this is just another device that handles all accelerators in full system.
+
+With the 2021.4 release, Auto-device setup is done in three major steps:
+
+1. Configure each device as usual (for example, via the conventional SetConfig method)
+2. Load a network to the Auto-device plugin. This is the only change needed in your application
+3. Just like with any other executable network (resulted from LoadNetwork), create as many requests as needed to saturate the devices. These steps are covered below in details.
+
+## Defining and Configuring the Auto-Device Plugin
+Following the OpenVINO convention for devices names, the Auto-device uses the label “AUTO”. The only configuration option for Auto-device is a limited device list:
+*[HTML]
+<table class="table">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 41%" />
+<col style="width: 7%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter name</p></th>
+<th class="head"><p>Parameter values</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>“AUTO_DEVICE_LIST”</p></td>
+<td><p>comma-separated device names with no spaces</p></td>
+<td><p>N/A</p></td>
+<td><p>Device candidate list to be selected</p></td>
+</tr>
+</tbody>
+</table>
+
+
+You can use the configuration name directly as a string or use IE::KEY_AUTO_DEVICE_LIST from ie_plugin_config.hpp, which defines the same string.
+
+There are two ways to use the Auto-device:
+1. Directly indicate device by “AUTO” or empty string
+2. Use the Auto-device configuration to limit the device candidates list to be selected
+
+## Enumerating Devices and Selection Logic
+
+### Enumerating Available Devices
+
+### Default Auto-Device Selection Logic
+With the 2021.4 release, Auto-Device selects the most suitable device with following default logic:
+1. Check if dGPU, iGPU and CPU device are available
+2. Get the precision of the input model, such as FP32
+3. According to the priority of dGPU, iGPU and CPU (in this order), if the device supports the precision of the input network, select it as the most suitable device
+
+For example, CPU, dGPU and iGPU can support below precision and optimization capabilities:
+
+* When application use Auto-device to run FP16 IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
+* When application use Auto-device to run FP16 IR on system with CPU and iGPU, Auto-device will offload this workload to iGPU.
+* When application use Auto-device to run WINOGRAD-enabled IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
+
+In any case, when loading the network to dGPU or iGPU fails, the networks falls back to CPU as the last choice.
+
+## Limit Auto Target Devices Logic
+
