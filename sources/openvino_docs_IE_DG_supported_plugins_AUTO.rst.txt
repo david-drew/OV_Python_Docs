@@ -1,0 +1,191 @@
+.. index:: pair: page; Auto-Device Plugin
+.. _doxid-openvino_docs__i_e__d_g_supported_plugins__a_u_t_o:
+
+Auto-Device Plugin
+==================
+
+:target:`doxid-openvino_docs__i_e__d_g_supported_plugins__a_u_t_o_1md_openvino_docs_ie_dg_supported_plugins_auto`
+
+Auto-Device Plugin Execution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Auto-device is a new special "virtual" or "proxy" device in the OpenVINO™ toolkit.
+
+Use "AUTO" as the device name to delegate selection of an actual accelerator to OpenVINO. With the 2021.4 release, Auto-device internally recognizes and selects devices from CPU, integrated GPU and discrete Intel GPUs (when available) depending on the device capabilities and the characteristic of CNN models, for example, precisions. Then Auto-device assigns inference requests to the selected device.
+
+From the application point of view, this is just another device that handles all accelerators in full system.
+
+With the 2021.4 release, Auto-device setup is done in three major steps:
+
+* Step 1: Configure each device as usual (for example, via the conventional ``SetConfig`` method)
+
+* Step 2: Load a network to the Auto-device plugin. This is the only change needed in your application
+
+* Step 3: Just like with any other executable network (resulted from ``LoadNetwork``), create as many requests as needed to saturate the devices. These steps are covered below in details.
+
+Defining and Configuring the Auto-Device Plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Following the OpenVINO notions of “devices”, the Auto-device has “AUTO” name. The only configuration option for Auto-device is a limited device list:
+
+==================  ===========================================  =======  ====================================  
+Parameter name      Parameter values                             Default  Description                           
+==================  ===========================================  =======  ====================================  
+"AUTO_DEVICE_LIST"  comma-separated device names with no spaces  N/A      Device candidate list to be selected  
+==================  ===========================================  =======  ====================================
+
+You can use the configuration name directly as a string or use ``IE::KEY_AUTO_DEVICE_LIST`` from ``ie_plugin_config.hpp``, which defines the same string.
+
+There are two ways to use Auto-device:
+
+#. Directly indicate device by “AUTO” or empty string:
+
+.. ref-code-block:: cpp
+
+	:ref:`InferenceEngine::Core <doxid-class_inference_engine_1_1_core>` ie;
+	:ref:`InferenceEngine::CNNNetwork <doxid-class_inference_engine_1_1_c_n_n_network>` network = ie.:ref:`ReadNetwork <doxid-class_inference_engine_1_1_core_1ac716dda382aefd09264b60ea40def3ef>`("sample.xml");
+	// these 2 lines below are equivalent
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exec0 = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "AUTO");
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exec1 = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "");
+
+
+
+#. Use Auto-device configuration to limit the device candidates list to be selected:
+
+.. ref-code-block:: cpp
+
+	:ref:`InferenceEngine::Core <doxid-class_inference_engine_1_1_core>` ie;
+	:ref:`InferenceEngine::CNNNetwork <doxid-class_inference_engine_1_1_c_n_n_network>` network = ie.:ref:`ReadNetwork <doxid-class_inference_engine_1_1_core_1ac716dda382aefd09264b60ea40def3ef>`("sample.xml");
+	// "AUTO" plugin is (globally) pre-configured with the explicit option:
+	ie.:ref:`SetConfig <doxid-class_inference_engine_1_1_core_1a34aa9ac6fb237b634d5bf08b288e88d4>`({{"AUTO_DEVICE_LIST", "CPU,GPU"}}, "AUTO");
+	// the below 3 lines are equivalent (the first line leverages the pre-configured AUTO, while second and third explicitly pass the same settings)
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exec0 = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "AUTO", {});
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exec1 = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "AUTO", {{"AUTO_DEVICE_LIST", "CPU,GPU"}});
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exec2 = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "AUTO:CPU,GPU");
+
+Auto-device supports query device optimization capabilities in metric;
+
+===========================  ========================  
+Parameter name               Parameter values          
+===========================  ========================  
+"OPTIMIZATION_CAPABILITIES"  Auto-Device capabilities  
+===========================  ========================
+
+Enumerating Available Devices and Auto-Device Selecting Logic
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enumerating Available Devices
+-----------------------------
+
+Inference Engine now features a dedicated API to enumerate devices and their capabilities. See :ref:`Hello Query Device C++ Sample <doxid-openvino_inference_engine_samples_hello_query_device__r_e_a_d_m_e>`. This is the example output from the sample (truncated to the devices' names only):
+
+.. ref-code-block:: cpp
+
+	./hello_query_device
+	Available devices: 
+	    Device: CPU
+	...
+	    Device: GPU.0
+	...
+	    Device: GPU.1
+
+Default Auto-Device selecting logic
+-----------------------------------
+
+With the 2021.4 release, Auto-Device selects the most suitable device with following default logic:
+
+#. Check if dGPU, iGPU and CPU device are available
+
+#. Get the precision of the input model, such as FP32
+
+#. According to the priority of dGPU, iGPU and CPU (in this order), if the device supports the precision of input network, select it as the most suitable device
+
+For example, CPU, dGPU and iGPU can support below precision and optimization capabilities:
+
+======  ===============================  
+Device  OPTIMIZATION_CAPABILITIES        
+======  ===============================  
+CPU     WINOGRAD FP32 FP16 INT8 BIN      
+dGPU    FP32 BIN BATCHED_BLOB FP16 INT8  
+iGPU    FP32 BIN BATCHED_BLOB FP16 INT8  
+======  ===============================
+
+When application use Auto-device to run FP16 IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
+
+When application use Auto-device to run FP16 IR on system with CPU and iGPU, Auto-device will offload this workload to iGPU.
+
+When application use Auto-device to run WINOGRAD-enabled IR on system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
+
+In any case, when loading the network to dGPU or iGPU fails, the networks falls back to CPU as the last choice.
+
+Limit Auto Target Devices Logic
+-------------------------------
+
+According to the Auto-device selection logic from the previous section, the most suitable device from available devices to load mode as follows:
+
+.. ref-code-block:: cpp
+
+	:ref:`InferenceEngine::Core <doxid-class_inference_engine_1_1_core>` ie;
+	:ref:`InferenceEngine::CNNNetwork <doxid-class_inference_engine_1_1_c_n_n_network>` network = ie.:ref:`ReadNetwork <doxid-class_inference_engine_1_1_core_1ac716dda382aefd09264b60ea40def3ef>`("sample.xml");
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exeNetwork = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "AUTO");
+
+Another way to load mode to device from limited choice of devices is with Auto-device:
+
+.. ref-code-block:: cpp
+
+	:ref:`InferenceEngine::Core <doxid-class_inference_engine_1_1_core>` ie;
+	:ref:`InferenceEngine::CNNNetwork <doxid-class_inference_engine_1_1_c_n_n_network>` network = ie.:ref:`ReadNetwork <doxid-class_inference_engine_1_1_core_1ac716dda382aefd09264b60ea40def3ef>`("sample.xml");
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exeNetwork = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "AUTO:CPU,GPU");
+
+
+
+Configuring the Individual Devices and Creating the Auto-Device on Top
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As described in the first section, configure each individual device as usual and then just create the "AUTO" device on top:
+
+.. ref-code-block:: cpp
+
+	:ref:`InferenceEngine::Core <doxid-class_inference_engine_1_1_core>` ie; 
+	:ref:`InferenceEngine::CNNNetwork <doxid-class_inference_engine_1_1_c_n_n_network>` network = ie.:ref:`ReadNetwork <doxid-class_inference_engine_1_1_core_1ac716dda382aefd09264b60ea40def3ef>`("sample.xml");
+	// configure the CPU device first
+	ie.:ref:`SetConfig <doxid-class_inference_engine_1_1_core_1a34aa9ac6fb237b634d5bf08b288e88d4>`(cpu_config, "CPU"); 
+	// configure the GPU device
+	ie.:ref:`SetConfig <doxid-class_inference_engine_1_1_core_1a34aa9ac6fb237b634d5bf08b288e88d4>`(gpu_config, "GPU"); 
+	// load the network to the auto-device
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exeNetwork = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, "AUTO");
+	// new metric allows to query the optimization capabilities
+	std::vector<std::string> device_cap = exeNetwork.:ref:`GetMetric <doxid-class_inference_engine_1_1_executable_network_1a5b38590cad3a68144c679af5f5a6090d>`(:ref:`METRIC_KEY <doxid-ie__plugin__config_8hpp_1a69d0efa20c5b2bec020a706279f0c7be>`(OPTIMIZATION_CAPABILITIES));
+
+Alternatively, you can combine all the individual device settings into single config and load it, allowing the Auto-device plugin to parse and apply it to the right devices. See the code example here:
+
+.. ref-code-block:: cpp
+
+	:ref:`InferenceEngine::Core <doxid-class_inference_engine_1_1_core>` ie; 
+	:ref:`InferenceEngine::CNNNetwork <doxid-class_inference_engine_1_1_c_n_n_network>` network = ie.:ref:`ReadNetwork <doxid-class_inference_engine_1_1_core_1ac716dda382aefd09264b60ea40def3ef>`("sample.xml");
+	// 'device_name' can be "AUTO:CPU,GPU" to configure the auto-device to use CPU and GPU
+	:ref:`InferenceEngine::ExecutableNetwork <doxid-class_inference_engine_1_1_executable_network>` exeNetwork = ie.:ref:`LoadNetwork <doxid-class_inference_engine_1_1_core_1a7ac4bd8bc351fae833aaa0db84fab738>`(network, device_name, full_config);
+	// new metric allows to query the optimization capabilities
+	std::vector<std::string> device_cap = exeNetwork.:ref:`GetMetric <doxid-class_inference_engine_1_1_executable_network_1a5b38590cad3a68144c679af5f5a6090d>`(:ref:`METRIC_KEY <doxid-ie__plugin__config_8hpp_1a69d0efa20c5b2bec020a706279f0c7be>`(OPTIMIZATION_CAPABILITIES));
+
+
+
+Using the Auto-Device with OpenVINO Samples and Benchmark App
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Note that every OpenVINO sample that supports "-d" (which stands for "device") command-line option transparently accepts the Auto-device. The Benchmark Application is the best example of the optimal usage of the Auto-device. You do not need to set the number of requests and CPU threads, as the application provides optimal out-of-the-box performance. Below is the example command-line to evaluate AUTO performance with that:
+
+.. ref-code-block:: cpp
+
+	./benchmark_app –d AUTO –m <model> -i <input> -niter 1000
+
+You can also use the auto-device with limit device choice:
+
+.. ref-code-block:: cpp
+
+	./benchmark_app –d AUTO:CPU,GPU –m <model> -i <input> -niter 1000
+
+Note that the default CPU stream is 1 if using “-d AUTO”.
+
+Note that you can use the FP16 IR to work with auto-device. Also note that no demos are (yet) fully optimized for the auto-device, by means of selecting the most suitable device, using the GPU streams/throttling, and so on.
+
