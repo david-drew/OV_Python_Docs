@@ -154,3 +154,8 @@ In any case, when loading the network to dGPU or iGPU fails, the networks falls 
 
 ## Limit Auto Target Devices Logic
 
+## Configuring the Individual Devices and Creating the Auto-Device on Top
+
+## Using the Auto-Device with OpenVINO Samples and Benchmark App
+
+
