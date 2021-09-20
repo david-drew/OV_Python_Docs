@@ -79,6 +79,25 @@ There are two ways to use the Auto-device:
     exec_net = ie.load_network(network=net, device_name='"AUTO", {{"AUTO_DEVICE_LIST", "CPU,GPU"}}') 
 </code></pre>
 
+The Auto-device supports query device optimization capabilities in metric
+
+*[HTML]
+<table class="table">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter name</p></th>
+<th class="head"><p>Parameter values</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>“OPTIMIZATION_CAPABILITIES”</p></td>
+<td><p>Auto-Device capabilities</p></td>
+</tr>
+</tbody>
+</table>
 
 ## Enumerating Devices and Selection Logic
 
