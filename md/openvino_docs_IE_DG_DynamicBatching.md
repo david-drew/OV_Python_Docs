@@ -64,4 +64,10 @@ Currently, certain limitations for using Dynamic Batching exist:
   * BatchNormalization
   * Copy
 
-Do not use layers that might arbitrary change tensor shape (such as Flatten, Permute, Reshape), layers specific to object detection topologies (ROIPooling, ProirBox, DetectionOutput), and custom layers. Topology analysis is performed during the process of loading a network into plugin, and if topology is not applicable, an exception is generated.
+Do NOT use:
+* layers that might arbitrary change tensor shape (such as Flatten, Permute, Reshape)
+* layers specific to object detection topologies (ROIPooling, ProirBox, DetectionOutput)
+* custom layers. 
+ 
+Topology analysis is performed during the process of loading a network into plugin, and if the topology is not supported, an exception is generated.
+
