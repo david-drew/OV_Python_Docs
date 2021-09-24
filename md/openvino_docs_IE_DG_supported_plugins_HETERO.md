@@ -109,16 +109,16 @@ You can point to more than two devices, for example: `-d HETERO:FPGA,GPU,CPU`
 
 After enabling the KEY_HETERO_DUMP_GRAPH_DOT config key, you can dump GraphViz* .dot files with annotations of devices per layer.
 
-Heterogeneous plugin can generate two files:
+The heterogeneous plugin can generate two files:
 
 * `hetero_affinity_<network name>.dot` - annotation of affinities per layer. This file is written to the disk only if default fallback policy was executed
 * `hetero_subgraphs_<network name>.dot` - annotation of affinities per graph. This file is written to the disk during execution of ICNNNetwork::LoadNetwork() for heterogeneous plugin
 
+### To Generate the dot Files
 <code><pre>
 ie = IECore()
 ie.set_config({ { KEY_HETERO_DUMP_GRAPH_DOT, 'YES' } }, "HETERO");
 </pre></code>
-
 
 You can use the GraphViz* utility or converters to .png formats. On Ubuntu* operating system, you can use the following utilities:
 
