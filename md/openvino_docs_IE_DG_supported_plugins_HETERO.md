@@ -21,15 +21,17 @@ Some of the topologies are not well-supported for heterogeneous execution on som
 
 Default fallback policy decides which layer goes to which device automatically according to the support in dedicated plugins (FPGA, GPU, CPU, MYRIAD).
 
-Another way to annotate a network is to set affinity manually using 
-`code`
-ngraph::Node::get_rt_info
-with key *affinity* :
+Another way to annotate a network is to set affinity manually using code.
 
+### Set Affinity of All Layers to CPU
 <pre><code>
-for (auto && op : function->get_ops())
-    op->get_rt_info()["affinity"] = std::make_shared<ngraph::VariantWrapper<std::string>>("CPU");
+    import ngraph as ng
+    ng_func = ng.function_from_cnn(net)
+    for node in ng_func.get_ordered_ops():   
+        rt_info = node.get_rt_info()
+        rt_info["affinity"] = "CPU"
 </code></pre>
+
 
 The fallback policy does not work if even one layer has an initialized affinity. The sequence should be calling the default affinity settings and then setting the layers manually.
 
