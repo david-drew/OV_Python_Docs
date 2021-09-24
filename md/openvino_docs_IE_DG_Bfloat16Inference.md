@@ -1,10 +1,3 @@
-<style>
-  r { color: Red }
-  pink { color: Pink }
-  o { color: Orange }
-  g { color: Green }
-</style>
-
 # Bfloat16 Inference
 
 # Disclaimer
@@ -59,20 +52,54 @@ For default optimization on CPU, the source model is converted from FP32 or FP16
 To disable BF16 internal transformations, set the KEY_ENFORCE_BF16 to NO. In this case, the model infers as is without modifications with precisions that were set on each layer edge.
 
 <pre><code>
-  bf16_config = {"KEY_ENFORCE_BF16" : "YES"}
+  bf16_config = {"ENFORCE_BF16" : "YES"}
 
   ie = IECore()
   net = ie.read_network("sample.xml")
   exec_net = ie.load_network(network=net, device_name="CPU", config = bf16_config)
 </code></pre>
   
-An exception with the message <pink>Platform doesn't support BF16 format</pink> is formed in case of setting KEY_ENFORCE_BF16 to YES on CPU without native BF16 support or BF16 simulation mode.
+An exception with the message `Platform doesn't support BF16 format` is formed in case of setting `KEY_ENFORCE_BF16` to YES on CPU without native BF16 support or BF16 simulation mode.
 
 Low-Precision 8-bit integer models cannot be converted to BF16, even if bfloat16 optimization is set by default.
   
+## Bfloat16 Simulation Mode
+
+Bfloat16 simulation mode is available on CPU and Intel® AVX-512 platforms that do not support the native avx512_bf16 instruction. The simulator does not guarantee an adequate performance. Note that the CPU must still support the AVX-512 extensions.
+
+### To Enable the simulation of Bfloat16:
+
+* In the Benchmark App, add the -enforcebf16=true option
+* In Python, use the following code as an example:
+
+  <pre><code>
+    bf16_config = {"ENFORCE_BF16" : "YES"}
+
+    ie = IECore()
+    net = ie.read_network("sample.xml")
+    exec_net = ie.load_network(network=net, device_name="CPU", config=bf16_config)
+  </code></pre>
+
+## Performance Counters
+
+Information about layer precision is stored in the performance counters that are available from the Inference Engine API. The layers have the following marks:
+
+* Suffix *BF16* for layers that had bfloat16 data type input and were computed in BF16 precision
+* Suffix *FP32* for layers computed in 32-bit precision
+
+For example, the performance counters table for the Inception model can look as follows:
+
+<pre><code>
+pool5                         EXECUTED       layerType: Pooling            realTime: 143       cpu: 143             execType: jit_avx512_BF16
+fc6                           EXECUTED       layerType: FullyConnected     realTime: 47723     cpu: 47723           execType: jit_gemm_BF16
+relu6                         NOT_RUN        layerType: ReLU               realTime: 0         cpu: 0               execType: undef
+fc7                           EXECUTED       layerType: FullyConnected     realTime: 7558      cpu: 7558            execType: jit_gemm_BF16
+relu7                         NOT_RUN        layerType: ReLU               realTime: 0         cpu: 0               execType: undef
+fc8                           EXECUTED       layerType: FullyConnected     realTime: 2193      cpu: 2193            execType: jit_gemm_BF16
+prob                          EXECUTED       layerType: SoftMax            realTime: 68        cpu: 68              execType: jit_avx512_FP32
 </code></pre>
 
-
+The *execType* column of the table includes inference primitives with specific suffixes.
 
 
 
