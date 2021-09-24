@@ -157,7 +157,78 @@ In any case, when loading the network to dGPU or iGPU fails, the networks uses C
 
 ### Limit Auto Target Devices Logic
 
+According to the Auto-device selection logic from the previous section, the most suitable device from available devices to load mode as follows:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model="sample.xml")
+
+  # Load the network to the AUTO device
+  exec_net = ie.load_network(network=net, device_name="AUTO")
+</code></pre>
+
+Another way to load mode to device from limited choice of devices is with Auto-device:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model="sample.xml")
+
+  # Load the network to the AUTO device
+  exec_net = ie.load_network(network=net, device_name="AUTO:CPU,GPU")
+</code></pre>
+
 ## Configuring the Individual Devices and Creating the Auto-Device on Top
+As described in the first section, configure each individual device as usual and then just create the “AUTO” device on top:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model="sample.xml")
+  
+  ie.set_config(cpu_config, "CPU")
+  ie.set_config(gpu_config, "GPU")
+
+  # Load the network to the AUTO device
+  exec_net = ie.load_network(network=net, device_name="AUTO")
+  
+  # Query the device's optimization capabilities
+  device_caps = exec_net.get_metric(METRIC_KEY(OPTIMIZATION_CAPABILITIES))
+</code></pre>
+
+
+Alternatively, you can combine all the individual device settings into single config file and load it, allowing the Auto-device plugin to parse and apply it to the right devices. See the code example here:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model="sample.xml")
+
+  # Load the network to the AUTO device
+  exec_net = ie.load_network(network=net, device_name="AUTO", config=full_config)
+  
+  # Query the device's optimization capabilities
+  device_caps = exec_net.get_metric(METRIC_KEY(OPTIMIZATION_CAPABILITIES))
+</code></pre>
+
 
 ## Using the Auto-Device with OpenVINO Samples and Benchmark App
+
 
