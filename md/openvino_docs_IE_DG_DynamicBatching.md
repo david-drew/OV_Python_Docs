@@ -8,7 +8,8 @@ You can activate Dynamic Batching by setting the "DYN_BATCH_ENABLED" flag to "YE
   from openvino.inference_engine import IECore, StatusCode
 
   # Get the dynamic batch size from the command line parameter
-  dyn_batch_size = args.dyn_bs
+  # This should be an int of a reasonable size (probably no more than hundreds)
+  dyn_batch_size = int(args.dyn_bs)
 
   # Setup our configuration map
   dyn_config = {"DYN_BATCH_ENABLED": "YES"}
