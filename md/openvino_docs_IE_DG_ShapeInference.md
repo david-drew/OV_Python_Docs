@@ -122,7 +122,7 @@ Here is a code example:
 </code></pre>
 
 ## Extensibility
-The Inference Engine provides a special mechanism that allows adding support of shape inference for custom operations. This mechanism is described in the
+The Inference Engine provides a special mechanism that allows adding support of shape inference for custom operations. This mechanism is described in the [Extensibility documentation](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_Extensibility_DG_Intro.html)
 
 See Also:
 The [Hello Reshape Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_reshape_ssd_README.html)
