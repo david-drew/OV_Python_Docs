@@ -152,6 +152,47 @@ So the explicit configuration to use both would be “MULTI:MYRIAD.1.2-ma2480,MY
   exec_net = ie.load_network(network=net, device_name=all_devices)
 </code></pre>
 
+## Configuring the Individual Devices and Creating the Multi-Device On Top
+
+As discussed in the first section, configure each individual device as usual and then create the “MULTI” device on top:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  ie = IECore()
+  
+  # Configure the HDDL device first
+  net = ie.read_network(model="sample.xml")
+  ie.set_config(hddl_config, "HDDL")
+  ie.set_config(gpu_config, "GPU")
+  
+  # Load the network to the multi-device, while specifying the configuration (devices along with priorities):
+  exec_net = ie.load_network(network=net, device_name="MULTI", {{InferenceEngine::MultiDeviceConfigParams::KEY_MULTI_DEVICE_PRIORITIES, "HDDL,GPU"}})
+
+  # A new metric allows querying the optimal number of requests:
+  nireq = exec_net.get_metric(METRIC_KEY(OPTIMAL_NUMBER_OF_INFER_REQUESTS));
+</code></pre>
+
+An alternative is to combine all the individual device settings into a single config file and load tht, allowing the Multi-Device plugin to parse and apply that to the right devices. See code example in the next section.
+
+Note that while the performance of accelerators works well with multi-device, the CPU+GPU execution poses some performance caveats, as these devices share power, bandwidth and other resources. For example it is recommended to enable the GPU throttling hint (which saves another CPU thread for the CPU inference). See section of the Using the multi-device with OpenVINO samples and benchmarking the performance below.
+
+## Querying the Optimal Number of Inference Requests
+
+## Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance
+
+Notice that every OpenVINO sample that supports “-d” (which stands for “device”) command-line option transparently accepts the multi-device. The [Benchmark Application](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_benchmark_tool_README.html) is the best reference to the optimal usage of the multi-device. As discussed earlier, you don’t need to setup number of requests, CPU streams or threads as the application provides optimal out of the box performance. Below is example command-line to evaluate HDDL+GPU performance with that:
+
+`./benchmark_app.py –d MULTI:HDDL,GPU –m <model> -i <input> -niter 1000`
+
+Notice that you can use the FP16 IR to work with multi-device (as CPU automatically upconverts it to the fp32) and rest of devices support it naturally. Also notice that no demos are (yet) fully optimized for the multi-device, by means of supporting the OPTIMAL_NUMBER_OF_INFER_REQUESTS metric, using the GPU streams/throttling, and so on.
+
+## Video: MULTI Plugin
+NOTE: The video is currently only available for C++, but many of the same concepts apply.
+
+[![MULTI Plugin YouTube Tutorial](https://img.youtube.com/vi/xbORYFEmrqU/0.jpg)](https://www.youtube.com/watch?v=xbORYFEmrqU)
+
+
 
 See Also:
 [Supported Devices](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_Supported_Devices.html)
