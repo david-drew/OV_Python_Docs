@@ -1,12 +1,12 @@
 # Heterogeneous Plugin
 
 ## Introducing the Heterogeneous Plugin
-The heterogeneous plugin enables computing for inference on one network on several devices. The purposes of executing networks in heterogeneous mode:
+The heterogeneous plugin enables computing the inference of one network on several devices. The purposes of executing networks in heterogeneous mode are to:
 
-* Utilize the power of accelerators to calculate heaviest parts of the network and execute unsupported layers on fallback devices like the CPU
+* Utilize the power of accelerators to process the heaviest parts of the network and to execute unsupported layers on fallback devices like the CPU
 * Utilize all available hardware more efficiently during one inference
 
-The execution through heterogeneous plugin can be divided to two independent steps:
+The execution through heterogeneous plugin can be divided into two independent steps:
 
 1. Setting of affinity to layers
 2. Loading a network to the Heterogeneous plugin, splitting the network to parts, and executing them through the plugin
@@ -15,7 +15,7 @@ These steps are decoupled. The setting of affinity can be done automatically usi
 
 The fallback automatic policy causes “greedy” behavior and assigns all layers that can be executed on certain device according to the priorities you specify (for example, HETERO:GPU,CPU). Automatic policy does not take into account plugin peculiarities such as the inability to infer some layers without other special layers placed before or after that layer. The plugin is responsible for solving such cases. If the device plugin does not support the subgraph topology constructed by the Hetero plugin, then you should set affinity manually.
 
-Some of the topologies are not friendly to heterogeneous execution on some devices or cannot be executed in such mode at all. Examples of such networks are networks having activation layers which are not supported on primary device. If transmitting data from one part of a network to another part in heterogeneous mode takes more time than in normal mode, it may not make sense to execute them in heterogeneous mode. In this case, you can define heaviest part manually and set the affinity to avoid sending data back and forth many times during one inference.
+Some of the topologies are not well-supported for heterogeneous execution on some devices or cannot be executed in this mode at all. Examples of such networks are those having activation layers which are not supported on the primary device. If transmitting data from one part of a network to another part in heterogeneous mode takes more time than in normal mode, it may not make sense to execute them in heterogeneous mode. In this case, you can define the most compute intense part manually and set the affinity to avoid sending data back and forth many times during one inference.
 
 ## Annotation of Layers per Device and Default Fallback Policy
 
@@ -30,9 +30,9 @@ with key *affinity* :
 for (auto && op : function->get_ops())
     op->get_rt_info()["affinity"] = std::make_shared<ngraph::VariantWrapper<std::string>>("CPU");
 
-The fallback policy does not work if even one layer has an initialized affinity. The sequence should be calling automated affinity settings and then setting the layers manually.
+The fallback policy does not work if even one layer has an initialized affinity. The sequence should be calling the default affinity settings and then setting the layers manually.
 
-NOTE : If you set affinity manually, be careful at the current moment Inference Engine plugins don’t support constant (*Constant -> Result*) and empty (*Parameter -> Result*) networks. Please avoid these subgraphs when you set affinity manually.
+NOTE : If you set affinity manually, be aware that currently Inference Engine plugins don’t support constant (*Constant -> Result*) and empty (*Parameter -> Result*) networks. Please avoid these subgraphs when you set affinity manually.
 
 ### Example - Manually Setting Layer Affinities
 
