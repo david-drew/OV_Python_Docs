@@ -117,10 +117,10 @@ Heterogeneous plugin can generate two files:
 <code><pre>
 ie = IECore()
 ie.set_config({ { KEY_HETERO_DUMP_GRAPH_DOT, 'YES' } }, "HETERO");
-
 </pre></code>
 
-You can use GraphViz* utility or converters to .png formats. On Ubuntu* operating system, you can use the following utilities:
+
+You can use the GraphViz* utility or converters to .png formats. On Ubuntu* operating system, you can use the following utilities:
 
 * `sudo apt-get install xdot`
 * `xdot hetero_subgraphs.dot`
