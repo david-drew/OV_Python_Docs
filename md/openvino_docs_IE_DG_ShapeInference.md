@@ -125,9 +125,9 @@ Here is a code example:
 The Inference Engine provides a special mechanism that allows adding support of shape inference for custom operations. This mechanism is described in the [Extensibility documentation](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_Extensibility_DG_Intro.html)
 
 See Also:
-The [Hello Reshape Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_reshape_ssd_README.html)
 
-And the [C++ Smart Classroom Demo](https://docs.openvinotoolkit.org/latest/omz_demos_smart_classroom_demo_cpp.html) is another sample demonstrating shape inference features.
+* The [Hello Reshape Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_reshape_ssd_README.html)
+* The [C++ Smart Classroom Demo](https://docs.openvinotoolkit.org/latest/omz_demos_smart_classroom_demo_cpp.html) is another sample demonstrating shape inference features.
 
 
 
