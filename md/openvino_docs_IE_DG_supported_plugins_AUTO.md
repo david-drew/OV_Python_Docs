@@ -157,7 +157,54 @@ In any case, when loading the network to dGPU or iGPU fails, the networks falls 
 ## Limit Auto Target Devices Logic
 
 ## Configuring the Individual Devices and Creating the Auto-Device on Top
+As described in the first section, configure each individual device as usual and then just create the “AUTO” device on top:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model=args.model)
+  
+  ie.set_config(cpu_config, "CPU")
+  ie.set_config(gpu_config, "GPU")
+
+  # Load the network to the AUTO device
+  exec_net = ie.load_network(network=net, device_name="AUTO")
+  
+  # Query the device's optimization capabilities
+  device_caps = exec_net.get_metric(METRIC_KEY(OPTIMIZATION_CAPABILITIES))
+</code></pre>
+
+
+Alternatively, you can combine all the individual device settings into single config file and load it, allowing the Auto-device plugin to parse and apply it to the right devices. See the code example here:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model=args.model)
+
+  # Load the network to the AUTO device
+  exec_net = ie.load_network(network=net, device_name="AUTO", config=full_config)
+  
+  # Query the device's optimization capabilities
+  device_caps = exec_net.get_metric(METRIC_KEY(OPTIMIZATION_CAPABILITIES))
+</code></pre>
+
 
 ## Using the Auto-Device with OpenVINO Samples and Benchmark App
 
+Note that every OpenVINO sample that supports “-d” (which stands for “device”) command-line option transparently accepts the Auto-device. The Benchmark Application is the best example of the optimal usage of the Auto-device. You do not need to set the number of requests and CPU threads, as the application provides optimal out-of-the-box performance. Below is the example command-line to evaluate AUTO performance with that:
+
+`./benchmark_app.py –d AUTO –m <model> -i <input> -niter 1000`
+
+You can also use the auto-device with limit device choice:
+
+`./benchmark_app.py –d AUTO:CPU,GPU –m <model> -i <input> -niter 1000`
 
