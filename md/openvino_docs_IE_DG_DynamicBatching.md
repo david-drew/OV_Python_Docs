@@ -2,7 +2,7 @@
 
 Dynamic Batching is a feature that allows you to dynamically change batch size for inference calls within a preset batch size limit. This feature might be useful when batch size is unknown beforehand, and using extra large batch size is not desired or impossible due to resource limitations. For example, face detection with person age, gender, or mood recognition is a typical usage scenario.
 
-You can activate Dynamic Batching by setting KEY_DYN_BATCH_ENABLED flag to YES in a configuration map that is passed to the plugin while loading a network. This configuration creates an ExecutableNetwork object that will allow setting batch size dynamically in all of its infer requests using SetBatch() method. The batch size that was set in passed CNNNetwork object will be used as a maximum batch size limit.
+You can activate Dynamic Batching by setting the "DYN_BATCH_ENABLED" flag to "YES" in a configuration map that is passed to the plugin while loading a network. This configuration creates an ExecutableNetwork object that will allow setting batch size dynamically in all of its infer requests using SetBatch() method. The batch size that was set in passed CNNNetwork object will be used as a maximum batch size limit.
 
 <pre><code>
   from openvino.inference_engine import IECore, StatusCode
@@ -10,6 +10,7 @@ You can activate Dynamic Batching by setting KEY_DYN_BATCH_ENABLED flag to YES i
   # Get the dynamic batch size from the command line parameter
   dyn_batch_size = args.dyn_bs
 
+  # Setup our configuration map
   dyn_config = {"DYN_BATCH_ENABLED": "YES"}
 
   # Init the Inference Engine Core
