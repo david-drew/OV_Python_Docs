@@ -26,9 +26,10 @@ Another way to annotate a network is to set affinity manually using
 ngraph::Node::get_rt_info
 with key *affinity* :
 
-`code`
+<code><pre>
 for (auto && op : function->get_ops())
     op->get_rt_info()["affinity"] = std::make_shared<ngraph::VariantWrapper<std::string>>("CPU");
+ </pre></code>
 
 The fallback policy does not work if even one layer has an initialized affinity. The sequence should be calling the default affinity settings and then setting the layers manually.
 
@@ -36,7 +37,7 @@ NOTE : If you set affinity manually, be aware that currently Inference Engine pl
 
 ### Example - Manually Setting Layer Affinities
 
-<pre><code>
+<code><pre>
   from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
@@ -73,9 +74,12 @@ NOTE : If you set affinity manually, be aware that currently Inference Engine pl
 
 If you rely on the default affinity distribution, you can avoid calling `ie.query_network` and just call `ie.load_network` instead:
 
+<code><pre>
   ie = IECore()
   net = ie.read_network(model='sample.xml')
   exec_net = ie.load_network(network=net, device_name='HETERO:GPU,CPU')
+</code></pre>
+
 
 NOTE : `ie.query_network` does not depend on affinities set by a user, but queries for layer support based on device capabilities.
 
