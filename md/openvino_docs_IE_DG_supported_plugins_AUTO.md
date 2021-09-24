@@ -231,4 +231,10 @@ Alternatively, you can combine all the individual device settings into single co
 
 ## Using the Auto-Device with OpenVINO Samples and Benchmark App
 
+Note that every OpenVINO sample that supports the “-d” (which stands for “device”) command-line option transparently accepts the Auto-device. The Benchmark Application is the best example of the optimal usage of the Auto-device. You do not need to set the number of requests and CPU threads, as the application provides optimal out-of-the-box performance. Below is the example command-line to evaluate AUTO performance with that:
 
+`./benchmark_app.py –d AUTO –m <model> -i <input> -niter 1000`
+
+You can also use the auto-device with limit device choice:
+
+`./benchmark_app.py –d AUTO:CPU,GPU –m <model> -i <input> -niter 1000`
