@@ -19,12 +19,12 @@ Some of the topologies are not well-supported for heterogeneous execution on som
 
 ## Annotation of Layers per Device and Default Fallback Policy
 
-Default fallback policy decides which layer goes to which device automatically according to the support in dedicated plugins (FPGA, GPU, CPU, MYRIAD).
+Default fallback policy decides which layer goes to which device automatically according to the support in dedicated plugins (GPU, CPU, MYRIAD).
 
 Another way to annotate a network is to set affinity manually using code.
 
 ### Set Affinity of All Layers to CPU
-<pre><code>
+```python
     import ngraph as ng
     from openvino.inference_engine import IECore, StatusCode
     
@@ -39,16 +39,16 @@ Another way to annotate a network is to set affinity manually using code.
     for node in ng_func.get_ordered_ops():   
         rt_info = node.get_rt_info()
         rt_info["affinity"] = "CPU"
-</code></pre>
+```
 
 
 The fallback policy does not work if even one layer has an initialized affinity. The sequence should be calling the default affinity settings and then setting the layers manually.
 
-NOTE : If you set affinity manually, be aware that currently Inference Engine plugins don’t support constant (*Constant -> Result*) and empty (*Parameter -> Result*) networks. Please avoid these subgraphs when you set affinity manually.
+> **NOTE:** If you set affinity manually, be aware that currently Inference Engine plugins don’t support constant (*Constant -> Result*) and empty (*Parameter -> Result*) networks. Please avoid these subgraphs when you set affinity manually.
 
 ### Example - Manually Setting Layer Affinities
 
-<pre><code>
+```python
   from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
@@ -81,18 +81,17 @@ NOTE : If you set affinity manually, be aware that currently Inference Engine pl
   
   # In our case, using "AUTO" (which should be loaded into the args.device variable)
   exec_net = ie.load_network(net, device)
-</code></pre>
+```
 
 If you rely on the default affinity distribution, you can avoid calling `ie.query_network` and just call `ie.load_network` instead:
 
-<pre><code>
+```python
   ie = IECore()
   net = ie.read_network(model='sample.xml')
   exec_net = ie.load_network(network=net, device_name='HETERO:GPU,CPU')
-</code></pre>
+```
 
-
-NOTE : `ie.query_network` does not depend on affinities set by a user, but queries for layer support based on device capabilities.
+> **NOTE:** `ie.query_network` does not depend on affinities set by a user, but queries for layer support based on device capabilities.
 
 ## Details of Splitting Network and Execution
 
@@ -105,20 +104,18 @@ The precision for inference in the heterogeneous plugin is defined by:
 * Precision of IR
 * Ability of final plugins to execute in precision defined in IR
 
-Examples:
+Example:
 
 * If you want to execute GPU with CPU fallback with FP16 on GPU, you need to use only FP16 IR.
-* If you want to execute on FPGA with CPU fallback, you can use any precision for IR. The execution on FPGA is defined by the bitstream, the execution on CPU happens in FP32.
 
 OpenVINO Samples can be used with the following command:
-`./object_detection_sample_ssd -m  <path_to_model>/ModelSSD.xml -i <path_to_pictures>/picture.jpg -d HETERO:FPGA,CPU`
+`./object_detection_sample_ssd -m  <path_to_model>/ModelSSD.xml -i <path_to_pictures>/picture.jpg -d HETERO:MYRIAD,CPU`
 
 where:
 
 * HETERO stands for heterogeneous plugin
-* FPGA,CPU points to fallback policy with priority on FPGA and fallback to CPU
 
-You can point to more than two devices, for example: `-d HETERO:FPGA,GPU,CPU`
+You can point to more than two devices, for example: `-d HETERO:MYRIAD,GPU,CPU`
 
 ## Analyzing Heterogeneous Execution
 
@@ -131,31 +128,31 @@ The heterogeneous plugin can generate two files:
 
 ### To Generate the dot Files
 
-<pre><code>
+```python
     ie = IECore()
     ie.set_config({ { KEY_HETERO_DUMP_GRAPH_DOT, 'YES' } }, "HETERO");
-</code></pre>
+```
 
-You can use the GraphViz* utility or converters to .png formats. On Ubuntu* operating system, you can use the following utilities:
+You can use the GraphViz* utility or a file converter to view the images. On the Ubuntu* operating system, you can use xdot:
 
 * `sudo apt-get install xdot`
 * `xdot hetero_subgraphs.dot`
 
-You can use performance data (in samples, it is the option `-pc`) to get the performance data on each subgraph.
+You can use performance data (in sample applications, it is the option `-pc`) to get the performance data on each subgraph.
 
-Here is an example of the output: for Googlenet v1 running on FPGA with fallback to CPU:
+Here is an example of the output for Googlenet v1 running on HDDL with fallback to CPU:
 
-<pre><code>
-    subgraph1: 1. input preprocessing (mean data/FPGA):EXECUTED layerType:          realTime: 129   cpu: 129  execType:
+```
+    subgraph1: 1. input preprocessing (mean data/HDDL):EXECUTED layerType:          realTime: 129   cpu: 129  execType:
     subgraph1: 2. input transfer to DDR:EXECUTED                layerType:          realTime: 201   cpu: 0    execType:
-    subgraph1: 3. FPGA execute time:EXECUTED                    layerType:          realTime: 3808  cpu: 0    execType:
+    subgraph1: 3. HDDL execute time:EXECUTED                    layerType:          realTime: 3808  cpu: 0    execType:
     subgraph1: 4. output transfer from DDR:EXECUTED             layerType:          realTime: 55    cpu: 0    execType:
-    subgraph1: 5. FPGA output postprocessing:EXECUTED           layerType:          realTime: 7     cpu: 7    execType:
+    subgraph1: 5. HDDL output postprocessing:EXECUTED           layerType:          realTime: 7     cpu: 7    execType:
     subgraph1: 6. copy to IE blob:EXECUTED                      layerType:          realTime: 2     cpu: 2    execType:
     subgraph2: out_prob:          NOT_RUN                       layerType: Output   realTime: 0     cpu: 0    execType: unknown
     subgraph2: prob:              EXECUTED                      layerType: SoftMax  realTime: 10    cpu: 10   execType: ref
     Total time: 4212 microseconds
-</code></pre>
+```
 
 
 See Also:
