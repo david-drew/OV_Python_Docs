@@ -26,6 +26,15 @@ Another way to annotate a network is to set affinity manually using code.
 ### Set Affinity of All Layers to CPU
 <pre><code>
     import ngraph as ng
+    from openvino.inference_engine import IECore, StatusCode
+    
+    # Init the Inference Engine Core
+    ie = IECore()
+
+    # Read a network in IR or ONNX format
+    net = ie.read_network("sample.xml")
+    
+    # Create an Ngraph (graph) function from the network
     ng_func = ng.function_from_cnn(net)
     for node in ng_func.get_ordered_ops():   
         rt_info = node.get_rt_info()
