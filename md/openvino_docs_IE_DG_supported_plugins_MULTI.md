@@ -107,6 +107,26 @@ Available devices:
 
 A simple programmatic way to enumerate the devices and use with the multi-device is as follows:
 
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  # Init the Inference Engine Core
+  ie = IECore()
+
+  # Read a network in IR or ONNX format
+  net = ie.read_network(model="sample.xml")
+  
+  # Set MULTI as the virtual device target
+  device = "MULTI"
+  
+  # Get a list of available devices
+  all_devices = ie.get_available_devices()
+
+  # Load a network on the target device
+  exec_net = ie.load_network(network=net, device_name=all_devices)
+</code></pre>
+
+
 Beyond the simple device labels such as “CPU”, “GPU”, “HDDL”, when multiple instances of a device are available the names are more qualified. For example, this is how two Intel® Movidius™ Myriad™ X sticks are listed with the hello_query_sample:
 
 <pre><code>
@@ -116,6 +136,21 @@ Beyond the simple device labels such as “CPU”, “GPU”, “HDDL”, when m
     Device: MYRIAD.1.4-ma2480
 </code></pre>
 
+So the explicit configuration to use both would be “MULTI:MYRIAD.1.2-ma2480,MYRIAD.1.4-ma2480”. Accordingly, the code that loops over all available devices of “MYRIAD” type only is below:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  ie = IECore()
+  net = ie.read_network(model="sample.xml")
+  all_devices = "MULTI:"
+  myriad_devices = ie.get_metric("MYRIAD", METRIC_KEY(AVAILABLE_DEVICES))
+  
+  # Concatenate list to string
+  all_devices += join(',', myriad_devices)
+
+  exec_net = ie.load_network(network=net, device_name=all_devices)
+</code></pre>
 
 
 See Also:
