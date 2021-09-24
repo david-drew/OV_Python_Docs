@@ -29,7 +29,7 @@ with key *affinity* :
 <code><pre>
 for (auto && op : function->get_ops())
     op->get_rt_info()["affinity"] = std::make_shared<ngraph::VariantWrapper<std::string>>("CPU");
- </pre></code>
+</pre></code>
 
 The fallback policy does not work if even one layer has an initialized affinity. The sequence should be calling the default affinity settings and then setting the layers manually.
 
@@ -70,7 +70,7 @@ NOTE : If you set affinity manually, be aware that currently Inference Engine pl
   
   # In our case, using "AUTO" (which should be loaded into the args.device variable)
   exec_net = ie.load_network(net, device)
-</code></pre>
+</pre></code>
 
 If you rely on the default affinity distribution, you can avoid calling `ie.query_network` and just call `ie.load_network` instead:
 
@@ -78,7 +78,7 @@ If you rely on the default affinity distribution, you can avoid calling `ie.quer
   ie = IECore()
   net = ie.read_network(model='sample.xml')
   exec_net = ie.load_network(network=net, device_name='HETERO:GPU,CPU')
-</code></pre>
+</pre></code>
 
 
 NOTE : `ie.query_network` does not depend on affinities set by a user, but queries for layer support based on device capabilities.
@@ -121,8 +121,8 @@ The heterogeneous plugin can generate two files:
 ### To Generate the dot Files
 
 <code><pre>
-ie = IECore()
-ie.set_config({ { KEY_HETERO_DUMP_GRAPH_DOT, 'YES' } }, "HETERO");
+    ie = IECore()
+    ie.set_config({ { KEY_HETERO_DUMP_GRAPH_DOT, 'YES' } }, "HETERO");
 </pre></code>
 
 You can use the GraphViz* utility or converters to .png formats. On Ubuntu* operating system, you can use the following utilities:
