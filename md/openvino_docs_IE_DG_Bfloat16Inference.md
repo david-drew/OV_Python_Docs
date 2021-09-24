@@ -1,3 +1,10 @@
+<style>
+  r { color: Red }
+  pink { color: Pink }
+  o { color: Orange }
+  g { color: Green }
+</style>
+
 # Bfloat16 Inference
 
 # Disclaimer
@@ -57,8 +64,9 @@ To disable BF16 internal transformations, set the KEY_ENFORCE_BF16 to NO. In thi
   ie = IECore()
   net = ie.read_network("sample.xml")
   exec_net = ie.load_network(network=net, device_name="CPU", config = bf16_config)
+</code></pre>
   
-An exception with the message <span style="color:blue">Platform doesn't support BF16 format</span> is formed in case of setting KEY_ENFORCE_BF16 to YES on CPU without native BF16 support or BF16 simulation mode.
+An exception with the message <pink>Platform doesn't support BF16 format</pink> is formed in case of setting KEY_ENFORCE_BF16 to YES on CPU without native BF16 support or BF16 simulation mode.
 
 Low-Precision 8-bit integer models cannot be converted to BF16, even if bfloat16 optimization is set by default.
   
