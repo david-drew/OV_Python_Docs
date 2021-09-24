@@ -111,8 +111,8 @@ After enabling the KEY_HETERO_DUMP_GRAPH_DOT config key, you can dump GraphViz* 
 
 The heterogeneous plugin can generate two files:
 
-* `hetero_affinity_<network name>.dot` - annotation of affinities per layer. This file is written to the disk only if default fallback policy was executed
-* `hetero_subgraphs_<network name>.dot` - annotation of affinities per graph. This file is written to the disk during execution of ICNNNetwork::LoadNetwork() for heterogeneous plugin
+* `hetero_affinity_<network name>.dot` - annotation of affinities per layer. This file is written to the disk only if the default fallback policy was executed
+* `hetero_subgraphs_<network name>.dot` - annotation of affinities per graph. This file is written to the disk during execution of ICNNNetwork::LoadNetwork() for the heterogeneous plugin
 
 ### To Generate the dot Files
 <code><pre>
