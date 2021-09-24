@@ -3,21 +3,21 @@
 # Auto-Device Plugin
 
 ## Auto-Device Plugin Execution
-The "AUTO" device is a new, special “virtual” or “proxy” device in the OpenVINO™ toolkit.
+The AUTO device is a new, special “virtual” or “proxy” device in the OpenVINO™ toolkit.
 
-Use “AUTO” as the device name to delegate selection of an actual accelerator to OpenVINO. With the 2021.4 release, the Auto-device internally recognizes and selects devices from CPU, integrated GPU and discrete Intel GPUs (when available) depending on the device capabilities and the characteristic of CNN models, for example, precisions. Then Auto-device assigns inference requests to the selected device.
+Use “AUTO” as the device name to delegate selection of an actual accelerator to OpenVINO. With the 2021.4 release, the Auto-device plugin internally recognizes and selects devices from among CPU, integrated GPU and discrete Intel GPUs (when available) depending on the device capabilities and the characteristics of CNN models (for example, precision). Then the Auto-device assigns inference requests to the selected device.
 
-From the application point of view, this is just another device that handles all accelerators in full system.
+From the application point of view, this is just another device that handles all accelerators in the full system.
 
 With the 2021.4 release, Auto-device setup is done in three major steps:
 
-1. Configure each device as usual (for example, via the conventional SetConfig method)
-2. Load a network to the Auto-device plugin. This is the only change needed in your application
-3. Just like with any other executable network (resulted from LoadNetwork), create as many requests as needed to saturate the devices. These steps are covered below in details.
+1. Configure each device as usual (for example, via the conventional SetConfig method).
+2. Load a network to the Auto-device plugin. This is the only change needed in your application.
+3. Just like with any other executable network (resulting from LoadNetwork), create as many requests as needed to saturate the devices. These steps are covered below in detail.
 
 ## Defining and Configuring the Auto-Device Plugin
 Following the OpenVINO convention for devices names, the Auto-device uses the label “AUTO”. The only configuration option for Auto-device is a limited device list:
-*[HTML]
+
 <table class="table">
 <colgroup>
 <col style="width: 17%" />
@@ -43,9 +43,10 @@ Following the OpenVINO convention for devices names, the Auto-device uses the la
 
 You can use the configuration name directly as a string or use IE::KEY_AUTO_DEVICE_LIST from ie_plugin_config.hpp, which defines the same string.
 
-There are two ways to use the Auto-device:
+There are two ways to use the Auto-device plugin:
+
 1. Directly indicate device by “AUTO” or an empty string.
-<pre><code>
+```python
   from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
@@ -59,10 +60,10 @@ There are two ways to use the Auto-device:
   
   # In our case, using "AUTO" (which should be loaded into the args.device variable)
   exec_net = ie.load_network(network=net, device_name="AUTO", num_requests=num_of_input)
-</code></pre>
+```
 
-2. Use the Auto-device configuration to limit the device candidates list to be selected
-<pre><code>
+2. Or use the Auto-device configuration to limit the device candidates list to be selected.
+```python
   from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
@@ -77,11 +78,10 @@ There are two ways to use the Auto-device:
   # the following 2 lines are equivalent, alternate ways to do the above
     exec_net = ie.load_network(network=net, device_name="AUTO:CPU,GPU")
     exec_net = ie.load_network(network=net, device_name='"AUTO", {{"AUTO_DEVICE_LIST", "CPU,GPU"}}') 
-</code></pre>
+```
 
-The Auto-device supports query device optimization capabilities in metric
+The Auto-device plugin supports query device optimization capabilities in metric.
 
-*[HTML]
 <table class="table">
 <colgroup>
 <col style="width: 53%" />
@@ -101,27 +101,28 @@ The Auto-device supports query device optimization capabilities in metric
 
 ## Enumerating Devices and Selection Logic
 
-The Inference Engine now features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html)
+The Inference Engine now features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html) for code.
 
-This is the example output from the sample (truncated to the devices’ names only):
+This is the example output from the sample (truncated to device names only):
 
-<pre class="highlight literal-block"><span></span><span class="p">.</span><span class="o">/</span><span class="n">hello_query_device</span>
-<br>
-<span class="n">Available</span> <span class="nl">devices</span><span class="p">:</span>
-    <span class="nl">Device</span><span class="p">:</span> <span class="n">CPU</span>
-<span class="p">...</span>
-    <span class="nl">Device</span><span class="p">:</span> <span class="n">GPU</span><span class="mf">.0</span>
-<span class="p">...</span>
-    <span class="nl">Device</span><span class="p">:</span> <span class="n">GPU</span><span class="mf">.1</span></pre>
+```python
+./hello_query_device
 
+Available devices:
+    Device: CPU
+...
+    Device: GPU.0
+...
+    Device: GPU.1
+```
 
 ### Enumerating Available Devices
 
 ### Default Auto-Device Selection Logic
 With the 2021.4 release, Auto-Device selects the most suitable device with following default logic:
-1. Check if dGPU, iGPU and CPU device are available
+1. Check if dGPU (discrete), iGPU (integrated) and CPU devices are available
 2. Get the precision of the input model, such as FP32
-3. According to the priority of dGPU, iGPU and CPU (in this order), if the device supports the precision of the input network, select it as the most suitable device
+3. According to the priority of dGPU, iGPU, and CPU (in this order), if the device supports the precision of the input network, select it as the most suitable device
 
 For example, CPU, dGPU and iGPU can support the following precision and optimization capabilities:
 
@@ -148,13 +149,13 @@ For example, CPU, dGPU and iGPU can support the following precision and optimiza
 </tbody>
 </table>
 
-* When application uses Auto-device to run FP16 IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
-* When application uses Auto-device to run FP16 IR on a system with CPU and iGPU, Auto-device will offload this workload to iGPU.
-* When application uses Auto-device to run WINOGRAD-enabled IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
+* When the application uses Auto-device to run FP16 IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
+* When the application uses Auto-device to run FP16 IR on a system with CPU and iGPU, Auto-device will offload this workload to iGPU.
+* When the application uses Auto-device to run WINOGRAD-enabled IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
 
-In any case, when loading the network to dGPU or iGPU fails, the networks falls back to CPU as the last choice.
+In any case, when loading the network to dGPU or iGPU fails, the networks uses CPU as the fall-back choice.
 
-## Limit Auto Target Devices Logic
+### Limit Auto Target Devices Logic
 
 According to the Auto-device selection logic from the previous section, the most suitable device from available devices to load mode as follows:
 
@@ -230,11 +231,4 @@ Alternatively, you can combine all the individual device settings into single co
 
 ## Using the Auto-Device with OpenVINO Samples and Benchmark App
 
-Note that every OpenVINO sample that supports “-d” (which stands for “device”) command-line option transparently accepts the Auto-device. The Benchmark Application is the best example of the optimal usage of the Auto-device. You do not need to set the number of requests and CPU threads, as the application provides optimal out-of-the-box performance. Below is the example command-line to evaluate AUTO performance with that:
-
-`./benchmark_app.py –d AUTO –m <model> -i <input> -niter 1000`
-
-You can also use the auto-device with limit device choice:
-
-`./benchmark_app.py –d AUTO:CPU,GPU –m <model> -i <input> -niter 1000`
 
