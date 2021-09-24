@@ -6,7 +6,7 @@
 
 OpenVINO™ provides the following methods for runtime model reshaping:
 
-* Set a new input shape with the InferenceEngine::CNNNetwork::reshape method.
+* Set a new input shape with the [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method.
 
 The [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method updates input shapes and propagates them down to the outputs of the model through all intermediate layers.
 
