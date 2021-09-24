@@ -44,8 +44,9 @@ You can activate Dynamic Batching by setting KEY_DYN_BATCH_ENABLED flag to YES i
     have_frame, frame = capture.read()
 </code></pre>
 
-Limitations
-Currently, certain limitations for using Dynamic Batching exist:
+## Limitations
+
+Currently, certain limitations for the use of Dynamic Batching exist:
 
 * Use Dynamic Batching with CPU and GPU plugins only.
 * Use Dynamic Batching on topologies that consist of certain layers only:
