@@ -85,7 +85,7 @@ Information about layer precision is stored in the performance counters that are
 
 For example, the performance counters table for the Inception model can look as follows:
 
-<pre><code>  pool5                         EXECUTED       layerType: Pooling            realTime: 143       cpu: 143             execType: jit_avx512_BF16
+<pre><code>pool5                         EXECUTED       layerType: Pooling            realTime: 143       cpu: 143             execType: jit_avx512_BF16
 fc6                           EXECUTED       layerType: FullyConnected     realTime: 47723     cpu: 47723           execType: jit_gemm_BF16
 relu6                         NOT_RUN        layerType: ReLU               realTime: 0         cpu: 0               execType: undef
 fc7                           EXECUTED       layerType: FullyConnected     realTime: 7558      cpu: 7558            execType: jit_gemm_BF16
