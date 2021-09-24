@@ -6,7 +6,7 @@ Inference Engine with the bfloat16 inference implemented on CPU must support the
 # Introduction
 Bfloat16 computations (referred to as BF16) is the Brain Floating-Point format with 16 bits. This is a truncated 16-bit version of the 32-bit IEEE 754 single-precision floating-point format FP32. BF16 preserves 8 exponent bits as FP32 but reduces precision of the sign and mantissa from 24 bits to 8 bits.
 
-[IMG](https://docs.openvinotoolkit.org/latest/bf16_format.png)
+![b16 Format](https://docs.openvinotoolkit.org/latest/bf16_format.png)
 
 Preserving the exponent bits keeps BF16 to the same range as the FP32 (~1e-38 to ~3e38). This simplifies conversion between two data types: you just need to skip or flush to zero 16 low bits. Truncated mantissa leads to occasionally less precision, but according to investigations, neural networks are more sensitive to the size of the exponent than the mantissa size. Also, in lots of models, precision is needed close to zero but not so much at the maximum range. Another useful feature of BF16 is possibility to encode INT8 in BF16 without loss of accuracy, because INT8 range completely fits in BF16 mantissa field. It reduces data flow in conversion from INT8 input image data to BF16 directly without intermediate representation in FP32, or in combination of INT8 inference and BF16 layers.
 
@@ -19,8 +19,7 @@ There are two ways to check if CPU device can support bfloat16 computations for 
 
 *DAVID*:  Find Python Equivalent for METRIC{"OPTIMIZATION_CAPABILITIES"}
 
-<pre><code>
-  ie = IECore()
+<pre><code>  ie = IECore()
   net = ie.read_network("sample.xml")
   exec_net = ie.load_network(network=net, device_name="CPU")
   cpu_caps = exec_net.get_metric("OPTIMIZATION_CAPABILITIES")
@@ -42,8 +41,7 @@ Using Bfloat16 precision provides the following performance benefits:
 
 For default optimization on CPU, the source model is converted from FP32 or FP16 to BF16 and executed internally on platforms with native BF16 support. In this case, KEY_ENFORCE_BF16 is set to YES. The code below demonstrates how to check if the key is set:
 
-<pre><code>
-  ie = IECore()
+<pre><code  >ie = IECore()
   net = ie.read_network("sample.xml")
   exec_net = ie.load_network(network=net, device_name="CPU")
   cpu_caps = exec_net.get_config("KEY_ENFORCE_BF16")
@@ -51,8 +49,7 @@ For default optimization on CPU, the source model is converted from FP32 or FP16
 
 To disable BF16 internal transformations, set the KEY_ENFORCE_BF16 to NO. In this case, the model infers as is without modifications with precisions that were set on each layer edge.
 
-<pre><code>
-  bf16_config = {"ENFORCE_BF16" : "YES"}
+<pre><code>  bf16_config = {"ENFORCE_BF16" : "YES"}
 
   ie = IECore()
   net = ie.read_network("sample.xml")
@@ -72,8 +69,7 @@ Bfloat16 simulation mode is available on CPU and Intel® AVX-512 platforms that 
 * In the Benchmark App, add the -enforcebf16=true option
 * In Python, use the following code as an example:
 
-  <pre><code>
-    bf16_config = {"ENFORCE_BF16" : "YES"}
+  <pre><code>  bf16_config = {"ENFORCE_BF16" : "YES"}
 
     ie = IECore()
     net = ie.read_network("sample.xml")
@@ -89,8 +85,7 @@ Information about layer precision is stored in the performance counters that are
 
 For example, the performance counters table for the Inception model can look as follows:
 
-<pre><code>
-pool5                         EXECUTED       layerType: Pooling            realTime: 143       cpu: 143             execType: jit_avx512_BF16
+<pre><code>  pool5                         EXECUTED       layerType: Pooling            realTime: 143       cpu: 143             execType: jit_avx512_BF16
 fc6                           EXECUTED       layerType: FullyConnected     realTime: 47723     cpu: 47723           execType: jit_gemm_BF16
 relu6                         NOT_RUN        layerType: ReLU               realTime: 0         cpu: 0               execType: undef
 fc7                           EXECUTED       layerType: FullyConnected     realTime: 7558      cpu: 7558            execType: jit_gemm_BF16
