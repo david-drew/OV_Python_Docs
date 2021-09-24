@@ -51,7 +51,7 @@ There are three ways to specify the devices to be use by the “MULTI”:
 ### Enumerating Available Devices
 The Inference Engine features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html). This is example output from the sample (truncated to the devices’ names only):
 
-<code><pre>
+<pre><code>
   from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
@@ -64,10 +64,11 @@ The Inference Engine features a dedicated API to enumerate devices and their cap
   
   exec_net_1 = ie.load_network(network=net, device_name=""MULTI", {{"MULTI_DEVICE_PRIORITIES", "HDDL,GPU"}})
   exec_net_2 = ie.load_network(network=net, device_name=""MULTI:HDDL,GPU")
-</pre></code>
+</code></pre>
 
 Notice that the priorities of the devices can be changed in real time for the executable network:
-<code><pre>
+
+<pre><code>
   from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
@@ -83,7 +84,7 @@ Notice that the priorities of the devices can be changed in real time for the ex
   ie.set_config({{"MULTI_DEVICE_PRIORITIES", "GPU"}}, "MULTI")
   ie.set_config({{"MULTI_DEVICE_PRIORITIES", "HDDL,GPU"}}, "MULTI")
   ie.set_config({{"MULTI_DEVICE_PRIORITIES", "CPU,HDDL,GPU"}}, "MULTI")
-</pre></code>
+</code></pre>
 
 There is a way to specify the number of requests that the multi-device will internally keep for each device. If the original app was running 4 cameras with 4 inference requests, it might be best to share these 4 requests between 2 devices used in the MULTI. The easiest way is to specify a number of requests for each device using parentheses: “MULTI:CPU(2),GPU(2)” and use the same 4 requests in the app. However, such an explicit configuration is not performance-portable and not recommended. The better way is to configure the individual devices and query the resulting number of requests to be used at the application level. See [Configuring the Individual Devices and Creating the Multi-Device On Top](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html#configuring_the_individual_devices_and_creating_the_multi_device_on_top).
 
@@ -92,7 +93,7 @@ There is a way to specify the number of requests that the multi-device will inte
 
 The Inference Engine features a dedicated API to enumerate devices and their capabilities. See [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html). This is example output from the sample (truncated to the devices’ names only):
 
-<code><pre>
+<pre><code>
 ./hello_query_device
 Available devices:
     Device: CPU
@@ -102,18 +103,18 @@ Available devices:
     Device: GPU.1
 ...
     Device: HDDL
-</pre></code>
+</code></pre>
 
 A simple programmatic way to enumerate the devices and use with the multi-device is as follows:
 
 Beyond the simple device labels such as “CPU”, “GPU”, “HDDL”, when multiple instances of a device are available the names are more qualified. For example, this is how two Intel® Movidius™ Myriad™ X sticks are listed with the hello_query_sample:
 
-<code><pre>
+<pre><code>
 ...
     Device: MYRIAD.1.2-ma2480
 ...
     Device: MYRIAD.1.4-ma2480
-</pre></code>
+</code></pre>
 
 
 
