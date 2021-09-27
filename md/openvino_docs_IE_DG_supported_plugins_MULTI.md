@@ -181,7 +181,11 @@ Note that while the performance of accelerators works well with Multi-Device, th
 
 ## Querying the Optimal Number of Inference Requests
 
-TBD
+Notice that until R2 you had to calculate number of requests in your application for any device, e.g. you had to know that Intel® Vision Accelerator Design with Intel® Movidius™ VPUs required at least 32 inference requests to perform well. Now you can use the new GetMetric API to query the optimal number of requests. Similarly, when using the multi-device you don’t need to sum over included devices yourself, you can query metric directly:
+
+<pre><code>
+TBD - Need Python Support for Looking Up Config Constants by Key
+</code></pre>
 
 ## Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance
 
