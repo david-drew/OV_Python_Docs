@@ -94,6 +94,17 @@ There is a way to specify the number of requests that Multi-Device will internal
 ## Enumerating Available Devices
 The Inference Engine features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html). This is example output from the sample (truncated to device names only):
 
+<pre><code>
+./hello_query_device
+Available devices:
+    Device: CPU
+...
+    Device: GPU.0
+...
+    Device: GPU.1
+...
+    Device: HDDL
+</code></pre>
 
 
 ## Configuring the Individual Devices and Creating the Multi-Device On Top
