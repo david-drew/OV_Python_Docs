@@ -95,15 +95,62 @@ There is a way to specify the number of requests that Multi-Device will internal
 The Inference Engine features a dedicated API to enumerate devices and their capabilities. See the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html). This is example output from the sample (truncated to device names only):
 
 <pre><code>
-./hello_query_device
-Available devices:
-    Device: CPU
-...
-    Device: GPU.0
-...
-    Device: GPU.1
-...
-    Device: HDDL
+  ./hello_query_device
+  Available devices:
+      Device: CPU
+  ...
+      Device: GPU.0
+  ...
+      Device: GPU.1
+  ...
+      Device: HDDL
+</code></pre>
+
+A simple programmatic way to enumerate the devices and use with the multi-device is as follows:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+
+  all_devices = "MULTI:"
+
+  ie = IECore()
+  net = ie.read_network(model="sample.xml")
+  available_devices = ie.get_available_devices()
+
+  all_devices += ','.join(available_devices)
+
+  exec_net = ie.load_network(network=net, device_name=all_devices)
+</code></pre>
+
+Beyond the trivial “CPU”, “GPU”, “HDDL” and so on, when multiple instances of a device are available the names are more qualified. For example, this is how two Intel® Movidius™ Myriad™ X sticks are listed with the hello_query_sample:
+
+<pre><code>
+  ...
+      Device: MYRIAD.1.2-ma2480
+  ...
+      Device: MYRIAD.1.4-ma2480
+</code></pre>
+
+So the explicit configuration to use both would be “MULTI:MYRIAD.1.2-ma2480,MYRIAD.1.4-ma2480”. Accordingly, the code that loops over all available devices of “MYRIAD” type only is below:
+
+<pre><code>
+  from openvino.inference_engine import IECore, StatusCode
+  
+  match_list = []
+  all_devices = "MULTI:"
+  dev_match_str = "MYRIAD
+
+  ie = IECore()
+  net = ie.read_network(model="sample.xml")
+  available_devices = ie.get_available_devices()
+  
+  for d in available_devices:
+    if dev_match_str in d:
+      match_list.append(d)
+      
+  all_devices += ','.join(match_list)
+
+  exec_net = ie.load_network(network=net, device_name=all_devices)
 </code></pre>
 
 
