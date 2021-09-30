@@ -26,8 +26,7 @@ The [ie_api.ExecutableNetwork](https://docs.openvinotoolkit.org/2021.1/ie_python
 
 The function returns a list of available devices, for example:
 
-<pre><code>
-  MYRIAD.1.2-ma2480
+<pre><code>  MYRIAD.1.2-ma2480
   MYRIAD.1.4-ma2480
   FPGA.0
   FPGA.1
