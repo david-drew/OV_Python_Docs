@@ -7,9 +7,8 @@ InferenceEngine::Blob is the main class intended for working with memory. Using 
 The right way to create Blob objects with a specific layout is to use constructors with InferenceEngine::TensorDesc.
 
 <pre><code>
-C++
-InferenceEngine::TensorDesc tdesc(FP32, {1, 3, 227, 227}, InferenceEngine::Layout::NCHW);
-InferenceEngine::Blob::Ptr blob = InferenceEngine::make_shared_blob<float>(tdesc);
+	tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout='NCHW')
+  input_blob = Blob(tensor_description, some_input_data)
 </code></pre>
 
 ## Layouts
@@ -20,16 +19,14 @@ This class allows to create planar layouts using the standard formats (like Infe
 
 In order to create a complex layout you should use InferenceEngine::BlockingDesc which allows to define the blocked memory with offsets and strides.
 
-<pre><code>
-C++
+<pre><code>C++
 
 </code></pre>
 
 ## Examples
 
 1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC with using next parameters:
-<pre><code>
-  C++
+<pre><code>C++
   InferenceEngine::BlockingDesc({1, 20, 20, 25}, {0, 2, 3, 1}); // or
   InferenceEngine::BlockingDesc({1, 20, 20, 25}, InferenceEngine::Layout::NHWC);
 </code></pre>
