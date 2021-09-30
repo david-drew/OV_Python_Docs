@@ -24,15 +24,15 @@ Use InferenceEngine::BlockingDesc to create a complex layout which allows defini
 1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC using these parameters (both lines are equivalent):
 
 <pre><code>
-  tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout=(0, 2, 3, 1))
-  tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout='NCHW')
+  tensor_desc = TensorDesc(precision="FP32", dims=(1, 25, 20, 20), layout=(0, 2, 3, 1))
+  tensor_desc = TensorDesc(precision="FP32", dims=(1, 25, 20, 20), layout='NCHW')
 </code></pre>
 
 
 2. If you have memory with real dimensions {N: 1, C: 25, H: 20, W: 20} but with channels which are blocked by 8, you can define it using next parameters:
 
 <pre><code>C++
-  tensor_desc = TensorDesc(precision="FP32", dims=(1, 4, 20, 20, 8), layout=(0, 1, 2, 3, 1))
+  tensor_desc = TensorDesc(precision="FP32", dims=(1, 25, 20, 20, 8), layout=(0, 1, 2, 3, 1))
 </code></pre>
 
 3. Also you can set strides and offsets if the layout contains them.
