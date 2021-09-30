@@ -11,9 +11,9 @@ The Inference Engine Core class provides the following API to query device infor
 * InferenceEngine::Core::SetConfig - Sets a new value for the configuration key.
 
 The InferenceEngine::ExecutableNetwork class is also extended to support the Query API:
-* InferenceEngine::ExecutableNetwork::GetMetric
-* InferenceEngine::ExecutableNetwork::GetConfig
-* InferenceEngine::ExecutableNetwork::SetConfig
+* [ie_api.get_metric](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#af1cdf2ecbea6399c556957c2c2fdf8eb)
+* [ie_api.get_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a48764dec7c235d2374af8b8ef53c6363)
+* [ie_api.set_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
 
 ## Query API in the Core Class
 
@@ -100,7 +100,7 @@ Or the current temperature of MYRIAD device:
   float temperature = exeNetwork.GetMetric(METRIC_KEY(DEVICE_THERMAL)).as<float>();
 </code></pre>
 
-### SetConfig
+### [SetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
 
 The only device that supports this method is the (Multi-Device)[https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html].
 
