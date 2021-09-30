@@ -1,6 +1,6 @@
 # Introduction to Inference Engine Device Query API
 
-This section provides a high-level description of the process of querying of different device properties and configuration values. Refer to the Hello Query Device Sample sources and Multi-Device Plugin guide for example of using the Inference Engine Query API in user applications.
+This section provides a high-level description of the process of querying of different device properties and configuration values. Refer to the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html) sources and the [Multi-Device Plugin guide](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html) for example of using the Inference Engine Query API in user applications.
 
 ## Using the Inference Engine Query API in Your Code
 
@@ -20,8 +20,9 @@ The InferenceEngine::ExecutableNetwork class is also extended to support the Que
 ### GetAvailableDevices
 
 <pre><code>
-  InferenceEngine::Core core;
-  std::vector<std::string> availableDevices = core.GetAvailableDevices();
+  from openvino.inference_engine import IECore, StatusCode
+  ie = IECore()
+  available_devices = ie.get_available_devices()
 </code></pre>
 
 The function returns a list of available devices, for example:
@@ -41,25 +42,34 @@ Each device name can then be passed to:
 - InferenceEngine::Core::GetMetric to get common or device specific metrics.
 - All other methods of the Core class that accept deviceName.
 
-### GetConfig
+### [GetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a48764dec7c235d2374af8b8ef53c6363)
 
 The code below demonstrates how to understand whether HETERO device dumps .dot files with split graphs during the split stage:
 
 <pre><code>
-  bool dumpDotFile = core.GetConfig("HETERO", HETERO_CONFIG_KEY(DUMP_GRAPH_DOT)).as<bool>();
+  dump_dot_file = ie.get_config(device_name="HETERO", config_name="DUMP_GRAPH_DOT")
 </code></pre>
 
 For documentation about common configuration keys, refer to ie_plugin_config.hpp. Device specific configuration keys can be found in corresponding plugin folders.
 
-### GetMetric
+### [GetMetric](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#af1cdf2ecbea6399c556957c2c2fdf8eb)
 
 To extract device properties such as available device, device name, supported configuration keys, and others, use the InferenceEngine::Core::GetMetric method:
 
 <pre><code>
-  std::string cpuDeviceName = core.GetMetric("GPU", METRIC_KEY(FULL_DEVICE_NAME)).as<std::string>();
+  ie = IECore()
+  ie.get_metric(metric_name="FULL_DEVICE_NAME", device_name="GPU")
 </code></pre>
 
 A returned value appears as follows: Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz.
+
+To list all supported metrics:
+
+<pre><code>
+  ie = IECore()
+  ie.get_metric(metric_name="SUPPORTED_METRICS", device_name="GPU")
+</code></pre>
+
 
 **NOTE:** All metrics have a specific type, which is set during the metric instantiation. The list of common device-agnostic metrics can be found in ie_plugin_config.hpp. Device specific metrics (for example, for HDDL, MYRIAD devices) can be found in corresponding plugin folders.
 
