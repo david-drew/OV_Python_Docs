@@ -13,9 +13,9 @@ The right way to create Blob objects with a specific layout is to use constructo
 
 ## Layouts
 
-InferenceEngine::TensorDesc is a special class that provides layout format description.
+TensorDesc is a class that provides a layout format description.
 
-This class allows to create planar layouts using the standard formats (like InferenceEngine::Layout::NCDHW, InferenceEngine::Layout::NCHW, InferenceEngine::Layout::NC, InferenceEngine::Layout::C and etc) and also non-planar layouts using InferenceEngine::BlockingDesc.
+This class allows the creation of planar layouts using standard formats (like NCDHW, NCHW, NC, C and etc) and also non-planar layouts using InferenceEngine::BlockingDesc.
 
 In order to create a complex layout you should use InferenceEngine::BlockingDesc which allows to define the blocked memory with offsets and strides.
 
@@ -25,14 +25,14 @@ In order to create a complex layout you should use InferenceEngine::BlockingDesc
 
 ## Examples
 
-1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC with using next parameters:
+1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC with using these parameters:
 <pre><code>C++
   InferenceEngine::BlockingDesc({1, 20, 20, 25}, {0, 2, 3, 1}); // or
   InferenceEngine::BlockingDesc({1, 20, 20, 25}, InferenceEngine::Layout::NHWC);
 </code></pre>
 
 
-2. If you have a memory with real dimensions {N: 1, C: 25, H: 20, W: 20} but with channels which are blocked by 8, you can define it using next parameters:
+2. If you have memory with real dimensions {N: 1, C: 25, H: 20, W: 20} but with channels which are blocked by 8, you can define it using next parameters:
 <pre><code>
   C++
   InferenceEngine::BlockingDesc({1, 4, 20, 20, 8}, {0, 1, 2, 3, 1})
