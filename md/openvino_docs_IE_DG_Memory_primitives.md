@@ -24,23 +24,23 @@ Use InferenceEngine::BlockingDesc to create a complex layout which allows defini
 
 ## Examples
 
-1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC with using these parameters:
-2. 
+1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC using these parameters (both lines are equivalent):
+
 <pre><code>
   tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout=(0, 2, 3, 1))
-  # ...or:
   tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout='NCHW')
 </code></pre>
 
 
 2. If you have memory with real dimensions {N: 1, C: 25, H: 20, W: 20} but with channels which are blocked by 8, you can define it using next parameters:
+
 <pre><code>C++
-  InferenceEngine::BlockingDesc({1, 4, 20, 20, 8}, {0, 1, 2, 3, 1})
+  tensor_desc = TensorDesc(precision="FP32", dims=(1, 4, 20, 20, 8), layout=(0, 1, 2, 3, 1))
 </code></pre>
 
-3. Also you can set strides and offsets if layout contains it.
+3. Also you can set strides and offsets if the layout contains them.
 
-4. If you have a complex blob layout and you don’t want to calculate the real offset to data you can use methods InferenceEngine::TensorDesc::offset(size_t l) or InferenceEngine::TensorDesc::offset(SizeVector v).
+4. If you have a complex blob layout and don’t want to calculate the real offset to data you can use methods InferenceEngine::TensorDesc::offset(size_t l) or InferenceEngine::TensorDesc::offset(SizeVector v).
 
 For example:
 <pre><code>C++
