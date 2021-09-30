@@ -26,9 +26,10 @@ Use InferenceEngine::BlockingDesc to create a complex layout which allows defini
 
 1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC with using these parameters:
 2. 
-<pre><code>C++
-  InferenceEngine::BlockingDesc({1, 20, 20, 25}, {0, 2, 3, 1}); // or
-  InferenceEngine::BlockingDesc({1, 20, 20, 25}, InferenceEngine::Layout::NHWC);
+<pre><code>
+  tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout=(0, 2, 3, 1))
+  # ...or:
+  tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout='NCHW')
 </code></pre>
 
 
