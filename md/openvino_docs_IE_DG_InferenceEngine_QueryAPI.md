@@ -14,7 +14,7 @@ The [Inference Engine Core](https://docs.openvinotoolkit.org/2021.1/ie_python_ap
 The [ie_api.ExecutableNetwork](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html) class is also extended to support the Query API:
 * [ie_api.IECore.get_metric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
 * [ie_api.IECore.get_config](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
-* 
+* There is no method to call for set_config, but the equivalent action is described below.
 
 ## Query API in the Core Class
 
@@ -100,6 +100,13 @@ Or the current temperature of MYRIAD device:
 ### [SetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
 
 The only device that supports this method is the (Multi-Device)[https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html].
+
+To set a configuration, a valid key must be used to create a dictionary, which is passed as the 'config' parameter to the IECore.load_network call.
+<pre><code>  ie = IECore()
+  bf16_config = {"ENFORCE_BF16" : "YES"}
+  exec_net = ie.load_network(network=net, device_name="MULTI", config=bf16_config)
+</code></pre>
+
 
 
 
