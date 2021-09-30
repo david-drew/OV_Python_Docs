@@ -19,9 +19,6 @@ This class allows the creation of planar layouts using standard formats (like NC
 
 Use InferenceEngine::BlockingDesc to create a complex layout which allows defining the blocked memory with offsets and strides.
 
-<pre><code>C++
-</code></pre>
-
 ## Examples
 
 1. You can define a blob with dimensions {N: 1, C: 25, H: 20, W: 20} and format NHWC using these parameters (both lines are equivalent):
