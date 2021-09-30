@@ -4,23 +4,22 @@ This section provides a high-level description of the process of querying of dif
 
 ## Using the Inference Engine Query API in Your Code
 
-The Inference Engine Core class provides the following API to query device information, set or get different device configuration properties:
+The [Inference Engine Core](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1IECore.html) class provides the following API to query device information, set or get different device configuration properties:
 
-* InferenceEngine::Core::GetAvailableDevices - Provides a list of available devices. If there are more than one instance of a specific device, the devices are enumerated with .suffix where suffix is a unique string identifier. The device name can be passed to all methods of the InferenceEngine::Core class that work with devices, for example InferenceEngine::Core::LoadNetwork.
-* InferenceEngine::Core::GetMetric - Provides information about specific device. InferenceEngine::Core::GetConfig - Gets the current value of a specific configuration key.
-* InferenceEngine::Core::SetConfig - Sets a new value for the configuration key.
+*  [ie_api.IECore.available_devices](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1IECore.html#a53ae93f362e9ceb7ffe27fcd20000025) - Provides a list of available devices. If there are more than one instance of a specific device, the devices are enumerated with .suffix where suffix is a unique string identifier. The device name can be passed to all methods of the IECore class that work with devices, for example [ie_api.IECore.load_network](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc).
+* ieCore.get_metric - Provides information about specific device. InferenceEngine::Core::GetConfig - Gets the current value of a specific configuration key.
+* ieCore.set_config  - Sets a new value for the configuration key.
 
-The InferenceEngine::ExecutableNetwork class is also extended to support the Query API:
+The [ie_api.ExecutableNetwork](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html) class is also extended to support the Query API:
 * [ie_api.IECore.get_metric](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#af1cdf2ecbea6399c556957c2c2fdf8eb)
-* [ ie_api.IECore.get_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a48764dec7c235d2374af8b8ef53c6363)
-* [ ie_api.IECore.set_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
+* [ie_api.IECore.get_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a48764dec7c235d2374af8b8ef53c6363)
+* [ie_api.IECore.set_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
 
 ## Query API in the Core Class
 
 ### GetAvailableDevices
 
-<pre><code>
-  from openvino.inference_engine import IECore, StatusCode
+<pre><code>  from openvino.inference_engine import IECore, StatusCode
   ie = IECore()
   available_devices = ie.get_available_devices()
 </code></pre>
@@ -46,8 +45,8 @@ Each device name can then be passed to:
 
 The code below demonstrates how to understand whether HETERO device dumps .dot files with split graphs during the split stage:
 
-<pre><code>
-  dump_dot_file = ie.get_config(device_name="HETERO", config_name="DUMP_GRAPH_DOT")
+<pre><code>  ie = IECore()
+  ie.get_metric(metric_name="DUMP_GRAPH_DOT", device_name="HETERO")
 </code></pre>
 
 For documentation about common configuration keys, refer to ie_plugin_config.hpp. Device specific configuration keys can be found in corresponding plugin folders.
@@ -56,8 +55,7 @@ For documentation about common configuration keys, refer to ie_plugin_config.hpp
 
 To extract device properties such as available device, device name, supported configuration keys, and others, use the InferenceEngine::Core::GetMetric method:
 
-<pre><code>
-  ie = IECore()
+<pre><code>  ie = IECore()
   ie.get_metric(metric_name="FULL_DEVICE_NAME", device_name="GPU")
 </code></pre>
 
@@ -65,8 +63,7 @@ A returned value appears as follows: Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz.
 
 To list all supported metrics:
 
-<pre><code>
-  ie = IECore()
+<pre><code>  ie = IECore()
   ie.get_metric(metric_name="SUPPORTED_METRICS", device_name="GPU")
 </code></pre>
 
@@ -75,29 +72,29 @@ To list all supported metrics:
 
 ## Query API in the ExecutableNetwork Class
 
-### GetMetric
+### [GetMetric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
 
-<pre><code>
-  auto network = core.ReadNetwork("sample.xml");
-  auto exeNetwork = core.LoadNetwork(network, "CPU");
-  auto nireq = exeNetwork.GetMetric(METRIC_KEY(OPTIMAL_NUMBER_OF_INFER_REQUESTS)).as<unsigned int>();
+<pre><code>  ie = IECore()
+  net = ie.read_network(model="sample.xml", weights="sample.bin")
+  exec_net = ie.load_network(net, "CPU")
+  exec_net.get_metric("NETWORK_NAME") 
 </code></pre>
 
-### GetConfig
+### [GetConfig](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
 The method is used to get information about configuration values the executable network has been created with:
 
-<pre><code>
-  auto network = core.ReadNetwork("sample.xml");
-  auto exeNetwork = core.LoadNetwork(network, "CPU");
-  auto ncores = exeNetwork.GetConfig(PluginConfigParams::KEY_CPU_THREADS_NUM).as<std::string>();
+<pre><code>  ie = IECore()
+  net = ie.read_network(model="sample.xml", weights="sample.bin")
+  exec_net = ie.load_network(net, "CPU")
+  num_threads = exec_net.get_config("KEY_CPU_THREADS_NUM")
 </code></pre>
 
 Or the current temperature of MYRIAD device:
 
-<pre><code>
-  auto network = core.ReadNetwork("sample.xml");
-  auto exeNetwork = core.LoadNetwork(network, "MYRIAD");
-  float temperature = exeNetwork.GetMetric(METRIC_KEY(DEVICE_THERMAL)).as<float>();
+<pre><code>  ie = IECore()
+  net = ie.read_network(model="sample.xml", weights="sample.bin")
+  exec_net = ie.load_network(net, "MYRIAD")
+  num_threads = exec_net.get_config("DEVICE_THERMAL")
 </code></pre>
 
 ### [SetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
