@@ -92,7 +92,7 @@ Or the current temperature of MYRIAD device:
 
 ### SetConfig
 
-The only device that supports this method is the Multi-Device.
+The only device that supports this method is the (Multi-Device)[https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html].
 
 
 
