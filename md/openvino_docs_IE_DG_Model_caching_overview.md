@@ -30,6 +30,7 @@ Depending on your device, total time for loading network on application startup 
 
 ![Model Caching](https://docs.openvinotoolkit.org/latest/caching_enabled.png)
 
+
 ## Even Faster: Use IECore.load_network('path_to_model')
 
 In some cases, applications do not need to customize inputs and outputs every time. Such applications always call net = ie.read_network(...), then ie.load_network(cnnNet, ..) and it can be further optimized. For such cases, more convenient API to load network in one call is introduced in the 2021.4 release.
@@ -46,6 +47,8 @@ With model caching enabled, total load time is even smaller - when `read_network
 
   ie.load_network(model=mod, device=dev, config=cfg)
 </pre></code>
+
+![Caching Times](https://docs.openvinotoolkit.org/latest/caching_times.png)
 
 ## Advanced Examples
 
