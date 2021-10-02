@@ -33,7 +33,7 @@ Depending on your device, total time for loading network on application startup 
 
 ## Even Faster: Use IECore.load_network('path_to_model')
 
-In some cases, applications do not need to customize inputs and outputs every time. Such applications always call net = ie.read_network(...), then ie.load_network(cnnNet, ..) and it can be further optimized. For such cases, more convenient API to load network in one call is introduced in the 2021.4 release.
+In some cases, applications do not need to customize inputs and outputs every time. These applications always call `IECore.read_network()`, then `IECore.load_network(model='sample.xml')` and may be further optimized. For such cases, it's more convenient to load the network in a single call, as introduced in the 2021.4 release.
 
 <pre><code>  ie = IECore()
   cfg = ie.set_config( {'CACHE_DIR' : 'path_to_cache_directory'} )
