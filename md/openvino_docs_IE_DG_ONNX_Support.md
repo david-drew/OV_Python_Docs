@@ -1,6 +1,6 @@
   # ONNX Format Support in the OpenVINO™ Toolkit
   
-  Starting with the 2020.4 release, OpenVINO™ supports reading native ONNX models. The IECore::read_network() method provides a uniform way to read models from IR or ONNX format, it is a recommended approach to reading models. Example:
+  Starting with the 2020.4 release, OpenVINO™ supports reading native ONNX models. The `IECore::read_network()` method provides a uniform way to read models from IR or ONNX format, it is a recommended approach to reading models. Example:
   
   <pre><code>
   from openvino.inference_engine import IECore, StatusCode
