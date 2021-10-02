@@ -12,7 +12,37 @@ As described in Inference Engine Developer Guide, common application flow consis
 6. *Set input data*
 7. *Execute the model* - Run inference
 
-Step #5 can potentially perform several time-consuming device-specific optimizations and network compilations, and such delays can lead to bad user experience on application startup. To avoid this, some devices offer Import/Export network capability, and it is possible to either use the [Compile Tool](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_compile_tool_README.html) or enable model caching to export compiled network automatically. Reusing cached networks can significantly reduce load network time.
+Step #5 can potentially perform several time-consuming device-specific optimizations and network compilations, and such delays can lead to bad user experience on application startup. To avoid this, some devices offer Import/Export network capability, and it is possible to either use the [Compile Tool](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_compile_tool_README.html) or enable model caching to export the compiled network automatically. Reusing cached networks can significantly reduce load network time.
+
+## Set the “CACHE_DIR” config option to enable model caching
+
+To enable model caching, the application must specify the folder where to store cached blobs. It can be done like this
+
+<pre><code>
+  ie = IECore()
+  ie.set_config( {'CACHE_DIR' : 'path_to_cache')
+  net = ie.read_network('sample.xml')
+  ie.load_network(network=net, device='GPU', config=cache_config)
+</pre></code>
+
+With this code, if a device supports the Import/Export network capability, a cached blob is automatically created inside the path_to_cache directory `CACHE_DIR` config is set to the Core object. If device does not support Import/Export capability, cache is just not created and no error is thrown
+
+Depending on your device, total time for loading network on application startup can be significantly reduced. Please also note that very first LoadNetwork (when cache is not yet created) takes slightly longer time to ‘export’ compiled blob into a cache file
+
+![Model Caching](https://docs.openvinotoolkit.org/latest/caching_enabled.png)
+
+## Even Faster: Use IECore.load_network('path_to_model')
+
+In some cases, applications do not need to customize inputs and outputs every time. Such applications always call net = ie.read_network(...), then ie.load_network(cnnNet, ..) and it can be further optimized. For such cases, more convenient API to load network in one call is introduced in the 2021.4 release.
+
+## Advanced Examples
+
+Not every device supports network import/export capability, enabling of caching for such devices do not have any effect. To check in advance if a particular device supports model caching, your application can use the following code:
+
+<pre><code>
+</pre></code>
+
+
 
 
 
