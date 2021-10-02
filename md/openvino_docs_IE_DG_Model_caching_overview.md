@@ -18,8 +18,7 @@ Step #5 can potentially perform several time-consuming device-specific optimizat
 
 To enable model caching, the application must specify the folder where to store cached blobs. It can be done like this
 
-<pre><code>
-  ie = IECore()
+<pre><code>  ie = IECore()
   ie.set_config( {'CACHE_DIR' : 'path_to_cache')
   net = ie.read_network('sample.xml')
   ie.load_network(network=net, device='GPU', config=cache_config)
@@ -35,29 +34,24 @@ Depending on your device, total time for loading network on application startup 
 
 In some cases, applications do not need to customize inputs and outputs every time. Such applications always call net = ie.read_network(...), then ie.load_network(cnnNet, ..) and it can be further optimized. For such cases, more convenient API to load network in one call is introduced in the 2021.4 release.
 
-<pre><code>
-  ie = IECore()
+<pre><code>  ie = IECore()
   cfg = ie.set_config( {'CACHE_DIR' : 'path_to_cache_directory'} )
   ie.load_network(model=mod, device=dev, config=cfg)
 </pre></code>
 
 With model caching enabled, total load time is even smaller - when `read_network()` is optimized as well
 
-<pre><code>
-  ie = IECore()
+<pre><code>  ie = IECore()
   cfg = ie.set_config( {'CACHE_DIR' : 'path_to_cache_directory'} )
 
   ie.load_network(model=mod, device=dev, config=cfg)
 </pre></code>
 
-
-
 ## Advanced Examples
 
 Not every device supports network import/export capability, enabling of caching for such devices do not have any effect. To check in advance if a particular device supports model caching, your application can use the following code:
 
-<pre><code>
-  all_metrics = ie.get_metric(target_device, 'SUPPORTED_METRICS')
+<pre><code>  all_metrics = ie.get_metric(target_device, 'SUPPORTED_METRICS')
   # Find the 'IMPORT_EXPORT_SUPPORT' metric in supported metrics
   allows_caching = all_metrics('IMPORT_EXPORT_SUPPORT')
 </pre></code>
