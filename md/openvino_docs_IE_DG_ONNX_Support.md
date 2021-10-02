@@ -21,7 +21,7 @@ Paths to external weight files are saved in an ONNX model; these paths are relat
 * A single model can use many external weights files.
 * Data of many tensors can be stored in a single external weights file (it is processed using offset and length values, which can be also saved in a model).
 
-The described mechanism is the only possibility to read weights from external files. The following input parameters of the ReadNetwork function overloads are NOT supported for ONNX models and should not be passed, or set as None:
+The described mechanism is the only possibility to read weights from external files. The following input parameters of the IECore.read_network() function overloads are NOT supported for ONNX models and should not be passed, or set as None:
 * weights
 
 Unsupported types of tensors:
