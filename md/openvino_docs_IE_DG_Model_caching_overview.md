@@ -2,7 +2,7 @@
 
 ## Introduction
 
-As described in Inference Engine Developer Guide, common application flow consists of the following steps:
+As described in Inference Engine Developer Guide, a common application flow consists of the following steps:
 
 1. Create an Inference Engine Core object
 2. *Read the Intermediate Representation* - Read an Intermediate Representation file into an object of the [ie_api.IENetwork](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html)
