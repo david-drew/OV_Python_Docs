@@ -12,7 +12,7 @@ As described in Inference Engine Developer Guide, common application flow consis
 6. *Set input data*
 7. *Execute the model* - Run inference
 
-Step #5 can potentially perform several time-consuming device-specific optimizations and network compilations, and such delays can lead to bad user experience on application startup. To avoid this, some devices offer Import/Export network capability, and it is possible to either use Compile tool or enable model caching to export compiled network automatically. Reusing cached networks can significantly reduce load network time.
+Step #5 can potentially perform several time-consuming device-specific optimizations and network compilations, and such delays can lead to bad user experience on application startup. To avoid this, some devices offer Import/Export network capability, and it is possible to either use the [Compile Tool](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_compile_tool_README.html) or enable model caching to export compiled network automatically. Reusing cached networks can significantly reduce load network time.
 
 
 
