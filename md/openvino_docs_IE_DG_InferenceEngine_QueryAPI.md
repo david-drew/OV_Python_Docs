@@ -76,8 +76,8 @@ To list all supported metrics:
 
 <pre><code>  ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
-  exec_net = ie.load_network(net, "CPU")
-  exec_net.get_metric("NETWORK_NAME") 
+  exec_net = ie.load_network(network=net, device_name="CPU")
+  exec_net.get_metric(metric_name="NETWORK_NAME", device_name="CPU") 
 </code></pre>
 
 ### [GetConfig](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
@@ -85,15 +85,15 @@ The method is used to get information about configuration values the executable 
 
 <pre><code>  ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
-  exec_net = ie.load_network(net, "CPU")
-  num_threads = exec_net.get_config("KEY_CPU_THREADS_NUM")
+  exec_net = ie.load_network(network=net, device_name="CPU")
+  num_threads = exec_net.get_config(metric_name="KEY_CPU_THREADS_NUM", device_name="CPU")
 </code></pre>
 
 Or the current temperature of MYRIAD device:
 
 <pre><code>  ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
-  exec_net = ie.load_network(net, "MYRIAD")
+  exec_net = ie.load_network(network=net, device_name="MYRIAD")
   num_threads = exec_net.get_config("DEVICE_THERMAL")
 </code></pre>
 
