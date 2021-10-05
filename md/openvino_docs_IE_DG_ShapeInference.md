@@ -1,7 +1,3 @@
-# Under Construction
-
-*Really: Under Construction*
-
 # Using Shape Inference
 
 OpenVINO™ provides the following methods for runtime model reshaping:
