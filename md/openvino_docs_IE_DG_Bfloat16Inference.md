@@ -41,7 +41,7 @@ Using Bfloat16 precision provides the following performance benefits:
 
 For default optimization on CPU, the source model is converted from FP32 or FP16 to BF16 and executed internally on platforms with native BF16 support. In this case, KEY_ENFORCE_BF16 is set to YES. The code below demonstrates how to check if the key is set:
 
-<pre><code  >ie = IECore()
+<pre><code>  ie = IECore()
   net = ie.read_network("sample.xml")
   exec_net = ie.load_network(network=net, device_name="CPU")
   cpu_caps = exec_net.get_config("KEY_ENFORCE_BF16")
