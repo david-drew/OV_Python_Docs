@@ -174,7 +174,7 @@ As discussed in the first section, configure each individual device as usual and
   exec_net = ie.load_network(network=net, device_name="MULTI", config={'MULTI_DEVICE_PRIORITIES':'HDDL,GPU'})
 
   # A new metric allows querying the optimal number of requests:
-  nireq = exec_net.get_metric(metric_name='OPTIMAL_NUMBER_OF_INFER_REQUESTS', device_name='CPU')
+  nireq = exec_net.get_metric('OPTIMAL_NUMBER_OF_INFER_REQUESTS')
 ```
 
 An alternative is to combine all the individual device settings into a single config file and load that, allowing the Multi-Device plugin to parse and apply settings to the right devices. See the code example in the next section.
