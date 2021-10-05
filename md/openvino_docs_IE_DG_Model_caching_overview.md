@@ -54,7 +54,7 @@ With model caching enabled, total load time is even smaller - when `read_network
 
 Not every device supports network import/export capability, enabling of caching for such devices do not have any effect. To check in advance if a particular device supports model caching, your application can use the following code:
 
-<pre><code>  all_metrics = ie.get_metric(target_device, 'SUPPORTED_METRICS')
+<pre><code>  all_metrics = ie.get_metric(device_name=target_device, metric_name='SUPPORTED_METRICS')
   # Find the 'IMPORT_EXPORT_SUPPORT' metric in supported metrics
   allows_caching = all_metrics('IMPORT_EXPORT_SUPPORT')
 </pre></code>
