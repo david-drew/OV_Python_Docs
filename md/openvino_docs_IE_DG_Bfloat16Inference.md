@@ -44,7 +44,7 @@ For default optimization on CPU, the source model is converted from FP32 or FP16
 <pre><code>  ie = IECore()
   net = ie.read_network("sample.xml")
   exec_net = ie.load_network(network=net, device_name="CPU")
-  cpu_caps = exec_net.get_config("KEY_ENFORCE_BF16")
+  cpu_caps = exec_net.get_config("ENFORCE_BF16")
 </code></pre>
 
 To disable BF16 internal transformations, set the KEY_ENFORCE_BF16 to NO. In this case, the model infers as is without modifications with precisions that were set on each layer edge.
