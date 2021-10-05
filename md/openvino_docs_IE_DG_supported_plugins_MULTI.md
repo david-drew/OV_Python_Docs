@@ -58,10 +58,10 @@ You can set the configuration directly as a string, or use MultiDeviceConfigPara
 
   # Read a network in IR or ONNX format
   net = ie.read_network(model=args.model)
+    
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES' : 'HDDL,GPU'}, device_name='MULTI');
   
-  ie.set_config({{"MULTI_DEVICE_PRIORITIES", "HDDL,GPU"}}, "MULTI");
-  
-  exec_net_1 = ie.load_network(network=net, device_name=""MULTI", {{"MULTI_DEVICE_PRIORITIES", "HDDL,GPU"}})
+  exec_net_1 = ie.load_network(network=net, device_name=""MULTI", config={'MULTI_DEVICE_PRIORITIES' : 'HDDL,GPU'})
   exec_net_2 = ie.load_network(network=net, device_name=""MULTI:HDDL,GPU")
 ```
 #### Option 2 - Pass a List as a Parameter, and Dynamically Change Priorities during Execution
@@ -77,13 +77,15 @@ Notice that the priorities of the devices can be changed in real time for the ex
   # Read a network in IR or ONNX format
   net = ie.read_network(model=args.model)
   
-  ie.set_config({{"MULTI_DEVICE_PRIORITIES", "HDDL,GPU"}}, "MULTI")
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'HDDL,GPU'}, device_name='MULTI')
   
   # Change priorities
-  ie.set_config({{"MULTI_DEVICE_PRIORITIES", "GPU,HDDL"}}, "MULTI")
-  ie.set_config({{"MULTI_DEVICE_PRIORITIES", "GPU"}}, "MULTI")
-  ie.set_config({{"MULTI_DEVICE_PRIORITIES", "HDDL,GPU"}}, "MULTI")
-  ie.set_config({{"MULTI_DEVICE_PRIORITIES", "CPU,HDDL,GPU"}}, "MULTI")
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'GPU,HDDL'}, device_name='MULTI')
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'GPU'}, device_name='MULTI')
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'HDDL,GPU'}, device_name='MULTI')
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'GPU'}, device_name='MULTI')
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'CPU,HDDL,GPU'}, device_name='MULTI')
+ 
 ```
 
 #### Option 3 - Use Explicit Hints for Controlling Request Numbers Executed by Devices
@@ -164,15 +166,15 @@ As discussed in the first section, configure each individual device as usual and
   ie = IECore()
   
   # Configure the HDDL device first
-  net = ie.read_network(model="sample.xml")
-  ie.set_config(hddl_config, "HDDL")
-  ie.set_config(gpu_config, "GPU")
+  net = ie.read_network(model='sample.xml')
+  ie.set_config(config=hddl_config, device_name='HDDL')
+  ie.set_config(config=gpu_config, device_name='GPU')
   
   # Load the network to the multi-device, while specifying the configuration (devices along with priorities):
-  exec_net = ie.load_network(network=net, device_name="MULTI", {{InferenceEngine::MultiDeviceConfigParams::KEY_MULTI_DEVICE_PRIORITIES, "HDDL,GPU"}})
+  exec_net = ie.load_network(network=net, device_name="MULTI", config={'MULTI_DEVICE_PRIORITIES':'HDDL,GPU'})
 
   # A new metric allows querying the optimal number of requests:
-  nireq = exec_net.get_metric(METRIC_KEY(OPTIMAL_NUMBER_OF_INFER_REQUESTS));
+  nireq = exec_net.get_metric(metric_name='OPTIMAL_NUMBER_OF_INFER_REQUESTS', device_name='CPU')
 ```
 
 An alternative is to combine all the individual device settings into a single config file and load that, allowing the Multi-Device plugin to parse and apply settings to the right devices. See the code example in the next section.
