@@ -17,12 +17,9 @@ There are two ways to check if CPU device can support bfloat16 computations for 
 1. Query the instruction set via system lscpu | grep avx512_bf16 or cat /proc/cpuinfo | grep avx512_bf16.
 2. Use Query API with METRIC_KEY(OPTIMIZATION_CAPABILITIES), which should return BF16 in the list of CPU optimization options:
 
-*DAVID*:  Find Python Equivalent for METRIC{"OPTIMIZATION_CAPABILITIES"}
-
 <pre><code>  ie = IECore()
   net = ie.read_network("sample.xml")
-  exec_net = ie.load_network(network=net, device_name="CPU")
-  cpu_caps = exec_net.get_metric("OPTIMIZATION_CAPABILITIES")
+  cpu_caps = ie.get_metric(metric_name='OPTIMIZATION_CAPABILITIES', device_name='CPU'
 </code></pre>
 
 The current Inference Engine solution for bfloat16 inference uses Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) and supports inference of the significant number of layers in BF16 computation mode.
