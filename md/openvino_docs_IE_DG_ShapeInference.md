@@ -2,32 +2,32 @@
 
 OpenVINO™ provides the following methods for runtime model reshaping:
 
-* Set a new input shape with the [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method.
+* Set a new input shape with the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method.
 
-The [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method updates input shapes and propagates them down to the outputs of the model through all intermediate layers.
+The [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method updates input shapes and propagates them down to the outputs of the model through all intermediate layers.
 
 ## NOTES
 
 * Starting with the 2021.1 release, the Model Optimizer converts topologies keeping shape-calculating sub-graphs by default, which enables correct shape propagation during reshaping in most cases.
 * Older versions of IRs are not guaranteed to reshape successfully. Please regenerate them with the Model Optimizer of the latest version of OpenVINO™.
 * If an ONNX model does not have a fully defined input shape and the model was imported with the ONNX importer, reshape the model before loading it to the plugin.
-* Set a new batch dimension value with the [IENetwork::batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) method.
+* Set a new batch dimension value with the [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) method.
 
-  The meaning of a model batch may vary depending on the model design. This method does not deduce batch placement for inputs from the model architecture. It assumes that the batch is placed at the zero index in the shape for all inputs and uses the [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method to propagate updated shapes through the model.
+  The meaning of a model batch may vary depending on the model design. This method does not deduce batch placement for inputs from the model architecture. It assumes that the batch is placed at the zero index in the shape for all inputs and uses the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method to propagate updated shapes through the model.
 
   The method transforms the model before a new shape propagation to relax a hard-coded batch dimension in the model, if any.
 
-  Use [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) rather than  [IENetwork::batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) to set new input shapes for the model if the model has:
+  Use [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) rather than  [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) to set new input shapes for the model if the model has:
 
     * Multiple inputs with different zero-index dimension meanings
     * Input without a batch dimension
     * 0D, 1D, or 3D shape
 
-  The [IENetwork::batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) method is a high-level API method that wraps the [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a)  method call and works for trivial models from the batch placement standpoint. Use [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) for other models.
+  The [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) method is a high-level API method that wraps the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a)  method call and works for trivial models from the batch placement standpoint. Use [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) for other models.
 
-  Using the [IENetwork::batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) method for models with a non-zero index batch placement or for models with inputs that do not have a batch dimension may lead to undefined behaviour.
+  Using the [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) method for models with a non-zero index batch placement or for models with inputs that do not have a batch dimension may lead to undefined behaviour.
 
-You can change input shapes multiple times using the IENetwork::reshape and [IENetwork::batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) methods in any order. If a model has a hard-coded batch dimension, use [IENetwork::batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) first to change the batch, then call IENetwork::reshape to update other dimensions, if needed.
+You can change input shapes multiple times using the IENetwork::reshape and [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) methods in any order. If a model has a hard-coded batch dimension, use [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) first to change the batch, then call IENetwork::reshape to update other dimensions, if needed.
 
 Inference Engine takes three kinds of a model description as an input, which are converted into an IENetwork object:
 
@@ -35,7 +35,7 @@ Inference Engine takes three kinds of a model description as an input, which are
 2. ONNX model through IECore::ReadNetwork
 3. nGraph function through the constructor of IENetwork
 
-IENetwork keeps an ngraph::Function object with the model description internally. The object should have fully defined input shapes to be successfully loaded to the Inference Engine plugins. To resolve undefined input dimensions of a model, call the [IENetwork::reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method providing new input shapes before loading to the Inference Engine plugin.
+IENetwork keeps an ngraph::Function object with the model description internally. The object should have fully defined input shapes to be successfully loaded to the Inference Engine plugins. To resolve undefined input dimensions of a model, call the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method providing new input shapes before loading to the Inference Engine plugin.
 
 Run the following code right after IENetwork creation to explicitly check for model input names and shapes:
 
