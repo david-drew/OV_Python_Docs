@@ -44,7 +44,7 @@ Following the OpenVINO™ convention of labeling devices, the Multi-Device plugi
 </tbody>
 </table>
 
-You can set the configuration directly as a string, or use MultiDeviceConfigParams::KEY_MULTI_DEVICE_PRIORITIES from the multi/multi_device_config.hpp file, which defines the same string.
+You can set the configuration directly as a string, or use the metric key 'MULTI_DEVICE_PRIORITIES' from the `multi/multi_device_config.hpp` file, which defines the same string.
 
 ### The Three Ways to Specify Devices Targets for the MULTI plugin.
 
@@ -59,10 +59,10 @@ You can set the configuration directly as a string, or use MultiDeviceConfigPara
   # Read a network in IR or ONNX format
   net = ie.read_network(model=args.model)
     
-  ie.set_config( config={'MULTI_DEVICE_PRIORITIES' : 'HDDL,GPU'}, device_name='MULTI');
+  ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'HDDL,GPU'}, device_name='MULTI');
   
-  exec_net_1 = ie.load_network(network=net, device_name=""MULTI", config={'MULTI_DEVICE_PRIORITIES' : 'HDDL,GPU'})
-  exec_net_2 = ie.load_network(network=net, device_name=""MULTI:HDDL,GPU")
+  exec_net_1 = ie.load_network(network=net, device_name='MULTI', config={'MULTI_DEVICE_PRIORITIES' : 'HDDL,GPU'})
+  exec_net_2 = ie.load_network(network=net, device_name='MULTI:HDDL,GPU')
 ```
 #### Option 2 - Pass a List as a Parameter, and Dynamically Change Priorities during Execution
 
