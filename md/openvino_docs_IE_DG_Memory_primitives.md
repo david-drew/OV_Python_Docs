@@ -7,8 +7,8 @@
 The right way to create Blob objects with a specific layout is to use constructors with [ie_api.TensorDesc](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1TensorDesc.html).
 
 <pre><code>
-  tensor_desc = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout='NCHW')
-  input_blob = Blob(tensor_description, some_input_data)
+  custom_td = TensorDesc(precision="FP32", dims=(1, 3, 227, 227), layout='NCHW')
+  input_blob = Blob(tensor_desc=custom_td, [array_data])
 </code></pre>
 
 ## Layouts
