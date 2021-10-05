@@ -19,7 +19,7 @@ Step #5 can potentially perform several time-consuming device-specific optimizat
 To enable model caching, the application must specify the folder where to store cached blobs. It can be done like this
 
 <pre><code>  ie = IECore()
-  ie.set_config( {'CACHE_DIR' : 'path_to_cache')
+  ie.set_config( {'CACHE_DIR' : 'path_to_cache'} )
   net = ie.read_network('sample.xml')
   ie.load_network(network=net, device='GPU', config=cache_config)
 </pre></code>
@@ -58,12 +58,3 @@ Not every device supports network import/export capability, enabling of caching 
   # Find the 'IMPORT_EXPORT_SUPPORT' metric in supported metrics
   allows_caching = all_metrics('IMPORT_EXPORT_SUPPORT')
 </pre></code>
-
-
-
-
-
-
-
-
-
