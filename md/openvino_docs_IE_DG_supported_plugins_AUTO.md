@@ -206,7 +206,7 @@ As described in the first section, configure each individual device as usual and
   exec_net = ie.load_network(network=net, device_name="AUTO")
   
   # Query the device's optimization capabilities
-  device_caps = exec_net.get_metric(METRIC_KEY(OPTIMIZATION_CAPABILITIES))
+  device_caps = ie.get_metric('OPTIMIZATION_CAPABILITIES')
 </code></pre>
 
 
@@ -225,7 +225,7 @@ Alternatively, you can combine all the individual device settings into single co
   exec_net = ie.load_network(network=net, device_name="AUTO", config=full_config)
   
   # Query the device's optimization capabilities
-  device_caps = exec_net.get_metric(METRIC_KEY(OPTIMIZATION_CAPABILITIES))
+  device_caps = ie.get_metric('OPTIMIZATION_CAPABILITIES')
 </code></pre>
 
 
