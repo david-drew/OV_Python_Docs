@@ -5,7 +5,7 @@
   <pre><code>
   from openvino.inference_engine import IECore, StatusCode
   ie = IECore();
-  net = ie.read_network("model.onnx");
+  net = ie.read_network(model="model.onnx");
 </code></pre>
 
 ## Reshape Feature
