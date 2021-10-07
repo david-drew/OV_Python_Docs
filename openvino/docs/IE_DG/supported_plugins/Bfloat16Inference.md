@@ -73,18 +73,17 @@ To disable BF16 in the C++ or Python API:
 
 ..tab:: C++
 	..code-block:: c
-
-```c
-ie_config_t config = { "ENFORCE_BF16", "NO", NULL};
-ie_core_load_network(core, network, device_name, &config, &exe_network);
-```
+	```c
+	ie_config_t config = { "ENFORCE_BF16", "NO", NULL};
+	ie_core_load_network(core, network, device_name, &config, &exe_network);
+	```
 
 ..tab:: Python
 	..code-block:: python
-```python
-bf16_config = { "ENFORCE_BF16", "NO", NULL}
-ie_core_load_network(network=’sample.xml’, device_name=’CPU’, config=bf16_config)
-```
+	```python
+	bf16_config = { "ENFORCE_BF16" : "NO"}
+	ie_core_load_network(network=’sample.xml’, device_name=’CPU’, config=bf16_config)
+	```
 
 An exception with message `Platform doesn't support BF16 format` is formed in case of setting `KEY_ENFORCE_BF16` to `YES` on CPU without native BF16 support or BF16 simulation mode.
 
@@ -96,11 +95,22 @@ Bfloat16 simulation mode is available on CPU and Intel® AVX-512 platforms that 
 To enable Bfloat16 simulator:
 * In [Benchmark App](../../inference-engine/samples/benchmark_app/README.md), add the `-enforcebf16=true` option
 * In C++ API, set `KEY_ENFORCE_BF16` to `YES`
-* In C API:
-```
-ie_config_t config = { "ENFORCE_BF16", "YES", NULL};
-ie_core_load_network(core, network, device_name, &config, &exe_network);
-```
+* In the C++ API or Python API:
+
+@sphinxdirective
+..tab:: C++
+	..code-block:: c
+	```c
+	ie_config_t config = { "ENFORCE_BF16", "YES", NULL};
+	ie_core_load_network(core, network, device_name, &config, &exe_network);
+	```
+..tab:: Python
+	..code-block:: python
+	```python
+	bf16_config = { 'ENFORCE_BF16' : 'YES'}
+	ie.load_network(network=net, device_name='CPU', config=bf16_config)
+	```
+@endsphinxdirective
 
 ## Performance Counters
 
