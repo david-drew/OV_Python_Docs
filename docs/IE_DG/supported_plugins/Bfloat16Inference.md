@@ -69,7 +69,7 @@ To disable BF16 internal transformations, set the `KEY_ENFORCE_BF16` to `NO`. In
 @endsphinxdirective
 
 
-To disable BF16 in C API:
+To disable BF16 in the C++ or Python API:
 
 ..tab:: C++
 	..code-block:: c
