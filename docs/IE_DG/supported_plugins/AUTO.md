@@ -34,18 +34,22 @@ There are two ways to use Auto-device:
 1. Directly indicate device by “AUTO” or empty string:
 
 @sphinxdirective
-.. tab:: c
+.. tab:: C++
+	.. code-block:: c  
 	@snippet snippets/AUTO0.cpp part0
-.. tab:: python
+.. tab:: Python
+	.. code-block:: python
 	@snippet snippets/AUTO0.py part0
 @endsphinxdirective
 
 2. Use Auto-device configuration to limit the device candidates list to be selected:
 
 @sphinxdirective
-.. tab:: c
+.. tab:: C++
+	.. code-block:: c  
 	@snippet snippets/AUTO1.cpp part1
-.. tab:: python
+.. tab:: Python
+	.. code-block:: python
 	@snippet snippets/AUTO1.py part1
 @endsphinxdirective
 
