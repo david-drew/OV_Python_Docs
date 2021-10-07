@@ -1,4 +1,4 @@
-
+from openvino.inference_engine import IECore, StatusCode
 
 ie = IECore()
 net = ie.read_network("sample.xml")
