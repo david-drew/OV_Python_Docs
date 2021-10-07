@@ -108,18 +108,22 @@ the most suitable device from available devices to load mode as follows:
 
 
 @sphinxdirective
-.. tab:: c
+.. tab:: C++
+	.. code-block:: c 
 	@snippet snippets/AUTO2.cpp part2
-.. tab:: python
+.. tab:: Python
+	.. code-block:: python
 	@snippet snippets/AUTO2.py part2
 @endsphinxdirective
 
 Another way to load mode to device from limited choice of devices is with Auto-device:
 
 @sphinxdirective
-.. tab:: c
+.. tab:: C++
+	.. code-block:: c 
 	@snippet snippets/AUTO3.cpp part3
-.. tab:: python
+.. tab:: Python
+	.. code-block:: python
 	@snippet snippets/AUTO3.py part3
 @endsphinxdirective
 
@@ -130,9 +134,11 @@ As described in the first section, configure each individual device as usual and
 
 
 @sphinxdirective
-.. tab:: c
+.. tab:: C++
+	.. code-block:: c 
 	@snippet snippets/AUTO4.cpp part4
-.. tab:: python
+.. tab:: Python
+	.. code-block:: python
 	@snippet snippets/AUTO4.py part4
 @endsphinxdirective
 
@@ -140,9 +146,11 @@ Alternatively, you can combine all the individual device settings into single co
 allowing the Auto-device plugin to parse and apply it to the right devices. See the code example here:
 
 @sphinxdirective
-.. tab:: c
+.. tab:: C++
+	.. code-block:: c 
 	@snippet snippets/AUTO5.cpp part5
-.. tab:: python
+.. tab:: Python
+	.. code-block:: python
 	@snippet snippets/AUTO5.py part5
 @endsphinxdirective
 
