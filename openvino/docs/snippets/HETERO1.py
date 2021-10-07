@@ -1,34 +1,27 @@
-#include <ie_core.hpp>
-#include <ngraph/function.hpp>
-#include <ngraph/variant.hpp>
+from openvino.inference_engine import IECore
+import ngraph as ng
 
-int main() {
-using namespace InferenceEngine;
-using namespace ngraph;
-//! [part1]
-InferenceEngine::Core core;
-auto network = core.ReadNetwork("sample.xml");
-auto function = network.getFunction();
+# Set up the network as usual, then pass it as a parameter
+ie = IECore()
+net = ie.read_network(model='sample.xml')
 
-// This example demonstrates how to perform default affinity initialization and then
-// correct affinity manually for some layers
-const std::string device = "HETERO:GPU,CPU";
+# Now we can extract an Ngraph function
+func = ng.function_from_cnn(net)
 
-// QueryNetworkResult object contains map layer -> device
-InferenceEngine::QueryNetworkResult res = core.QueryNetwork(network, device, { });
+# This example demonstrates how to perform default affinity initialization and then
+# correct affinity manually for some layers
+device_target = "HETERO:GPU,CPU"
 
-// update default affinities
-res.supportedLayersMap["layerName"] = "CPU";
+# Query Network result object maps layer -> device
+res = ie.query_network(network=net, device_name=device_target)
 
-// set affinities to network
-for (auto&& node : function->get_ops()) {
-    auto& affinity = res.supportedLayersMap[node->get_friendly_name()];
-    // Store affinity mapping using node runtime information
-    node->get_rt_info()["affinity"] = std::make_shared<ngraph::VariantWrapper<std::string>>(affinity);
-}
+# Each layer/node could be a different value if desired
+for r in res:
+    res[r] = 'CPU'
 
-// load network with affinities set before
-auto executable_network = core.LoadNetwork(network, device);
-//! [part1]
-return 0;
-}
+# Now we can find and change a given node's affinity
+for node in func.get_ordered_ops():
+  rt_info = node.get_rt_info()
+  rt_info['affinity'] = 'CPU'
+
+exec_net = ie.load_network(network=net, device_name=device_target)
