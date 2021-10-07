@@ -4,10 +4,6 @@ Dynamic Batching is a feature that allows you to dynamically change batch size f
 
 You can activate Dynamic Batching by setting the "DYN_BATCH_ENABLED" flag to "YES" in a configuration map that is passed to the plugin while loading a network. This configuration creates an ExecutableNetwork object that will allow setting batch size dynamically in all of its infer requests using SetBatch() method. The batch size that was set in passed CNNNetwork object will be used as a maximum batch size limit.
 
-
-
-@snippet snippets/DynamicBatching.py part0
-
 @sphinxdirective
 ..tab:: C++
 	..code-block:: c
