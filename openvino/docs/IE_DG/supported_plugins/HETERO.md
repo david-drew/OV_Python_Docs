@@ -27,17 +27,38 @@ Default fallback policy decides which layer goes to which device automatically a
 
 Another way to annotate a network is to set affinity manually using <code>ngraph::Node::get_rt_info</code> with key `"affinity"`:
 
-@snippet snippets/HETERO0.cpp part0
+@sphinxdirective
+..tab:: C++
+	..code-block:: c
+  @snippet snippets/HETERO0.cpp part0
+..tab:: Python
+	..code-block:: python
+  @snippet snippets/HETERO0.p part0
+@endsphinxdirective
 
 The fallback policy does not work if even one layer has an initialized affinity. The sequence should be calling of automating affinity settings and then fix manually.
 
 > **NOTE**: If you set affinity manually, be careful at the current moment Inference Engine plugins don't support constant (`Constant`->`Result`) and empty (`Parameter`->`Result`) networks. Please avoid such subgraphs when you set affinity manually.
 
-@snippet snippets/HETERO1.cpp part1
+@sphinxdirective
+..tab:: C++
+	..code-block:: c
+  @snippet snippets/HETERO1.cpp part1
+..tab:: Python
+	..code-block:: python
+  @snippet snippets/HETERO1.py part1
+@endsphinxdirective
 
 If you rely on the default affinity distribution, you can avoid calling <code>InferenceEngine::Core::QueryNetwork</code> and just call <code>InferenceEngine::Core::LoadNetwork</code> instead:
 
-@snippet snippets/HETERO2.cpp part2
+@sphinxdirective
+..tab:: C++
+	..code-block:: c
+  @snippet snippets/HETERO2.cpp part2
+..tab:: Python
+	..code-block:: python
+  @snippet snippets/HETERO2.py part2
+@endsphinxdirective
 
 > **NOTE**: `InferenceEngine::Core::QueryNetwork` does not depend on affinities set by a user, but queries for layer support based on device capabilities.
 
