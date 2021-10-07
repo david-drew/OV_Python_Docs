@@ -12,12 +12,15 @@ func = ng.function_from_cnn(net)
 # correct affinity manually for some layers
 device_target = "HETERO:GPU,CPU"
 
-# Query Network result object maps layer -> device
+# Note: checking affinity is optional, for information gathering
+
+# Check Affinity 1 - query the network's device config
+# The Query Network result object maps layer -> device
 res = ie.query_network(network=net, device_name=device_target)
 
-# Each layer/node could be a different value if desired
+# Check Affinity 2 - Each layer/node could be a different value if desired
 for r in res:
-    res[r] = 'CPU'
+    print('Layer: {}, Affinity: {}'.format(r, res[r]))
 
 # Now we can find and change a given node's affinity
 for node in func.get_ordered_ops():
