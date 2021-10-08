@@ -77,7 +77,7 @@ There are two ways to use the Auto-device plugin:
   
   # the following 2 lines are equivalent, alternate ways to do the above
     exec_net = ie.load_network(network=net, device_name="AUTO:CPU,GPU")
-    exec_net = ie.load_network(network=net, device_name='"AUTO", {{"AUTO_DEVICE_LIST", "CPU,GPU"}}') 
+    exec_net = ie.load_network(network=net, device_name="AUTO", config={"AUTO_DEVICE_LIST" : "CPU,GPU"}) 
 ```
 
 The Auto-device plugin supports query device optimization capabilities in metric.
