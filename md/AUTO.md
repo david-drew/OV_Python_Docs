@@ -46,8 +46,7 @@ You can use the configuration name directly as a string or use IE::KEY_AUTO_DEVI
 There are two ways to use the Auto-device plugin:
 
 1. Directly indicate device by “AUTO” or an empty string.
-```python
-  from openvino.inference_engine import IECore, StatusCode
+```python  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -63,8 +62,7 @@ There are two ways to use the Auto-device plugin:
 ```
 
 2. Or use the Auto-device configuration to limit the device candidates list to be selected.
-```python
-  from openvino.inference_engine import IECore, StatusCode
+```python  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -105,8 +103,7 @@ The Inference Engine now features a dedicated API to enumerate devices and their
 
 This is the example output from the sample (truncated to device names only):
 
-```python
-./hello_query_device
+```python./hello_query_device
 
 Available devices:
     Device: CPU
