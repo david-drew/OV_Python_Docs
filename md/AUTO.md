@@ -119,7 +119,7 @@ Available devices:
 ### Enumerating Available Devices
 
 ### Default Auto-Device Selection Logic
-With the 2021.4 release, Auto-Device selects the most suitable device with following default logic:
+With the 2021.4 release, the Auto-Device selects the most suitable device using the following default logic:
 1. Check if dGPU (discrete), iGPU (integrated) and CPU devices are available
 2. Get the precision of the input model, such as FP32
 3. According to the priority of dGPU, iGPU, and CPU (in this order), if the device supports the precision of the input network, select it as the most suitable device
@@ -149,11 +149,11 @@ For example, CPU, dGPU and iGPU can support the following precision and optimiza
 </tbody>
 </table>
 
-* When the application uses Auto-device to run FP16 IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
-* When the application uses Auto-device to run FP16 IR on a system with CPU and iGPU, Auto-device will offload this workload to iGPU.
-* When the application uses Auto-device to run WINOGRAD-enabled IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
+* When the application uses the Auto-device to run FP16 IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to dGPU.
+* When the application uses the Auto-device to run FP16 IR on a system with CPU and iGPU, Auto-device will offload this workload to iGPU.
+* When the application uses the Auto-device to run WINOGRAD-enabled IR on a system with CPU, dGPU and iGPU, Auto-device will offload this workload to CPU.
 
-In any case, when loading the network to dGPU or iGPU fails, the networks uses CPU as the fall-back choice.
+In cases when loading the network to dGPU or iGPU fails, CPU is the fall-back choice.
 
 ### Limit Auto Target Devices Logic
 
@@ -172,7 +172,7 @@ According to the Auto-device selection logic from the previous section, the most
   exec_net = ie.load_network(network=net, device_name="AUTO")
 </code></pre>
 
-Another way to load mode to device from limited choice of devices is with Auto-device:
+Another way to specify the device is to list preferences in order:
 
 <pre><code>
   from openvino.inference_engine import IECore, StatusCode
