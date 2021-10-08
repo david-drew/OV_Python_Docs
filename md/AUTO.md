@@ -7,13 +7,13 @@ The AUTO device is a new, special “virtual” or “proxy” device in the Ope
 
 Use “AUTO” as the device name to delegate selection of an actual accelerator to OpenVINO. With the 2021.4 release, the Auto-device plugin internally recognizes and selects devices from among CPU, integrated GPU and discrete Intel GPUs (when available) depending on the device capabilities and the characteristics of CNN models (for example, precision). Then the Auto-device assigns inference requests to the selected device.
 
-From the application point of view, this is just another device that handles all accelerators in the full system.
+From the applications point of view, this is just another device that handles all accelerators in the full system.
 
 With the 2021.4 release, Auto-device setup is done in three major steps:
 
-1. Configure each device as usual (for example, via the conventional SetConfig method).
+1. Configure each device as usual (for example, via the conventional [IECOre.set_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05) method).
 2. Load a network to the Auto-device plugin. This is the only change needed in your application.
-3. Just like with any other executable network (resulting from LoadNetwork), create as many requests as needed to saturate the devices. These steps are covered below in detail.
+3. As with any other executable network resulting from [IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc), create as many requests as needed to saturate the devices. These steps are covered below in detail.
 
 ## Defining and Configuring the Auto-Device Plugin
 Following the OpenVINO convention for devices names, the Auto-device uses the label “AUTO”. The only configuration option for Auto-device is a limited device list:
@@ -172,7 +172,7 @@ According to the Auto-device selection logic from the previous section, the most
   exec_net = ie.load_network(network=net, device_name="AUTO")
 </code></pre>
 
-Another way to specify the device is to list preferences in order:
+Another way to specify the device is to list hardware preferences in order:
 
 <pre><code>
   from openvino.inference_engine import IECore, StatusCode
