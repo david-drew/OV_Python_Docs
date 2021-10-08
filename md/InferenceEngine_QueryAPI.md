@@ -1,6 +1,7 @@
 # Introduction to Inference Engine Device Query API
 
-This section provides a high-level description of the process of querying of different device properties and configuration values. Refer to the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html) sources and the [Multi-Device Plugin guide](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html) for example of using the Inference Engine Query API in user applications.
+The OpenVINO™ toolkit supports inferencing with several types of devices (processors or accelerators). 
+This section provides a high-level description of the process of querying device properties and configuration values. Refer to the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html) sources and the [Multi-Device Plugin guide](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html) for example of using the Inference Engine Query API in user applications.
 
 ## Using the Inference Engine Query API in Your Code
 
@@ -37,13 +38,14 @@ The function returns a list of available devices, for example:
 </code></pre>
 
 Each device name can then be passed to:
-- IECore.load_network to load the network to a specific device.
-- IECore.get_metric to get common or device specific metrics.
-- All other methods of the Core class that accept deviceName.
+
+- IECore.load_network to load the network to a specific device
+- IECore.get_metric to get common or device specific metrics
+- All other methods of the Core class that accept deviceName
 
 ### [GetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a48764dec7c235d2374af8b8ef53c6363)
 
-The code below demonstrates how to understand whether HETERO device dumps .dot files with split graphs during the split stage:
+The code below demonstrates how to understand whether HETERO device dumps GraphViz .dot files with split graphs during the split stage:
 
 <pre><code>  ie = IECore()
   ie.get_metric(metric_name="DUMP_GRAPH_DOT", device_name="HETERO")
@@ -68,11 +70,13 @@ To list all supported metrics:
 </code></pre>
 
 
-**NOTE:** All metrics have a specific type, which is set during the metric instantiation. The list of common device-agnostic metrics can be found in ie_plugin_config.hpp. Device specific metrics (for example, for HDDL, MYRIAD devices) can be found in corresponding plugin folders.
+**NOTE:** All metrics have a specific type, which is set during the metric instantiation. The list of common device-agnostic metrics can be found in `ie_plugin_config.hpp`. Device specific metrics (for example, for HDDL, MYRIAD devices) can be found in corresponding plugin folders.
 
 ## Query API in the ExecutableNetwork Class
 
 ### [GetMetric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
+
+This method is used to get an executable network specific metric such as `NETWORK_NAME`:
 
 <pre><code>  ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
@@ -81,6 +85,7 @@ To list all supported metrics:
 </code></pre>
 
 ### [GetConfig](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
+
 The method is used to get information about configuration values the executable network has been created with:
 
 <pre><code>  ie = IECore()
@@ -99,7 +104,7 @@ Or the current temperature of MYRIAD device:
 
 ### [SetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
 
-The only device that supports this method is the (Multi-Device)[https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html].
+The only device that supports this method is the [Multi-Device](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html).
 
 To set a configuration, a valid key must be used to create a dictionary, which is passed as the 'config' parameter to the IECore.load_network call.
 <pre><code>  ie = IECore()
