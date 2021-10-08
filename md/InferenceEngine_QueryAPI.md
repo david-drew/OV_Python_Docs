@@ -105,7 +105,7 @@ The method is used to get information about configuration values the executable 
 
 ### [SetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
 
-The only device that supports this method is the (Multi-Device)[https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html].
+The only device that supports this method is the [Multi-Device](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html).
 
 To set a configuration, a valid key must be used to create a dictionary, which is passed as the 'config' parameter to the IECore.load_network call.
 ```python
