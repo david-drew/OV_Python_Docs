@@ -14,15 +14,17 @@ See the [BFLOAT16 – Hardware Numerics Definition" white paper](https://softwar
 
 There are two ways to check if CPU device can support bfloat16 computations for models:
 
-1. Query the instruction set via system lscpu | grep avx512_bf16 or cat /proc/cpuinfo | grep avx512_bf16.
-2. Use Query API with METRIC_KEY(OPTIMIZATION_CAPABILITIES), which should return BF16 in the list of CPU optimization options:
+1. Query the instruction set using one of these system commands:
+  * `lscpu | grep avx512_bf16` 
+  * `cat /proc/cpuinfo | grep avx512_bf16`
+2. Use the Query API with METRIC_KEY(OPTIMIZATION_CAPABILITIES), which should return BF16 in the list of CPU optimization options:
 
 <pre><code>  ie = IECore()
   net = ie.read_network("sample.xml")
   cpu_caps = ie.get_metric(metric_name='OPTIMIZATION_CAPABILITIES', device_name='CPU'
 </code></pre>
 
-The current Inference Engine solution for bfloat16 inference uses Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) and supports inference of the significant number of layers in BF16 computation mode.
+The current Inference Engine solution for bfloat16 inference uses the Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) and supports inference of the significant number of layers in BF16 computation mode.
 
 ## Lowering Inference Precision
 
@@ -44,7 +46,7 @@ For default optimization on CPU, the source model is converted from FP32 or FP16
   cpu_caps = exec_net.get_config("ENFORCE_BF16")
 </code></pre>
 
-To disable BF16 internal transformations, set the KEY_ENFORCE_BF16 to NO. In this case, the model infers as is without modifications with precisions that were set on each layer edge.
+To disable BF16 internal transformations, set the key 'ENFORCE_BF16' to 'NO'. In this case, the model infers as is without modifications with precisions that were set on each layer edge.
 
 <pre><code>  bf16_config = {"ENFORCE_BF16" : "YES"}
 
@@ -53,13 +55,13 @@ To disable BF16 internal transformations, set the KEY_ENFORCE_BF16 to NO. In thi
   exec_net = ie.load_network(network=net, device_name="CPU", config = bf16_config)
 </code></pre>
   
-An exception with the message `Platform doesn't support BF16 format` is formed in case of setting `KEY_ENFORCE_BF16` to YES on CPU without native BF16 support or BF16 simulation mode.
+An exception with the message `Platform doesn't support BF16 format` is formed in case of setting `ENFORCE_BF16` to YES on CPU without native BF16 support or BF16 simulation mode.
 
 Low-Precision 8-bit integer models cannot be converted to BF16, even if bfloat16 optimization is set by default.
   
 ## Bfloat16 Simulation Mode
 
-Bfloat16 simulation mode is available on CPU and Intel® AVX-512 platforms that do not support the native avx512_bf16 instruction. The simulator does not guarantee an adequate performance. Note that the CPU must still support the AVX-512 extensions.
+Bfloat16 simulation mode is available on CPU and Intel® AVX-512 platforms that do not support the native avx512_bf16 instruction. The simulator does not guarantee good performance. Note that the CPU must still support the AVX-512 extensions.
 
 ### To Enable the simulation of Bfloat16:
 
@@ -67,7 +69,6 @@ Bfloat16 simulation mode is available on CPU and Intel® AVX-512 platforms that 
 * In Python, use the following code as an example:
 
   <pre><code>  bf16_config = {"ENFORCE_BF16" : "YES"}
-
     ie = IECore()
     net = ie.read_network("sample.xml")
     exec_net = ie.load_network(network=net, device_name="CPU", config=bf16_config)
