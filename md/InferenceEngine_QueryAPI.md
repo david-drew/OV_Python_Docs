@@ -20,10 +20,11 @@ The [ie_api.ExecutableNetwork](https://docs.openvinotoolkit.org/2021.1/ie_python
 
 ### GetAvailableDevices
 
-<pre><code>  from openvino.inference_engine import IECore, StatusCode
+```python
+  from openvino.inference_engine import IECore, StatusCode
   ie = IECore()
   available_devices = ie.get_available_devices()
-</code></pre>
+```
 
 The function returns a list of available devices, for example:
 
@@ -55,17 +56,19 @@ For documentation about common configuration keys, refer to ie_plugin_config.hpp
 
 To extract device properties such as available device, device name, supported configuration keys, and others, use the InferenceEngine::Core::GetMetric method:
 
-<pre><code>  ie = IECore()
+```python
+  ie = IECore()
   ie.get_metric(metric_name="FULL_DEVICE_NAME", device_name="GPU")
-</code></pre>
+```
 
 A returned value appears as follows: Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz.
 
 To list all supported metrics:
 
-<pre><code>  ie = IECore()
+```python
+  ie = IECore()
   ie.get_metric(metric_name="SUPPORTED_METRICS", device_name="GPU")
-</code></pre>
+```
 
 
 **NOTE:** All metrics have a specific type, which is set during the metric instantiation. The list of common device-agnostic metrics can be found in ie_plugin_config.hpp. Device specific metrics (for example, for HDDL, MYRIAD devices) can be found in corresponding plugin folders.
@@ -74,38 +77,42 @@ To list all supported metrics:
 
 ### [GetMetric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
 
-<pre><code>  ie = IECore()
+```python
+  ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
   exec_net = ie.load_network(network=net, device_name="CPU")
   exec_net.get_metric(metric_name="NETWORK_NAME", device_name="CPU") 
-</code></pre>
+```
 
 ### [GetConfig](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
 The method is used to get information about configuration values the executable network has been created with:
 
-<pre><code>  ie = IECore()
+```python
+  ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
   exec_net = ie.load_network(network=net, device_name="CPU")
   num_threads = exec_net.get_config(metric_name="KEY_CPU_THREADS_NUM", device_name="CPU")
-</code></pre>
+```
 
 Or the current temperature of MYRIAD device:
 
-<pre><code>  ie = IECore()
+```python
+  ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
   exec_net = ie.load_network(network=net, device_name="MYRIAD")
   num_threads = exec_net.get_config("DEVICE_THERMAL")
-</code></pre>
+```
 
 ### [SetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)
 
 The only device that supports this method is the (Multi-Device)[https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html].
 
 To set a configuration, a valid key must be used to create a dictionary, which is passed as the 'config' parameter to the IECore.load_network call.
-<pre><code>  ie = IECore()
+```python
+  ie = IECore()
   bf16_config = {"ENFORCE_BF16" : "YES"}
   exec_net = ie.load_network(network=net, device_name="MULTI", config=bf16_config)
-</code></pre>
+```
 
 
 
