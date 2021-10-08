@@ -29,10 +29,10 @@ The [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/cl
 
 You can change input shapes multiple times using the IENetwork::reshape and [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) methods in any order. If a model has a hard-coded batch dimension, use [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e) first to change the batch, then call IENetwork::reshape to update other dimensions, if needed.
 
-Inference Engine takes three kinds of a model description as an input, which are converted into an IENetwork object:
+The Inference Engine takes three kinds of a model description as an input, which are converted into an IENetwork object:
 
-1. Intermediate Representation (IR) through IECore::ReadNetwork
-2. ONNX model through IECore::ReadNetwork
+1. Intermediate Representation (IR) through IECore.read_network
+2. ONNX model through IECore.read_network
 3. nGraph function through the constructor of IENetwork
 
 IENetwork keeps an ngraph::Function object with the model description internally. The object should have fully defined input shapes to be successfully loaded to the Inference Engine plugins. To resolve undefined input dimensions of a model, call the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method providing new input shapes before loading to the Inference Engine plugin.
@@ -41,9 +41,9 @@ Run the following code right after IENetwork creation to explicitly check for mo
 
 To feed input data of a shape that is different from the model input shape, reshape the model first.
 
-Once the input shape of IENetwork is set, call the IECore::LoadNetwork method to get an InferenceEngine::ExecutableNetwork object for inference with updated shapes.
+Once the input shape of IENetwork is set, call the IECore.load_network method to get an ExecutableNetwork object for inference with updated shapes.
 
-There are other approaches to reshape the model during the stage of IR generation or nGraph::Function creation.
+There are other approaches to reshape the model during the stage of IR generation or [nGraph function](ngraph.function_from_cnn) creation.
 
 Practically, some models are not ready to be reshaped. In this case, a new input shape cannot be set with the Model Optimizer or the IENetwork::reshape method.
 
@@ -89,7 +89,6 @@ Here is a code example:
 
   # 1. Get the information needed for the reshape
   #--------------------------------------------------------------------------------
-
   # Get names of input and output blobs (for setting precision in next lines)
   input_blob = next(iter(net.input_info))
   out_blob = next(iter(net.outputs))
