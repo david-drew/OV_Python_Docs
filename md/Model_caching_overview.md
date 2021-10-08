@@ -21,12 +21,12 @@ To enable model caching, the application must specify the folder where to store 
 <pre><code>  ie = IECore()
   ie.set_config( {'CACHE_DIR' : 'path_to_cache'} )
   net = ie.read_network('sample.xml')
-  ie.load_network(network=net, device='GPU', config=cache_config)
+  ie.load_network(network=net, device_name='GPU', config=cache_config)
 </pre></code>
 
-With this code, if a device supports the Import/Export network capability, a cached blob is automatically created inside the path_to_cache directory `CACHE_DIR` config is set to the Core object. If device does not support Import/Export capability, cache is just not created and no error is thrown
+With this code, if a device supports the Import/Export network capability, a cached blob is automatically created inside the path_to_cache directory `CACHE_DIR` config is set to the Core object. If device does not support Import/Export capability, the cache is not created and no error is thrown.
 
-Depending on your device, total time for loading network on application startup can be significantly reduced. Please also note that very first LoadNetwork (when cache is not yet created) takes slightly longer time to ‘export’ compiled blob into a cache file
+Depending on your device, the total time for loading network on application startup can be significantly reduced. Please also note that very first [IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc) call (before the cache is created) takes a slightly longer time to ‘export’ the compiled blob to a cache file.
 
 ![Model Caching](https://docs.openvinotoolkit.org/latest/caching_enabled.png)
 
@@ -37,15 +37,15 @@ In some cases, applications do not need to customize inputs and outputs every ti
 
 <pre><code>  ie = IECore()
   cfg = ie.set_config( {'CACHE_DIR' : 'path_to_cache_directory'} )
-  ie.load_network(model=mod, device=dev, config=cfg)
+  ie.load_network(model=mod, device_name=dev, config=cfg)
 </pre></code>
 
-With model caching enabled, total load time is even smaller - when `read_network()` is optimized as well
+With model caching enabled, total load time is even faster - when `read_network()` is optimized as well
 
 <pre><code>  ie = IECore()
   cfg = ie.set_config( {'CACHE_DIR' : 'path_to_cache_directory'} )
 
-  ie.load_network(model=mod, device=dev, config=cfg)
+  ie.load_network(model=mod, device_name==dev, config=cfg)
 </pre></code>
 
 ![Caching Times](https://docs.openvinotoolkit.org/latest/caching_times.png)
