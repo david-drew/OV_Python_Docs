@@ -156,8 +156,7 @@ In cases when loading the network to dGPU or iGPU fails, CPU is the fall-back ch
 
 According to the Auto-device selection logic from the previous section, the most suitable device from available devices to load mode as follows:
 
-<pre><code>
-  from openvino.inference_engine import IECore, StatusCode
+```python  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -167,12 +166,11 @@ According to the Auto-device selection logic from the previous section, the most
 
   # Load the network to the AUTO device
   exec_net = ie.load_network(network=net, device_name="AUTO")
-</code></pre>
+```
 
 Another way to specify the device is to list hardware preferences in order:
 
-<pre><code>
-  from openvino.inference_engine import IECore, StatusCode
+```python  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -182,13 +180,12 @@ Another way to specify the device is to list hardware preferences in order:
 
   # Load the network to the AUTO device
   exec_net = ie.load_network(network=net, device_name="AUTO:CPU,GPU")
-</code></pre>
+```
 
 ## Configuring the Individual Devices and Creating the Auto-Device on Top
 As described in the first section, configure each individual device as usual and then just create the “AUTO” device on top:
 
-<pre><code>
-  from openvino.inference_engine import IECore, StatusCode
+```python  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -204,13 +201,12 @@ As described in the first section, configure each individual device as usual and
   
   # Query the device's optimization capabilities
   device_caps = ie.get_metric('OPTIMIZATION_CAPABILITIES')
-</code></pre>
+```
 
 
 Alternatively, you can combine all the individual device settings into single config file and load it, allowing the Auto-device plugin to parse and apply it to the right devices. See the code example here:
 
-<pre><code>
-  from openvino.inference_engine import IECore, StatusCode
+```python  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -223,7 +219,7 @@ Alternatively, you can combine all the individual device settings into single co
   
   # Query the device's optimization capabilities
   device_caps = ie.get_metric('OPTIMIZATION_CAPABILITIES')
-</code></pre>
+```
 
 
 ## Using the Auto-Device with OpenVINO Samples and Benchmark App
