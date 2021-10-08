@@ -46,7 +46,8 @@ You can use the configuration name directly as a string or use IE::KEY_AUTO_DEVI
 There are two ways to use the Auto-device plugin:
 
 1. Directly indicate device by “AUTO” or an empty string.
-```python  from openvino.inference_engine import IECore, StatusCode
+```python
+  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -62,7 +63,8 @@ There are two ways to use the Auto-device plugin:
 ```
 
 2. Or use the Auto-device configuration to limit the device candidates list to be selected.
-```python  from openvino.inference_engine import IECore, StatusCode
+```python
+  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -156,7 +158,8 @@ In cases when loading the network to dGPU or iGPU fails, CPU is the fall-back ch
 
 According to the Auto-device selection logic from the previous section, the most suitable device from available devices to load mode as follows:
 
-```python  from openvino.inference_engine import IECore, StatusCode
+```python
+  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -170,7 +173,8 @@ According to the Auto-device selection logic from the previous section, the most
 
 Another way to specify the device is to list hardware preferences in order:
 
-```python  from openvino.inference_engine import IECore, StatusCode
+```python
+  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -185,7 +189,8 @@ Another way to specify the device is to list hardware preferences in order:
 ## Configuring the Individual Devices and Creating the Auto-Device on Top
 As described in the first section, configure each individual device as usual and then just create the “AUTO” device on top:
 
-```python  from openvino.inference_engine import IECore, StatusCode
+```python
+  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
@@ -206,7 +211,8 @@ As described in the first section, configure each individual device as usual and
 
 Alternatively, you can combine all the individual device settings into single config file and load it, allowing the Auto-device plugin to parse and apply it to the right devices. See the code example here:
 
-```python  from openvino.inference_engine import IECore, StatusCode
+```python
+  from openvino.inference_engine import IECore, StatusCode
 
   # Init the Inference Engine Core
   ie = IECore()
