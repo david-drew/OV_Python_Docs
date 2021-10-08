@@ -11,7 +11,7 @@ From the applications point of view, this is just another device that handles al
 
 With the 2021.4 release, Auto-device setup is done in three major steps:
 
-1. Configure each device as usual (for example, via the conventional [IECOre.set_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05) method).
+1. Configure each device as usual (for example, via the conventional [IECore.set_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05) method).
 2. Load a network to the Auto-device plugin. This is the only change needed in your application.
 3. As with any other executable network resulting from [IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc), create as many requests as needed to saturate the devices. These steps are covered below in detail.
 
