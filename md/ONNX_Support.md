@@ -9,7 +9,7 @@
 </code></pre>
 
 ## Reshape Feature
-OpenVINO™ doesn’t provide a mechanism to specify pre-processing (like mean values subtraction, reverse input channels) for the ONNX format. If an ONNX model contains dynamic shapes for input, please use the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a)` method for shape specialization.
+OpenVINO™ doesn’t provide a mechanism to specify pre-processing (like mean values subtraction, reverse input channels) for the ONNX format. If an ONNX model contains dynamic shapes for input, please use the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method for shape specialization.
 
 ## Weights Saved in External Files
 
