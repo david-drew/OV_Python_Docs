@@ -1,6 +1,7 @@
 # Introduction to Inference Engine Device Query API
 
-This section provides a high-level description of the process of querying of different device properties and configuration values. Refer to the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html) sources and the [Multi-Device Plugin guide](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html) for example of using the Inference Engine Query API in user applications.
+The OpenVINO™ toolkit supports inferencing with several types of devices (processors or accelerators). 
+This section provides a high-level description of the process of querying device properties and configuration values at runtime. Refer to the [Hello Query Device Python Sample](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_ie_bridges_python_sample_hello_query_device_README.html) sources and the [Multi-Device Plugin guide](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_supported_plugins_MULTI.html) for example of using the Inference Engine Query API in user applications.
 
 ## Using the Inference Engine Query API in Your Code
 
@@ -14,7 +15,7 @@ The [Inference Engine Core](https://docs.openvinotoolkit.org/2021.1/ie_python_ap
 The [ie_api.ExecutableNetwork](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html) class is also extended to support the Query API:
 * [ie_api.ExecutableNetwork.get_metric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
 * [ie_api.ExecutableNetwork.get_config](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
-* There is no method to call for set_config, but the equivalent action is described below.
+* There is no method for `set_config` corresponding to `get_config`, but the equivalent action is described below.
 
 ## Query API in the Core Class
 
@@ -77,6 +78,8 @@ To list all supported metrics:
 
 ### [GetMetric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
 
+The method is used to get an executable network specific metric such as the network name running on a device:
+
 ```python
   ie = IECore()
   net = ie.read_network(model="sample.xml", weights="sample.bin")
@@ -113,7 +116,3 @@ To set a configuration, a valid key must be used to create a dictionary, which i
   bf16_config = {"ENFORCE_BF16" : "YES"}
   exec_net = ie.load_network(network=net, device_name="MULTI", config=bf16_config)
 ```
-
-
-
-
