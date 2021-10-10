@@ -46,9 +46,9 @@ Each device name can then be passed to:
 
 The code below demonstrates how to understand whether HETERO device dumps .dot files with split graphs during the split stage:
 
-<pre><code>  ie = IECore()
-  ie.get_metric(metric_name="DUMP_GRAPH_DOT", device_name="HETERO")
-</code></pre>
+```python
+  ie.get_config(device_name='HETERO', config_name='DUMP_GRAPH_DOT')
+```
 
 For documentation about common configuration keys, refer to ie_plugin_config.hpp. Device specific configuration keys can be found in corresponding plugin folders.
 
@@ -57,8 +57,7 @@ For documentation about common configuration keys, refer to ie_plugin_config.hpp
 To extract device properties such as available device, device name, supported configuration keys, and others, use the InferenceEngine::Core::GetMetric method:
 
 ```python
-  ie = IECore()
-  ie.get_metric(metric_name="FULL_DEVICE_NAME", device_name="GPU")
+  ie.get_metric(device_name='GPU', metric_name="FULL_DEVICE_NAME")
 ```
 
 A returned value appears as follows: Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz.
@@ -66,10 +65,8 @@ A returned value appears as follows: Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz.
 To list all supported metrics:
 
 ```python
-  ie = IECore()
-  ie.get_metric(metric_name="SUPPORTED_METRICS", device_name="GPU")
+  ie.get_metric(device_name='GPU', metric_name="SUPPORTED_METRICS")
 ```
-
 
 **NOTE:** All metrics have a specific type, which is set during the metric instantiation. The list of common device-agnostic metrics can be found in ie_plugin_config.hpp. Device specific metrics (for example, for HDDL, MYRIAD devices) can be found in corresponding plugin folders.
 
