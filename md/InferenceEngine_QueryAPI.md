@@ -6,14 +6,14 @@ This section provides a high-level description of the process of querying of dif
 
 The [Inference Engine Core](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1IECore.html) class provides the following API to query device information, set or get different device configuration properties:
 
-* [ie_api.IECore.available_devices](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1IECore.html#a53ae93f362e9ceb7ffe27fcd20000025) - Provides a list of available devices. If there are more than one instance of a specific device, the devices are enumerated with .suffix where suffix is a unique string identifier. The device name can be passed to all methods of the IECore class that work with devices, for example [ie_api.IECore.load_network](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc).
+* [ie_api.IECore.available_devices](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a53ae93f362e9ceb7ffe27fcd20000025) - Provides a list of available devices. If there are more than one instance of a specific device, the devices are enumerated with .suffix where suffix is a unique string identifier. The device name can be passed to all methods of the IECore class that work with devices, for example [ie_api.IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc).
 * [ie_api.ieCore.get_metric](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#af1cdf2ecbea6399c556957c2c2fdf8eb) - Provides information about specific device.
 * [ie_api.IECore.get_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a48764dec7c235d2374af8b8ef53c6363) - Gets the current value of a specific configuration key.
 * [ie_api.IECore.set_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a2c738cee90fca27146e629825c039a05)  - Sets a new value for the configuration key.
 
-The [ie_api.ExecutableNetwork](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html) class is also extended to support the Query API:
-* [ie_api.ExecutableNetwork.get_metric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
-* [ie_api.ExecutableNetwork.get_config](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
+The [ie_api.ExecutableNetwork](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1ExecutableNetwork.html) class is also extended to support the Query API:
+* [ie_api.ExecutableNetwork.get_metric](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
+* [ie_api.ExecutableNetwork.get_config](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
 * There is no method to call for set_config, but the equivalent action is described below.
 
 ## Query API in the Core Class
@@ -75,7 +75,7 @@ To list all supported metrics:
 
 ## Query API in the ExecutableNetwork Class
 
-### [GetMetric](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
+### [GetMetric](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1ExecutableNetwork.html#ab1266563989479fd897250390f4ca23b)
 
 ```python
   ie = IECore()
@@ -93,7 +93,7 @@ Or the current temperature of MYRIAD device:
   num_threads = exec_net.get_metric("DEVICE_THERMAL")
 ```
 
-### [GetConfig](https://docs.openvinotoolkit.org/2021.1/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
+### [GetConfig](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1ExecutableNetwork.html#a41880d0a92e9f34096f38b81b0fef3db)
 The method is used to get information about configuration values the executable network has been created with:
 
 ```python
