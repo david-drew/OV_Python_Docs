@@ -110,7 +110,7 @@ The Inference Engine features a dedicated API to enumerate devices and their cap
 
 A simple programmatic way to enumerate the devices and use with the multi-device is as follows:
 
-<pre><code>
+```python
   from openvino.inference_engine import IECore, StatusCode
 
   all_devices = "MULTI:"
@@ -122,7 +122,7 @@ A simple programmatic way to enumerate the devices and use with the multi-device
   all_devices += ','.join(available_devices)
 
   exec_net = ie.load_network(network=net, device_name=all_devices)
-</code></pre>
+```
 
 Beyond the trivial “CPU”, “GPU”, “HDDL” and so on, when multiple instances of a device are available the names are more qualified. For example, this is how two Intel® Movidius™ Myriad™ X sticks are listed with the hello_query_sample:
 
@@ -135,7 +135,7 @@ Beyond the trivial “CPU”, “GPU”, “HDDL” and so on, when multiple ins
 
 So the explicit configuration to use both would be “MULTI:MYRIAD.1.2-ma2480,MYRIAD.1.4-ma2480”. Accordingly, the code that loops over all available devices of “MYRIAD” type only is below:
 
-<pre><code>
+```python
   from openvino.inference_engine import IECore, StatusCode
   
   match_list = []
@@ -153,7 +153,7 @@ So the explicit configuration to use both would be “MULTI:MYRIAD.1.2-ma2480,MY
   all_devices += ','.join(match_list)
 
   exec_net = ie.load_network(network=net, device_name=all_devices)
-</code></pre>
+```
 
 
 ## Configuring the Individual Devices and Creating the Multi-Device On Top
