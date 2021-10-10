@@ -44,7 +44,7 @@ Following the OpenVINO™ convention of labeling devices, the Multi-Device plugi
 </tbody>
 </table>
 
-You can set the configuration directly as a string, or use the metric key 'MULTI_DEVICE_PRIORITIES' from the `multi/multi_device_config.hpp` file, which defines the same string.
+You can set the configuration directly as a string, or use the metric key 'MULTI_DEVICE_PRIORITIES' from the [multi_device_config.hpp](https://docs.openvinotoolkit.org/latest/multi__device__config_8hpp.html) header file, which defines the same string.
 
 ### The Three Ways to Specify Devices Targets for the MULTI plugin.
 
