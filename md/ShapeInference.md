@@ -73,7 +73,7 @@ The algorithm for resizing network is the following:
 
 Here is a code example:
 
-<pre><code>
+```python
   # Libraries needed for this example
   import cv2
   import numpy as np
@@ -114,7 +114,7 @@ Here is a code example:
   exec_net = ie.load_network(network=net, device_name="CPU")
 
   # etc...
-</code></pre>
+```
 
 ## Extensibility
 The Inference Engine provides a special mechanism that allows adding support of shape inference for custom operations. This mechanism is described in the [Extensibility documentation](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_Extensibility_DG_Intro.html)
