@@ -11,7 +11,7 @@ Note that with Multi-Device the application logic is left unchanged, so you donâ
 
 The setup of Multi-Device can be described in three major steps:
 
-1. Configure each device as usual (e.g., via the conventional set_config method)
+1. Configure each device as usual (using the conventional set_config method)
 2. Load the network to the Multi-Device plugin created on top of a (prioritized) list of the configured devices. This is the only change needed in the application.
 3. As with any other ExecutableNetwork call (resulting from `load_network`), you create as many requests as needed to saturate the devices. 
 
