@@ -178,7 +178,7 @@ As discussed in the first section, configure each individual device as usual and
 
 An alternative is to combine all the individual device settings into a single config file and load that, allowing the Multi-Device plugin to parse and apply settings to the right devices. See the code example in the next section.
 
-Note that while the performance of accelerators works well with Multi-Device, the CPU+GPU execution poses some performance caveats, as these devices share power, bandwidth and other resources. For example it is recommended to enable the GPU throttling hint (which saves another CPU thread for CPU inferencing). See the section below titled [Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance](#Benchmarking).
+Note that while the performance of accelerators works well with Multi-Device, the CPU+GPU execution poses some performance caveats, as these devices share power, bandwidth and other resources. For example it is recommended to enable the GPU throttling hint (which saves another CPU thread for CPU inferencing). See the section below titled [Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance](#Using-the-Multi-Device-with-OpenVINO-Samples-and-Benchmarking-the-Performance).
 
 ## Querying the Optimal Number of Inference Requests
 
