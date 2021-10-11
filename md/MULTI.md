@@ -85,7 +85,6 @@ Notice that the priorities of the devices can be changed in real time for the ex
   ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'HDDL,GPU'}, device_name='MULTI')
   ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'GPU'}, device_name='MULTI')
   ie.set_config( config={'MULTI_DEVICE_PRIORITIES':'CPU,HDDL,GPU'}, device_name='MULTI')
- 
 ```
 
 #### Option 3 - Use Explicit Hints for Controlling Request Numbers Executed by Devices
@@ -179,7 +178,7 @@ As discussed in the first section, configure each individual device as usual and
 
 An alternative is to combine all the individual device settings into a single config file and load that, allowing the Multi-Device plugin to parse and apply settings to the right devices. See the code example in the next section.
 
-Note that while the performance of accelerators works well with Multi-Device, the CPU+GPU execution poses some performance caveats, as these devices share power, bandwidth and other resources. For example it is recommended to enable the GPU throttling hint (which saves another CPU thread for CPU inferencing). See the section below titled Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance.
+Note that while the performance of accelerators works well with Multi-Device, the CPU+GPU execution poses some performance caveats, as these devices share power, bandwidth and other resources. For example it is recommended to enable the GPU throttling hint (which saves another CPU thread for CPU inferencing). See the section below titled [Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance](#Benchmarking).
 
 ## Querying the Optimal Number of Inference Requests
 
@@ -189,7 +188,7 @@ Notice that until R2 you had to calculate number of requests in your application
 TBD - Need Python Support for Looking Up Config Constants by Key
 </code></pre>
 
-## Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance
+## Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance (#Benchmarking)
 
 Notice that every OpenVINO sample that supports the `-d` (which stands for “device”) command-line option transparently accepts Multi-Device. The [Benchmark application](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_benchmark_tool_README.html) is the best reference for the optimal usage of Multi-Device. As discussed earlier, you don’t need to set up the number of requests, CPU streams or threads because the application provides optimal performance out of the box. Below is an example command to evaluate HDDL+GPU performance with the Benchmark application:
 
