@@ -49,41 +49,26 @@ The fallback policy does not work if even one layer has an initialized affinity.
 ### Example - Manually Setting Layer Affinities
 
 ```python
+  import ngraph as ng
   from openvino.inference_engine import IECore, StatusCode
-
+    
   # Init the Inference Engine Core
   ie = IECore()
 
   # Read a network in IR or ONNX format
   net = ie.read_network("sample.xml")
-  
-  # Function
-  func = net.get_function()
-  
-  # Set Target Device and Desired Layers Strings
-  device = "HETERO:GPU,CPU"
-  layer_device = "GPU"
-  
-  # QueryNetworkResult object contains map layer -> device
-  res = ie.query_network(net, device)
-  
-  # Update affinities preference
-  res.supported_layers_map["layerName"] = layer_device;
-
-  # Set affinities
-  for node in func.get_ops():
-      affinity = res.supported_layers_map[node->get_friendly_name()];
-      # Store affinity mapping using node runtime information
-      node.get_rt_info()["affinity"] = affinity
+    
+  # Create an Ngraph (graph) function from the network
+  ng_func = ng.function_from_cnn(net)
+  for node in ng_func.get_ordered_ops():   
+    rt_info = node.get_rt_info()
+    rt_info["affinity"] = "CPU"
 
   # Load the network on the target device
-  exec_net = ie.load_network(network=net, device_name=args.device, num_requests=num_of_input)
-  
-  # In our case, using "AUTO" (which should be loaded into the args.device variable)
-  exec_net = ie.load_network(net, device)
+  exec_net = ie.load_network(network=net, device_name=args.device)
 ```
 
-If you rely on the default affinity distribution, you can avoid calling `ie.query_network` and just call `ie.load_network` instead:
+You can skip calling `ie.query_network` and just call `ie.load_network` if you want to use the default affinities:
 
 ```python
   ie = IECore()
