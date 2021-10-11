@@ -8,7 +8,7 @@ The heterogeneous plugin enables computing the inference of one network on sever
 
 The execution through heterogeneous plugin can be divided into two independent steps:
 
-1. Setting of affinity to layers
+1. Setting of hardware affinity to layers
 2. Loading a network to the Heterogeneous plugin, splitting the network to parts, and executing them through the plugin
 
 These steps are decoupled. The setting of affinity can be done automatically using fallback policy or in manual mode.
