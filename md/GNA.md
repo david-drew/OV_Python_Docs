@@ -83,10 +83,10 @@ For example, the Kaldi model optimizer inserts such a permute after convolution 
 
 Intel® GNA essentially operates in the low-precision mode, which represents a mix of 8-bit (`I8`), 16-bit (`I16`), and 32-bit (`I32`) integer computations. Outputs calculated using a reduced integer precision are different from the scores calculated using the floating point format, for example, `FP32` outputs calculated on CPU using the Inference Engine [CPU Plugin](CPU.md).
 
-Unlike other plugins supporting low-precision execution, the GNA plugin can calculate quantization factors at the model loading time, so you can run a model without calibration using the [Post-Training Optimizaton Tool](@ref pot_README).
+Unlike other plugins supporting low-precision execution, the GNA plugin can calculate quantization factors at the model loading time, so you can run a model without calibration using the [Post-Training Optimization Tool](https://docs.openvinotoolkit.org/latest/pot_README.html).
 However, this mode may not provide satisfactory accuracy because the internal quantization algorithm is based on heuristics which may or may not be efficient, depending on the model and dynamic range of input data.
 
-Starting with 2021.4 release of OpenVINO™, GNA plugin users are encouraged to use the [POT API Usage sample for GNA](@ref pot_sample_speech_README) to get a model with quantization hints based on statistics for the provided dataset.
+Starting with 2021.4 release of OpenVINO™, GNA plugin users are encouraged to use the [POT API Usage sample for GNA](https://docs.openvinotoolkit.org/latest/pot_sample_speech_README.html) to get a model with quantization hints based on statistics for the provided dataset.
 
 
 ## <a name="execution-modes">Execution Modes</a>
