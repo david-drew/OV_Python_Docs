@@ -2,9 +2,9 @@
 
 ## Introducing the GNA Plugin
 
-Intel® Gaussian & Neural Accelerator is a low-power neural coprocessor for continuous inference at the edge.
+The Intel® Gaussian & Neural Accelerator plugin is a low-power neural coprocessor for continuous inference at the edge.
 
-Intel® GNA is not intended to replace classic inference devices such as
+Intel® GNA is not intended to replace classic inference devices such as the
 CPU, graphics processing unit (GPU), or vision processing unit (VPU). It is designed for offloading 
 continuous inference workloads including but not limited to noise reduction or speech recognition 
 to save power and free CPU resources.
