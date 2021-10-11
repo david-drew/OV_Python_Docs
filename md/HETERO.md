@@ -96,7 +96,7 @@ Example:
 OpenVINO Samples can be used with the following command:
 ```sh
 ./object_detection_sample_ssd -m  <path_to_model>/ModelSSD.xml -i <path_to_pictures>/picture.jpg -d HETERO:MYRIAD,CPU
-111
+```
 
 where:
 
