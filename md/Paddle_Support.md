@@ -1,7 +1,7 @@
 # Paddle Support in the OpenVINO™ {#openvino_docs_IE_DG_Paddle_Support}
 
 Starting from the 2022.1 release, OpenVINO™ supports reading native Paddle models.
-`Core::ReadNetwork()` method provides a uniform way to read models from IR or Paddle format, it is a recommended approach to reading models.
+[IECore.read_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#a0d69c298618fab3a08b855442dca430f) method provides a uniform way to read models from IR or Paddle format, it is a recommended approach to reading models.
 
 ## Read Paddle Models from IR
 
