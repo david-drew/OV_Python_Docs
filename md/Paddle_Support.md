@@ -7,24 +7,24 @@ Starting from the 2022.1 release, OpenVINO™ supports reading native Paddle mod
 
 After [Converting a Paddle Model](../MO_DG/prepare_model/convert_model/Convert_Model_From_Paddle.md) to [Intermediate Representation (IR)](../MO_DG/IR_and_opsets.md), it can be read as recommended. Example:
 
-```cpp
-InferenceEngine::Core core;
-auto network = core.ReadNetwork("model.xml");
+```python
+ie = IECore()
+net = ie.read_network("model.xml")
 ```
 
 ## Read Paddle Models from Paddle Format (Paddle `inference model` model type)
 
 **Example:**
 
-```cpp
-InferenceEngine::Core core;
-auto network = core.ReadNetwork("model.pdmodel");
+```python
+ie = IECore()
+net = ie.read_network("model.pdmodel")
 ```
 
 **Reshape feature:**
 
 OpenVINO™ does not provide a mechanism to specify pre-processing, such as mean values subtraction and reverse input channels, for the Paddle format.
-If a Paddle model contains dynamic shapes for input, use the `CNNNetwork::reshape` method for shape specialization.
+If a Paddle model contains dynamic shapes for input, use the [IENetwork.reshape](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a6683f0291db25f908f8d6720ab2f221a) method for shape specialization.
 
 ## NOTE
 
