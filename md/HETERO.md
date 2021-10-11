@@ -65,7 +65,7 @@ The fallback policy does not work if even one layer has an initialized affinity.
     rt_info["affinity"] = "CPU"
 
   # Load the network on the target device
-  exec_net = ie.load_network(network=net, device_name='HETERO')
+  exec_net = ie.load_network(network=net, device_name='HETERO:FPGA,CPU')
 ```
 
 You can skip calling `ie.query_network` and just call `ie.load_network` if you want to use the default affinities:
