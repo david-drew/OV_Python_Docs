@@ -103,28 +103,26 @@ Starting with 2021.4 release of OpenVINO™, GNA plugin users are encouraged to 
 ## Supported Configuration Parameters
 
 The plugin supports the configuration parameters listed below.
-The parameters are passed as `std::map<std::string, std::string>` on `InferenceEngine::Core::LoadNetwork` or `InferenceEngine::SetConfig`.
+The parameters are passed as strings on [IECore.load_network] and [IECore.set_config]
 
-You can change the `KEY_GNA_DEVICE_MODE` parameter at run time using `InferenceEngine::ExecutableNetwork::SetConfig`, which works for any value excluding `GNA_SW_FP32`. This enables you to switch the
-execution between software emulation mode and hardware emulation mode after the model is loaded.
+You can change the `GNA_DEVICE_MODE` parameter at run time using [IENetwork.set_config](), which works for any value excluding `GNA_SW_FP32`. This enables you to switch the execution between software emulation mode and hardware emulation mode after the model is loaded.
 
-The parameter names below correspond to their usage through API keys, such as `GNAConfigParams::KEY_GNA_DEVICE_MODE` or `PluginConfigParams::KEY_PERF_COUNT`.
-When specifying key values as raw strings, that is, when using Python API, omit the `KEY_` prefix.
+The parameter names below correspond to their usage through API keys, such as `GNA_DEVICE_MODE` or `PERF_COUNT`.
 
 | Parameter Name                    | Parameter Values                                          | Default Value     | Description                                                              |
 | :---------------------------------| :---------------------------------------------------------| :-----------| :------------------------------------------------------------------------|
-| `KEY_GNA_COMPACT_MODE`            | `YES`/`NO`                                                | `NO`       | Enables I/O buffers reuse to save space. Makes debugging harder.              |
-| `KEY_GNA_SCALE_FACTOR`            | `FP32` number                                             | 1.0         | Sets the scale factor to use for input quantization.                               |
-| `KEY_GNA_DEVICE_MODE`             | `GNA_AUTO`/`GNA_HW`/`GNA_SW_EXACT`/`GNA_SW_FP32` | `GNA_AUTO`  |  One of the modes described in <a href="#execution-modes">Execution Modes</a> |
-| `KEY_GNA_FIRMWARE_MODEL_IMAGE`    | `std::string`                                             | `""`        | Sets the name for the embedded model binary dump file.                                 |
-| `KEY_GNA_PRECISION`               | `I16`/`I8`                                                | `I16`       | Sets the preferred integer weight resolution for quantization (ignored for models produced using POT). |
-| `KEY_PERF_COUNT`                  | `YES`/`NO`                                                | `NO`        | Turns on performance counters reporting.                                   |
-| `KEY_GNA_LIB_N_THREADS`           | 1-127 integer number                                      | 1           | Sets the number of GNA accelerator library worker threads used for inference computation in software modes.
+| `GNA_COMPACT_MODE`            | `YES`/`NO`                                                | `NO`       | Enables I/O buffers reuse to save space. Makes debugging harder.              |
+| `GNA_SCALE_FACTOR`            | `FP32` number                                             | 1.0         | Sets the scale factor to use for input quantization.                               |
+| `GNA_DEVICE_MODE`             | `GNA_AUTO`/`GNA_HW`/`GNA_SW_EXACT`/`GNA_SW_FP32` | `GNA_AUTO`  |  One of the modes described in <a href="#execution-modes">Execution Modes</a> |
+| `GNA_FIRMWARE_MODEL_IMAGE`    | `string`                                                  | `""`        | Sets the name for the embedded model binary dump file.                                 |
+| `GNA_PRECISION`               | `I16`/`I8`                                                | `I16`       | Sets the preferred integer weight resolution for quantization (ignored for models produced using POT). |
+| `PERF_COUNT`                  | `YES`/`NO`                                                | `NO`        | Turns on performance counters reporting.                                   |
+| `GNA_LIB_N_THREADS`           | 1-127 integer number                                      | 1           | Sets the number of GNA accelerator library worker threads used for inference computation in software modes.
 
 ## How to Interpret Performance Counters
 
-As a result of collecting performance counters using `InferenceEngine::InferRequest::GetPerformanceCounts`, you can find various performance data about execution on GNA.
-Returned map stores a counter description as a key, and a counter value in the `realTime_uSec` field of the `InferenceEngineProfileInfo` structure. Current GNA implementation calculates counters for the whole utterance scoring and does not provide per-layer information. The API enables you to retrieve counter units in cycles, you can convert cycles to seconds as follows:
+As a result of collecting performance counters using [InferRequest.get_perf_counts](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1InferRequest.html#a2194bc8c557868822bbfd260e8ef1a08), you can find a variety of performance data about execution on GNA.
+The returned map stores a counter description as a key, and a counter value in the `realTime_uSec` field of the `InferenceEngineProfileInfo` structure. Current GNA implementation calculates counters for the whole utterance scoring and does not provide per-layer information. The API enables you to retrieve counter units in cycles, you can convert cycles to seconds as follows:
 
 ```
 seconds = cycles / frequency
@@ -147,7 +145,7 @@ Performance counters provided for the time being:
 
 The GNA plugin supports the following configuration parameters for multithreading management:
 
-* `KEY_GNA_LIB_N_THREADS`
+* `NA_LIB_N_THREADS`
 
 	By default, the GNA plugin uses one worker thread for inference computations. This parameter allows you to create up to 127 threads for software modes.
 
@@ -156,7 +154,7 @@ The GNA plugin supports the following configuration parameters for multithreadin
 ## Network Batch Size
 
 Intel® GNA plugin supports the processing of context-windowed speech frames in batches of 1-8 frames in one
-input blob using `InferenceEngine::ICNNNetwork::setBatchSize`. Increasing batch size only improves efficiency of `Fully Connected` layers.
+input blob using [IENetwork.batch_size](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IENetwork.html#a79a647cb1b49645616eaeb2ca255ef2e). Increasing batch size only improves efficiency of `Fully Connected` layers.
 
 > **NOTE**: For networks with `Convolutional`, `LSTM`, or `Memory` layers, the only supported batch size is 1.
 
@@ -182,11 +180,9 @@ Any application working with GNA must properly react to this code.
 One of the strategies to adapt an application:
 
 1. Immediately switch to the GNA_SW emulation mode:
-```cpp
-std::map<std::string, Parameter> newConfig;
-newConfig[GNAConfigParams::KEY_GNA_DEVICE_MODE] = Parameter("GNA_SW_EXACT");
-executableNet.SetConfig(newConfig);
-
+```python
+new_cfg = {'GNA_DEVICE_MODE' : 'GNA_SW_EXACT'}
+exec_net = ie.load_network(network=net, device_name="MULTI", config=new_cfg)
 ```
 2. Resubmit and switch back to GNA_HW expecting that the competing application has finished.
 
