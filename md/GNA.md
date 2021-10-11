@@ -182,7 +182,7 @@ One of the strategies to adapt an application:
 1. Immediately switch to the GNA_SW emulation mode:
 ```python
 new_cfg = {'GNA_DEVICE_MODE' : 'GNA_SW_EXACT'}
-exec_net = ie.load_network(network=net, device_name="MULTI", config=new_cfg)
+exec_net = ie.load_network(network=net, device_name="GNA", config=new_cfg)
 ```
 2. Resubmit and switch back to GNA_HW expecting that the competing application has finished.
 
