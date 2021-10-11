@@ -115,7 +115,7 @@ The heterogeneous plugin can generate two files:
 
 ```python
     ie = IECore()
-    ie.set_config( config_name='HETERO_DUMP_GRAPH_DOT', device_name='HETERO');
+    ie.set_config( config={'HETERO_DUMP_GRAPH_DOT' : 'YES'}, device_name='HETERO');
 ```
 
 You can use the GraphViz* utility or a file converter to view the images. On the Ubuntu* operating system, you can use xdot:
