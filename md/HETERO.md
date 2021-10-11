@@ -11,7 +11,7 @@ The execution through heterogeneous plugin can be divided into two independent s
 1. Setting of hardware affinity to layers
 2. Loading a network to the Heterogeneous plugin, splitting the network to parts, and executing them through the plugin
 
-These steps are decoupled. The setting of affinity can be done automatically using fallback policy or in manual mode.
+These steps are decoupled. The setting of affinity can be done automatically using the fallback policy or in manual mode.
 
 The fallback automatic policy causes “greedy” behavior and assigns all layers that can be executed on certain device according to the priorities you specify (for example, HETERO:GPU,CPU). Automatic policy does not take into account plugin peculiarities such as the inability to infer some layers without other special layers placed before or after that layer. The plugin is responsible for solving such cases. If the device plugin does not support the subgraph topology constructed by the Hetero plugin, then you should set affinity manually.
 
