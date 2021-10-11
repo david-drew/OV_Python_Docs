@@ -184,9 +184,12 @@ Note that while the performance of accelerators works well with Multi-Device, th
 
 Notice that until R2 you had to calculate number of requests in your application for any device, e.g. you had to know that Intel® Vision Accelerator Design with Intel® Movidius™ VPUs required at least 32 inference requests to perform well. Now you can use the new GetMetric API to query the optimal number of requests. Similarly, when using the multi-device you don’t need to sum over included devices yourself, you can query metric directly:
 
-<pre><code>
-TBD - Need Python Support for Looking Up Config Constants by Key
-</code></pre>
+```python
+  ie = IECore()
+  # We're excluding the config here, but it could be used if desired
+  exec_net = ie.load_network(network='sample.xml', device_name='MULTI:HDDL,GPU')
+  nireq = exec_net.get_metric('OPTIMAL_NUMBER_OF_INFER_REQUESTS')
+```
 
 ## Using the Multi-Device with OpenVINO Samples and Benchmarking the Performance (#Benchmarking)
 
