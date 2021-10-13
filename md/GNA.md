@@ -105,7 +105,7 @@ Starting with 2021.4 release of OpenVINO™, GNA plugin users are encouraged to 
 The plugin supports the configuration parameters listed below.
 The parameters are passed as strings to [IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc).
 
-**DAVID: REWORK THIS**
+**DAVID: REWORK THIS**<br>
 You can change the `GNA_DEVICE_MODE` parameter at run time by sending a configuration dict to the [IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc) call, which works for any value excluding `GNA_SW_FP32`. This enables you to switch the execution between software emulation mode and hardware emulation mode after the model is loaded.
 
 The parameter names below correspond to their usage through API keys, such as `GNA_DEVICE_MODE` or `PERF_COUNT`.
