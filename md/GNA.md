@@ -105,7 +105,6 @@ Starting with 2021.4 release of OpenVINO™, GNA plugin users are encouraged to 
 The plugin supports the configuration parameters listed below.
 The parameters are passed as strings to [IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc).
 
-**DAVID: REWORK THIS**<br>
 You can change the `GNA_DEVICE_MODE` parameter at run time by sending a configuration dict to the [IECore.load_network](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1IECore.html#ac9a2e043d14ccfa9c6bbf626cfd69fcc) call, which works for any value excluding `GNA_SW_FP32`. This enables you to switch the execution between software emulation mode and hardware emulation mode after the model is loaded.
 
 The parameter names below correspond to their usage through API keys, such as `GNA_DEVICE_MODE` or `PERF_COUNT`.
@@ -123,7 +122,7 @@ The parameter names below correspond to their usage through API keys, such as `G
 ## How to Interpret Performance Counters
 
 As a result of collecting performance counters using [InferRequest.get_perf_counts](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1InferRequest.html#a2194bc8c557868822bbfd260e8ef1a08), you can find a variety of performance data about execution on GNA.
-The returned map stores a counter description as a key, and a counter value in the `realTime_uSec` field of the `InferenceEngineProfileInfo` structure. Current GNA implementation calculates counters for the whole utterance scoring and does not provide per-layer information. The API enables you to retrieve counter units in cycles, you can convert cycles to seconds as follows:
+The returned map stores a counter description as a key, and a counter value in the `real_time` field. Current GNA implementation calculates counters for the whole utterance scoring and does not provide per-layer information. The API enables you to retrieve counter units in cycles, you can convert cycles to seconds as follows:
 
 ```
 seconds = cycles / frequency
