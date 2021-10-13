@@ -122,7 +122,7 @@ The parameter names below correspond to their usage through API keys, such as `G
 ## How to Interpret Performance Counters
 
 As a result of collecting performance counters using [InferRequest.get_perf_counts](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1InferRequest.html#a2194bc8c557868822bbfd260e8ef1a08), you can find a variety of performance data about execution on GNA.
-The returned map stores a counter description as a key, and a counter value in the `real_time` field. Current GNA implementation calculates counters for the whole utterance scoring and does not provide per-layer information. The API enables you to retrieve counter units in cycles, you can convert cycles to seconds as follows:
+The returned map stores a counter description as a key, and a counter value in the `real_time` field. The current GNA implementation calculates counters for the whole utterance scoring and does not provide per-layer information. The API enables you to retrieve counter units in cycles, you can convert cycles to seconds as follows:
 
 ```
 seconds = cycles / frequency
