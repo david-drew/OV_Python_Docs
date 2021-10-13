@@ -174,8 +174,8 @@ For such workloads, processing should be time constrained, otherwise extra delay
 the schedule, thereby causing long running GNA tasks to terminate early.
 
 Applications should be prepared for this situation.
-If an inference in the `GNA_HW` mode cannot be executed because of such an interruption, then `InferRequest::Wait()` returns status code
-`StatusCode::INFER_NOT_STARTED`. In future releases, it will be changed to a more meaningful status code.
+If an inference in the `GNA_HW` mode cannot be executed because of such an interruption, then [InferRequest.wait](https://docs.openvinotoolkit.org/latest/ie_python_api/classie__api_1_1InferRequest.html#a936fa50a7531e2f9a9e9c3d45afc9b43) returns status code
+`INFER_NOT_STARTED`. In future releases, it will be changed to a more meaningful status code.
 
 Any application working with GNA must properly react to this code.
 One of the strategies to adapt an application:
